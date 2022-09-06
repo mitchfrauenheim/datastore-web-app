@@ -1,16 +1,29 @@
 import logo from './logo.svg';
 import './App.css';
 
-const {Query, PVResponse} = require('./grpc-proto/query_pb.js');
 const {QueryServiceClient} = require('./grpc-proto/query_grpc_web_pb.js');
+const {Query, AnnotationResponse} = require('./grpc-proto/query_pb.js');
 
 console.log("connecting to datastore server");
 const client = new QueryServiceClient("http://localhost:8080");
-let queryString = "mpexPv09.*";
-let request = new Query(queryString);
-client.listPVs(request, {}, (err, response) => {
+
+// annotation query
+let annotationQuery = ".*";
+let annotationRequest = new Query(annotationQuery);
+client.listAnnotations(annotationRequest, {}, (err, response) => {
   if (err) {
-    console.error("error encountered: " + err);
+    console.error("error encountered in annotation query: " + err);
+    return;
+  }
+  console.log(response.getAnnotationsList());
+});
+
+// PV query
+let pvQuery = ".*Pv01";
+let pvRequest = new Query(pvQuery);
+client.listPVs(pvRequest, {}, (err, response) => {
+  if (err) {
+    console.error("error encountered in PV query: " + err);
     return;
   }
   console.log(response.getPvsList());
