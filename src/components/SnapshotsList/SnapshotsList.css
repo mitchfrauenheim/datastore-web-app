@@ -1,0 +1,12 @@
+.snapshotcard {
+    display: flex;
+    align-items: center;
+    margin: 4px;
+    padding: 4px;
+    border-bottom: 1px solid darkgray;
+    cursor: pointer;
+}
+
+.snapshotcard-column h3 {
+    margin: 2px;
+}
