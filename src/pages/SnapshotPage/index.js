@@ -57,8 +57,8 @@ export default function SnapshotPage({ client, onOpen }) {
     }
 
     return (
-        <div className="snapshotspage">
-            <div className="snapshotslist-section">
+        <div>
+            <div>
                 <div
                     style={{ paddingBottom: "4px", borderBottom: "1px solid darkgray" }}
                 >
