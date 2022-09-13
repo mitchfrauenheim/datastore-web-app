@@ -1,9 +1,0 @@
-.snapshotpage {
-    display: flex;
-    border: 1px solid darkgrey;
-    height: 100%;
-}
-
-.snapshotslist-section {
-    flex: 1;
-}
