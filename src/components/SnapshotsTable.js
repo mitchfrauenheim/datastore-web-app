@@ -1,6 +1,6 @@
 import SnapshotsTableRow from "./SnapshotsTableRow";
 
-export default function SnapshotsTable({ snapshots = [], onOpen }) {
+export default function SnapshotsTable({ snapshots = [] }) {
 
     return (
         <table>
@@ -11,7 +11,7 @@ export default function SnapshotsTable({ snapshots = [], onOpen }) {
                 <th>description</th>
             </tr>
             {snapshots?.map((snapshot, i) => {
-                return <SnapshotsTableRow snapshot={snapshot} key={i} onOpen={onOpen}/>;
+                return <SnapshotsTableRow snapshot={snapshot} key={i} />;
             })}
             </tbody>
         </table>

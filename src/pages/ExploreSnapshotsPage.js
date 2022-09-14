@@ -10,8 +10,7 @@ class Snapshot {
     }
 
 }
-
-export default function ExploreSnapshotsPage({ client, onOpen }) {
+export default function ExploreSnapshotsPage({ client }) {
 
     let[snapshots, setSnapshots] = useState([]);
     let snapshotQuerySubmitted = false;
@@ -63,7 +62,7 @@ export default function ExploreSnapshotsPage({ client, onOpen }) {
                         <button onClick={getSnapshots}>REFRESH</button>
                     </div>
                 </div>
-                <SnapshotsTable snapshots={snapshots} onOpen={onOpen}/>
+                <SnapshotsTable snapshots={snapshots} />
             </div>
         </div>
     );
@@ -71,48 +70,9 @@ export default function ExploreSnapshotsPage({ client, onOpen }) {
 
 
 
-// =============================== original code  from app.js
-
-// const[selectedSnapshot, setSelectedSnapshot] = useState(null);
-//
-// function renderSnapshotPage() {
-//     return <SnapshotPage client={client} onOpen={onOpen}/>;
-// }
-//
-// function renderSnapshotDataPage() {
-//     return (
-//         <div className="snapshotdatapage">
-//             <main className="main">
-//                 <p>{selectedSnapshot.timestamp}</p>
-//             </main>
-//         </div>
-//     );
-// }
-//
-// function onOpen(snapshot) {
-//     console.log("onOpen");
-//     setSelectedSnapshot(snapshot); // this will start a new render because of useState hook
-// }
-//
-// return (
-//
-//     <div className="container">
-//         <main className="main">
-//             {selectedSnapshot ? renderSnapshotDataPage() : renderSnapshotPage()}
-//         </main>
-//     </div>
-//
-// );
-
-
-
 // ========================== original code from QueryPage/index.js
-// for calling grpc API for retrieving PVs
+// ========================== for calling grpc API for retrieving PVs
 
-// import "./QueryPage.css";
-// import React, { useEffect, useState } from "react";
-// import {Query} from "../../grpc-proto/query_pb";
-//
 // export default function QueryPage({ client }) {
 //
 //     let[pvList, setPvList] = useState(null);
