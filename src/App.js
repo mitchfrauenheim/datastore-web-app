@@ -1,4 +1,3 @@
-import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "./pages/Layout";
@@ -8,9 +7,6 @@ import SnapshotPage from "./pages/SnapshotPage";
 import NoPage from "./pages/NoPage";
 
 import './App.css';
-
-//import QueryPage from "./pages/QueryPage";
-//import SnapshotPage from "./pages/SnapshotPage";
 
 import React, { useEffect, useState } from "react";
 

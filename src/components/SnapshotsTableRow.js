@@ -1,16 +1,12 @@
-export default function SnapshotsTableRow({ snapshot, onOpen }) {
+import {Link} from "react-router-dom";
 
-    function handleOpen() {
-        console.log("open snapshot");
-        onOpen(snapshot)
-    }
+export default function SnapshotsTableRow({ snapshot }) {
 
     return (
         <tr>
-            <td><h3>{snapshot?.id || "No id"}</h3></td>
-            <td><h3>{snapshot?.timestamp || ""}</h3></td>
+            <td><h3><Link to={`/snapshot?id=${snapshot.id}`}>{snapshot?.id || "No id"}</Link></h3></td>
+            <td><h3><Link to={`/snapshot?id=${snapshot.id}`}>{snapshot?.timestamp || ""}</Link></h3></td>
             <td><h3>{snapshot?.description || ""}</h3></td>
-            <td><button onClick={handleOpen}>Open</button></td>
         </tr>
     );
 }
