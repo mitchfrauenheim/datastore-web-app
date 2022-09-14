@@ -75,6 +75,128 @@ proto.QueryServicePromiseClient =
  * @const
  * @type {!grpc.web.MethodDescriptor<
  *   !proto.Query,
+ *   !proto.PaginatedResponse>}
+ */
+const methodDescriptor_QueryService_listSnapshotData = new grpc.web.MethodDescriptor(
+  '/QueryService/listSnapshotData',
+  grpc.web.MethodType.UNARY,
+  proto.Query,
+  proto.PaginatedResponse,
+  /**
+   * @param {!proto.Query} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.PaginatedResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.Query} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.PaginatedResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.PaginatedResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.QueryServiceClient.prototype.listSnapshotData =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/QueryService/listSnapshotData',
+      request,
+      metadata || {},
+      methodDescriptor_QueryService_listSnapshotData,
+      callback);
+};
+
+
+/**
+ * @param {!proto.Query} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.PaginatedResponse>}
+ *     Promise that resolves to the response
+ */
+proto.QueryServicePromiseClient.prototype.listSnapshotData =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/QueryService/listSnapshotData',
+      request,
+      metadata || {},
+      methodDescriptor_QueryService_listSnapshotData);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.SnapshotQuery,
+ *   !proto.SnapshotResponse>}
+ */
+const methodDescriptor_QueryService_listSnapshots = new grpc.web.MethodDescriptor(
+  '/QueryService/listSnapshots',
+  grpc.web.MethodType.UNARY,
+  proto.SnapshotQuery,
+  proto.SnapshotResponse,
+  /**
+   * @param {!proto.SnapshotQuery} request
+   * @return {!Uint8Array}
+   */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.SnapshotResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.SnapshotQuery} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.RpcError, ?proto.SnapshotResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.SnapshotResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.QueryServiceClient.prototype.listSnapshots =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/QueryService/listSnapshots',
+      request,
+      metadata || {},
+      methodDescriptor_QueryService_listSnapshots,
+      callback);
+};
+
+
+/**
+ * @param {!proto.SnapshotQuery} request The
+ *     request proto
+ * @param {?Object<string, string>=} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.SnapshotResponse>}
+ *     Promise that resolves to the response
+ */
+proto.QueryServicePromiseClient.prototype.listSnapshots =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/QueryService/listSnapshots',
+      request,
+      metadata || {},
+      methodDescriptor_QueryService_listSnapshots);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.Query,
  *   !proto.PVResponse>}
  */
 const methodDescriptor_QueryService_listPVs = new grpc.web.MethodDescriptor(
