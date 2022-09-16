@@ -8,7 +8,8 @@ export default function SnapshotsTable({ snapshots = [] }) {
             <tr>
                 <th>id</th>
                 <th>timestamp</th>
-                <th>description</th>
+                <th>first time</th>
+                <th>last time</th>
             </tr>
             {snapshots?.map((snapshot, i) => {
                 return <SnapshotsTableRow snapshot={snapshot} key={i} />;
