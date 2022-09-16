@@ -3,16 +3,18 @@ import SnapshotsTable from "../components/SnapshotsTable";
 
 class Snapshot {
 
-    constructor(id, timestamp, description) {
+    constructor(id, timestamp, first, last) {
         this.id = id;
         this.timestamp = timestamp;
-        this.description = description;
+        this.first = first;
+        this.last = last;
     }
 
 }
-export default function ExploreSnapshotsPage({ client }) {
 
-    let[snapshots, setSnapshots] = useState([]);
+export default function ExploreSnapshotsPage({client}) {
+
+    let [snapshots, setSnapshots] = useState([]);
     let snapshotQuerySubmitted = false;
 
     useEffect(() => {
@@ -26,47 +28,76 @@ export default function ExploreSnapshotsPage({ client }) {
         if (snapshotQuerySubmitted) return;
         snapshotQuerySubmitted = true;
 
-        // change this code to call grpc snapshot query when ready
-        // console.log("executing PV query");
-        // let pvQuery = "mpexPv09";
-        // let pvRequest = new Query(pvQuery);
-        // client.listPVs(pvRequest, {}, (err, response) => {
-        //     if (err) {
-        //         const errorMsg = response.getMsg();
-        //         console.log("error executing PV query: " + errorMsg);
-        //     } else {
-        //         console.log("PV query success");
-        //         let resultList = response.getPvsList();
-        //         console.log(resultList);
-        //         setPvList(resultList);
-        //         setPvCount(resultList.length);
-        //         console.log("query pv count: " + resultList.length);
-        //     }
-        // });
+        const {Timestamp} = require('../grpc-proto/common_pb.js');
+        const {
+            SnapshotQuery,
+            TimestampClause,
+            SnapshotTimestampClauseSelector,
+            SnapshotTimestampClausePredicate
+        } = require('../grpc-proto/query_pb.js');
 
-        console.log("generating hardwired snapshot data");
-        let hardwiredSnapshots = [];
-        hardwiredSnapshots.push(new Snapshot(1, "2022-09-09T13:45:00", "power outage"));
-        hardwiredSnapshots.push(new Snapshot(2, "2022-09-09T13:50:00", "small fire"));
-        hardwiredSnapshots.push(new Snapshot(3, "2022-09-09T13:55:00", "clean up on aisle 9"));
-        setSnapshots(hardwiredSnapshots);
+        // execute grpc snapshot metadata query
+        console.log("executing grpc snapshot metadata query");
+        let nowSecondsSinceEpoch = Math.round(Date.now() / 1000);
+        let nowTimestamp = new Timestamp();
+        nowTimestamp.setEpochseconds(nowSecondsSinceEpoch);
+        nowTimestamp.setNanoseconds(0);
+        let endTimestamp = new Timestamp();
+        endTimestamp.setEpochseconds(nowSecondsSinceEpoch);
+        endTimestamp.setNanoseconds(0);
+        let timestampClause = new TimestampClause();
+        timestampClause.setSelector(SnapshotTimestampClauseSelector.SNAPSHOT_TIMESTAMP);
+        timestampClause.setPredicate(SnapshotTimestampClausePredicate.BEFORE);
+        timestampClause.setTimestamp(nowTimestamp);
+        timestampClause.setEndtimestamp(endTimestamp);
+        let snapshotQuery = new SnapshotQuery();
+        snapshotQuery.addTimestampclauses(timestampClause);
+        client.listSnapshots(snapshotQuery, {}, (err, response) => {
+            if (err) {
+                const errorMsg = response.getMsg();
+                console.log("error executing snapshot metadata query: " + errorMsg);
+                setSnapshots([]);
+            } else {
+                let resultList = response.getSnapshotsList();
+                console.log("snapshot metadata query success, result length: " + resultList.length);
+                resultList = resultList
+                    .map((snapshot) => {
+                        return new Snapshot(
+                            snapshot.getId(),
+                            snapshot.getSnapshottimestamp().getEpochseconds(),
+                            snapshot.getFirst().getEpochseconds(),
+                            snapshot.getLast().getEpochseconds()
+                        );
+                    });
+                setSnapshots(resultList);
+            }
+        });
     }
 
     return (
         <div>
             <div>
                 <div
-                    style={{ paddingBottom: "4px", borderBottom: "1px solid darkgray" }}
+                    style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}
                 >
                     <div>
                         <button onClick={getSnapshots}>REFRESH</button>
                     </div>
                 </div>
-                <SnapshotsTable snapshots={snapshots} />
+                <SnapshotsTable snapshots={snapshots}/>
             </div>
         </div>
     );
 }
+
+
+
+// // ========================= test pv query
+// let pvQuery = new Query();
+// pvQuery.setQuery("mpexPv01");
+// client.listPVs(pvQuery, {}, (err, response) => {});
+
+
 
 
 
