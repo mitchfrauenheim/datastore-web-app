@@ -1,16 +1,6 @@
 import React, {useEffect, useState} from "react";
 import SnapshotsTable from "../components/SnapshotsTable";
-
-class Snapshot {
-
-    constructor(id, timestamp, first, last) {
-        this.id = id;
-        this.timestamp = timestamp;
-        this.first = first;
-        this.last = last;
-    }
-
-}
+import Snapshot from "../domain/Snapshot";
 
 export default function ExploreSnapshotsPage({client}) {
 
@@ -60,16 +50,13 @@ export default function ExploreSnapshotsPage({client}) {
             } else {
                 let resultList = response.getSnapshotsList();
                 console.log("snapshot metadata query success, result length: " + resultList.length);
+                console.log(resultList);
                 resultList = resultList
                     .map((snapshot) => {
-                        return new Snapshot(
-                            snapshot.getId(),
-                            snapshot.getSnapshottimestamp().getEpochseconds(),
-                            snapshot.getFirst().getEpochseconds(),
-                            snapshot.getLast().getEpochseconds()
-                        );
+                        return new Snapshot(snapshot);
                     });
                 setSnapshots(resultList);
+                console.log(resultList);
             }
         });
     }
