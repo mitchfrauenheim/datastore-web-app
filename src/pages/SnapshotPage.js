@@ -1,21 +1,56 @@
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
+import Snapshot from "../domain/Snapshot";
 
 export default function SnapshotPage({ client, onOpen }) {
+
+    let snapshotQuerySubmitted = false;
 
     let [searchParams, setSearchParams] = useSearchParams();
 
     let snapshotId = searchParams.get("id");
+    let firstSeconds = searchParams.get("first");
+    let lastSeconds = searchParams.get("last");
 
-    // useEffect(() => {
-    //     getSnapshot();
-    // }, []);
-    //
-    // function getSnapshots() {
-    // }
-    //
+    useEffect(() => {
+        getSnapshot();
+    }, []);
+
+    function getSnapshot() {
+        console.log("getSnapshot()");
+
+        if (snapshotQuerySubmitted) return;
+        snapshotQuerySubmitted = true;
+
+        // execute query to retrieve snapshot data
+
+        console.log("executing grpc snapshot data query");
+//        let firstTimeString = new Date(firstSeconds*1000).toISOString();
+//        let lastTimeString = new Date(lastSeconds*1000).toISOString();
+        let firstTimeString = "2022-09-21T03:03:19.504Z";
+        let lastTimeString = "2022-09-21T03:03:19.505Z";
+        let queryString = "SELECT `*.*` WHERE time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
+        console.log(queryString);
+
+        const {
+            Query
+        } = require('../grpc-proto/query_pb.js');
+
+        let snapshotQuery = new Query();
+        snapshotQuery.setQuery(queryString);
+        client.listSnapshotData(snapshotQuery, {}, (err, response) => {
+            if (err) {
+                const errorMsg = response.getMsg();
+                console.log("error executing snapshot data query: " + errorMsg);
+            } else {
+                console.log("snapshot data query success");
+                console.log(response);
+            }
+        });
+    }
+
     function renderSnapshotPage() {
-        return <h1>Snapshot Details id: {snapshotId}</h1>;
+        return <h1>Snapshot Details id: {snapshotId} first: {firstSeconds} last: {lastSeconds}</h1>;
     }
 
     function renderNoSnapshotPage() {
