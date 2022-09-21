@@ -10,6 +10,8 @@ export default function SnapshotsTable({ snapshots = [] }) {
                 <th>Trigger Time</th>
                 <th>First Sample Time</th>
                 <th>Last Sample Time</th>
+                <th>PV Names</th>
+                <th>Description</th>
             </tr>
             {snapshots?.map((snapshot, i) => {
                 return <SnapshotsTableRow snapshot={snapshot} key={i} />;

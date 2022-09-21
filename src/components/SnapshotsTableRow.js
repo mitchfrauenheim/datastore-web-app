@@ -8,6 +8,8 @@ export default function SnapshotsTableRow({ snapshot }) {
             <td><Link to={`/snapshot?id=${snapshot.id}&first=${snapshot.firstTimestampSeconds}&last=${snapshot.lastTimestampSeconds}`}>{snapshot.snapshotTimestampLocaleString || ""}</Link></td>
             <td>{snapshot?.firstTimestampLocaleString || ""}</td>
             <td>{snapshot?.lastTimestampLocaleString || ""}</td>
+            <td>{snapshot?.pvNamesString || ""}</td>
+            <td style={{ whiteSpace: 'pre-line' }}>{snapshot?.descriptionString || ""}</td>
         </tr>
     );
 }
