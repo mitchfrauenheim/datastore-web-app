@@ -50,13 +50,11 @@ export default function ExploreSnapshotsPage({client}) {
             } else {
                 let resultList = response.getSnapshotsList();
                 console.log("snapshot metadata query success, result length: " + resultList.length);
-                console.log(resultList);
                 resultList = resultList
                     .map((snapshot) => {
                         return new Snapshot(snapshot);
                     });
                 setSnapshots(resultList);
-                console.log(resultList);
             }
         });
     }

@@ -31,6 +31,7 @@ class Snapshot {
     get lastTimestampNanos() {
         return this.apiSnapshot.getLast().getNanoseconds();
     }
+
 }
 
 module.exports = Snapshot
