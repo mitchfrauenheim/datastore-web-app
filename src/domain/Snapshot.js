@@ -1,3 +1,5 @@
+const {epochSecondsToLocaleString} = require("./utils/timestamp");
+
 class Snapshot {
 
     constructor(apiSnapshot) {
@@ -16,12 +18,20 @@ class Snapshot {
         return this.apiSnapshot.getSnapshottimestamp().getNanoseconds();
     }
 
+    get snapshotTimestampLocaleString() {
+        return epochSecondsToLocaleString(this.snapshotTimestampSeconds);
+    }
+
     get firstTimestampSeconds() {
         return this.apiSnapshot.getFirst().getEpochseconds();
     }
 
-    get snapshotTimestampNanos() {
+    get firstTimestampNanos() {
         return this.apiSnapshot.getFirst().getNanoseconds();
+    }
+
+    get firstTimestampLocaleString() {
+        return epochSecondsToLocaleString(this.firstTimestampSeconds);
     }
 
     get lastTimestampSeconds() {
@@ -30,6 +40,10 @@ class Snapshot {
 
     get lastTimestampNanos() {
         return this.apiSnapshot.getLast().getNanoseconds();
+    }
+
+    get lastTimestampLocaleString() {
+        return epochSecondsToLocaleString(this.lastTimestampSeconds);
     }
 
 }

@@ -6,10 +6,10 @@ export default function SnapshotsTable({ snapshots = [] }) {
         <table>
             <tbody>
             <tr>
-                <th>id</th>
-                <th>timestamp</th>
-                <th>first time</th>
-                <th>last time</th>
+                <th>Snapshot ID</th>
+                <th>Trigger Time</th>
+                <th>First Sample Time</th>
+                <th>Last Sample Time</th>
             </tr>
             {snapshots?.map((snapshot, i) => {
                 return <SnapshotsTableRow snapshot={snapshot} key={i} />;

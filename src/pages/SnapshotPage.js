@@ -1,6 +1,6 @@
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
-import Snapshot from "../domain/Snapshot";
+import {epochSecondsToLocaleString} from "../domain/utils/timestamp";
 
 export default function SnapshotPage({ client, onOpen }) {
 
@@ -50,7 +50,14 @@ export default function SnapshotPage({ client, onOpen }) {
     }
 
     function renderSnapshotPage() {
-        return <h1>Snapshot Details id: {snapshotId} first: {firstSeconds} last: {lastSeconds}</h1>;
+        return (
+            <div>
+                <h1>Snapshot Details</h1>
+                <p>Snapshot ID: {snapshotId}</p>
+                <p>First Sample Time: {epochSecondsToLocaleString(firstSeconds)}</p>
+                <p>Last Sample Time: {epochSecondsToLocaleString(lastSeconds)}</p>
+            </div>
+        );
     }
 
     function renderNoSnapshotPage() {
