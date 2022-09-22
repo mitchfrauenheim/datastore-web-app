@@ -1,8 +1,13 @@
 import {useSearchParams} from "react-router-dom";
-import {useEffect} from "react";
-import {epochSecondsToLocaleString} from "../../domain/utils/timestamp";
+import React, {useEffect, useState} from "react";
+import SnapshotMetadataPanel from "./SnapshotMetadataPanel";
+import FilterPanel from "./FilterPanel";
+import SnapshotDataPanel from "./SnapshotDataPanel";
+import SnapshotDataPage from "../../domain/SnapshotDataPage";
 
 export default function ViewSnapshotPage({ client, onOpen }) {
+
+    let [snapshotDataPage, setSnapshotDataPage] = useState(null);
 
     let snapshotQuerySubmitted = false;
 
@@ -28,7 +33,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 //        let firstTimeString = new Date(firstSeconds*1000).toISOString();
 //        let lastTimeString = new Date(lastSeconds*1000).toISOString();
         let firstTimeString = "2022-09-21T03:03:19.504Z";
-        let lastTimeString = "2022-09-21T03:03:19.505Z";
+        let lastTimeString = "2022-09-21T03:03:19.514Z";
         let queryString = "SELECT `*.*` WHERE time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
         console.log(queryString);
 
@@ -44,7 +49,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
                 console.log("error executing snapshot data query: " + errorMsg);
             } else {
                 console.log("snapshot data query success");
-                console.log(response);
+                setSnapshotDataPage(new SnapshotDataPage(response));
             }
         });
     }
@@ -52,10 +57,9 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     function renderSnapshotPage() {
         return (
             <div>
-                <h1>Snapshot Details</h1>
-                <p>Snapshot ID: {snapshotId}</p>
-                <p>First Sample Time: {epochSecondsToLocaleString(firstSeconds)}</p>
-                <p>Last Sample Time: {epochSecondsToLocaleString(lastSeconds)}</p>
+                <SnapshotMetadataPanel snapshotId={snapshotId} firstSeconds={firstSeconds} lastSeconds={lastSeconds} />
+                <FilterPanel/>
+                <SnapshotDataPanel snapshotDataPage={snapshotDataPage}/>
             </div>
         );
     }
