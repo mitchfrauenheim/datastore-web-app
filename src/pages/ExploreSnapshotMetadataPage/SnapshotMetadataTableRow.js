@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 
-export default function SnapshotsTableRow({ snapshot }) {
+export default function SnapshotMetadataTableRow({ snapshot }) {
 
     return (
         <tr>
