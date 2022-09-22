@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from "react";
-import SnapshotsTable from "../components/SnapshotsTable";
-import Snapshot from "../domain/Snapshot";
+import SnapshotMetadataTable from "./SnapshotMetadataTable";
+import Snapshot from "../../domain/Snapshot";
 
-export default function ExploreSnapshotsPage({client}) {
+export default function ExploreSnapshotMetadataPage({client}) {
 
     let [snapshots, setSnapshots] = useState([]);
     let snapshotQuerySubmitted = false;
@@ -18,13 +18,13 @@ export default function ExploreSnapshotsPage({client}) {
         if (snapshotQuerySubmitted) return;
         snapshotQuerySubmitted = true;
 
-        const {Timestamp} = require('../grpc-proto/common_pb.js');
+        const {Timestamp} = require('../../grpc-proto/common_pb.js');
         const {
             SnapshotQuery,
             TimestampClause,
             SnapshotTimestampClauseSelector,
             SnapshotTimestampClausePredicate
-        } = require('../grpc-proto/query_pb.js');
+        } = require('../../grpc-proto/query_pb.js');
 
         // execute grpc snapshot metadata query
         console.log("executing grpc snapshot metadata query");
@@ -69,7 +69,7 @@ export default function ExploreSnapshotsPage({client}) {
                         <button onClick={getSnapshots}>REFRESH</button>
                     </div>
                 </div>
-                <SnapshotsTable snapshots={snapshots}/>
+                <SnapshotMetadataTable snapshots={snapshots}/>
             </div>
         </div>
     );

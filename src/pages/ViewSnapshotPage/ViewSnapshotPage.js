@@ -1,8 +1,8 @@
 import {useSearchParams} from "react-router-dom";
 import {useEffect} from "react";
-import {epochSecondsToLocaleString} from "../domain/utils/timestamp";
+import {epochSecondsToLocaleString} from "../../domain/utils/timestamp";
 
-export default function SnapshotPage({ client, onOpen }) {
+export default function ViewSnapshotPage({ client, onOpen }) {
 
     let snapshotQuerySubmitted = false;
 
@@ -34,7 +34,7 @@ export default function SnapshotPage({ client, onOpen }) {
 
         const {
             Query
-        } = require('../grpc-proto/query_pb.js');
+        } = require('../../grpc-proto/query_pb.js');
 
         let snapshotQuery = new Query();
         snapshotQuery.setQuery(queryString);
