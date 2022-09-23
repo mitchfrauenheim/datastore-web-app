@@ -1,9 +1,17 @@
 import React, {useEffect, useState} from "react";
 import SnapshotMetadataTable from "./SnapshotMetadataTable";
 import Snapshot from "../../domain/Snapshot";
+import SnapshotMetadataPanel from "../ViewSnapshotPage/SnapshotMetadataPanel";
+import FilterPanel from "../ViewSnapshotPage/FilterPanel";
+import SnapshotDataPanel from "../ViewSnapshotPage/SnapshotDataPanel";
+import FilterEditPanel from "./FilterEditPanel";
+import FilterCriteriaPanel from "./FilterCriteriaPanel";
+import QueryResultsPanel from "./QueryResultsPanel";
+import SnapshotMetadataFilter from "../../domain/SnapshotMetadataFilter";
 
 export default function ExploreSnapshotMetadataPage({client}) {
 
+    let [filter, setFilter] = useState(new SnapshotMetadataFilter());
     let [snapshots, setSnapshots] = useState([]);
     let snapshotQuerySubmitted = false;
 
@@ -61,18 +69,12 @@ export default function ExploreSnapshotMetadataPage({client}) {
 
     return (
         <div>
-            <div>
-                <div
-                    style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}
-                >
-                    <div>
-                        <button onClick={getSnapshots}>REFRESH</button>
-                    </div>
-                </div>
-                <SnapshotMetadataTable snapshots={snapshots}/>
-            </div>
+            <FilterEditPanel filter={filter} />
+            <FilterCriteriaPanel filter={filter} />
+            <QueryResultsPanel snapshots={snapshots}/>
         </div>
     );
+
 }
 
 
