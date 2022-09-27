@@ -80,7 +80,7 @@ export default function ExploreSnapshotMetadataPage({client}) {
     return (
         <div>
             <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-            <FilterCriteriaPanel filter={filter} handleSubmitFunction={handleSubmit}/>
+            <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit}/>
             <QueryResultsPanel snapshots={snapshots}/>
         </div>
     );
