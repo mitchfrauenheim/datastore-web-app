@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function FilterCriteriaPanel({filter, handleSubmitFunction}) {
+export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}) {
 
-    let snapshotMetadataFilter = filter;
+    let criteriaDisplayList = criteriaList;
     let handleSubmit = handleSubmitFunction;
 
     function renderFilterCriteriaPanel() {
@@ -26,7 +26,7 @@ export default function FilterCriteriaPanel({filter, handleSubmitFunction}) {
 
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            {(snapshotMetadataFilter.criteriaList.length === 0) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()}
+            {(criteriaDisplayList.length === 0) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()}
         </div>
     );
 
