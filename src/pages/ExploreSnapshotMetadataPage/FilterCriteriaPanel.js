@@ -1,11 +1,9 @@
 import React from "react";
 
-export default function FilterCriteriaPanel({filter}) {
+export default function FilterCriteriaPanel({filter, handleSubmitFunction}) {
 
     let snapshotMetadataFilter = filter;
-
-    function handleSubmit() {
-    }
+    let handleSubmit = handleSubmitFunction;
 
     function renderFilterCriteriaPanel() {
         return (
@@ -28,7 +26,7 @@ export default function FilterCriteriaPanel({filter}) {
 
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            {(snapshotMetadataFilter.criteriaList === null) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()}
+            {(snapshotMetadataFilter.criteriaList.length === 0) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()}
         </div>
     );
 
