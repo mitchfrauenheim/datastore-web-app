@@ -9,7 +9,7 @@ class SnapshotMetadataFilter {
 
     addTimeRangeCriteria(firstTime, lastTime) {
         console.log("adding time range criteria to domain");
-        this.timeRangeCriteria = new TimeRangeFilterCriteria(firstTime, lastTime);
+        this.timeRangeCriteria = new TimeRangeFilterCriteria(firstTime.current.value, lastTime.current.value);
     }
 
     get criteriaList() {
