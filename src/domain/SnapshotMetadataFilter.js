@@ -8,12 +8,12 @@ class SnapshotMetadataFilter {
     }
 
     addTimeRangeCriteria(firstTime, lastTime) {
-        console.log("adding time range criteria to domain");
+        console.log("SnapshotMetadataFilter.addTimeRangeCriteria()");
         this.timeRangeCriteria = new TimeRangeFilterCriteria(firstTime.current.value, lastTime.current.value);
     }
 
     get criteriaList() {
-        console.log("generating criteriaList");
+        console.log("SnapshotMetadataFilter.criteriaList()");
         let result = []
         if (this.timeRangeCriteria !== null) {
             result.push(this.timeRangeCriteria.displayString);

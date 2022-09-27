@@ -9,7 +9,7 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     const input2Ref = useRef(null);
 
     function handleAddTimeRangeFilter() {
-        console.log("adding time range filter criteria");
+        console.log("FilterEditPanel.handleAddTimeRangeFilter()");
         snapshotMetadataFilter.addTimeRangeCriteria(input1Ref, input2Ref);
         updateCriteria();
     }
