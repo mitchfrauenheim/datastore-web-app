@@ -12,14 +12,24 @@ import SnapshotMetadataFilter from "../../domain/SnapshotMetadataFilter";
 export default function ExploreSnapshotMetadataPage({client}) {
 
     let [filter, setFilter] = useState(new SnapshotMetadataFilter());
+    let [filterCriteria, setFilterCriteria] = useState([]);
     let [snapshots, setSnapshots] = useState([]);
     let snapshotQuerySubmitted = false;
 
-    useEffect(() => {
-        getSnapshots();
-    }, []);
+    // useEffect(() => {
+    //     getSnapshots();
+    // }, []);
 
-    function getSnapshots() {
+    function updateCriteria () {
+        console.log("updating criteria");
+        setFilterCriteria(filter.criteriaList);
+    }
+
+    function handleSubmit() {
+        getSnapshotMetadata();
+    }
+
+    function getSnapshotMetadata() {
 
         console.log("getSnapshots()");
 
@@ -69,8 +79,8 @@ export default function ExploreSnapshotMetadataPage({client}) {
 
     return (
         <div>
-            <FilterEditPanel filter={filter} />
-            <FilterCriteriaPanel filter={filter} />
+            <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
+            <FilterCriteriaPanel filter={filter} handleSubmitFunction={handleSubmit}/>
             <QueryResultsPanel snapshots={snapshots}/>
         </div>
     );
