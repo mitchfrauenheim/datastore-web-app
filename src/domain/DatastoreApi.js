@@ -1,5 +1,5 @@
 const {QueryServiceClient} = require("../grpc-proto/query_grpc_web_pb");
-const {Timestamp} = require("../grpc-proto/common_pb");
+const {Timestamp, Attribute} = require("../grpc-proto/common_pb");
 const {
     TimestampClause,
     SnapshotTimestampClauseSelector,
@@ -24,56 +24,96 @@ class DatastoreApi {
         // execute grpc snapshot metadata query
         console.log("DatastoreApi.querySnapshotMetadataUsingFilter()");
 
-        // extract time range from filter
-        if (filter.timeRangeCriteria === null) {
-            const errorMsg = "error: no time range criteria provided in filter";
-            console.log(errorMsg);
-            return errorHandler(errorMsg);
-        }
-
-        let firstTime = filter.timeRangeCriteria.firstTime;
-        let lastTime = filter.timeRangeCriteria.lastTime;
-        if (firstTime === null || lastTime === null) {
-            const errorMsg = "error: first or last time not specified in filter time range criteria";
-            console.log(errorMsg);
-            return errorHandler(errorMsg);
-        }
-
-        // handle first timestamp
-        let firstTimeMillis = Date.parse(firstTime);
-        console.log(firstTimeMillis);
-        if (isNaN(firstTimeMillis)) {
-            const errorMsg = "error: invalid ISO date format for first time: " + firstTime;
-            console.log(errorMsg);
-            return errorHandler(errorMsg);
-        }
-        let firstTimeSeconds = Math.round(firstTimeMillis / 1000);
-        let firstTimestamp = new Timestamp();
-        firstTimestamp.setEpochseconds(firstTimeSeconds);
-        firstTimestamp.setNanoseconds(0);
-
-        // handle last timestamp
-        let lastTimeMillis = Date.parse(lastTime);
-        if (isNaN(lastTimeMillis)) {
-            const errorMsg = "error: invalid ISO date format for last time: " + lastTime;
-            console.log(errorMsg);
-            return errorHandler(errorMsg);
-        }
-        let lastTimeSeconds = Math.round(lastTimeMillis / 1000);
-        let lastTimestamp = new Timestamp();
-        lastTimestamp.setEpochseconds(lastTimeSeconds);
-        lastTimestamp.setNanoseconds(0);
-
-        // build TimestampClause
-        let timestampClause = new TimestampClause();
-        timestampClause.setSelector(SnapshotTimestampClauseSelector.SNAPSHOT_TIMESTAMP);
-        timestampClause.setPredicate(SnapshotTimestampClausePredicate.BETWEEN);
-        timestampClause.setTimestamp(firstTimestamp);
-        timestampClause.setEndtimestamp(lastTimestamp);
-
-        // build snapshot query
+        // filter must include time range, attribute, or pv criteria
+        let valid = false;
         let snapshotQuery = new SnapshotQuery();
-        snapshotQuery.addTimestampclauses(timestampClause);
+        let timestampClause = null;
+
+        // process time range from filter
+        if (filter.timeRangeCriteria !== null) {
+
+            let firstTime = filter.timeRangeCriteria.firstTime;
+            let lastTime = filter.timeRangeCriteria.lastTime;
+            if (firstTime === null || firstTime === "" || lastTime === null || lastTime === "") {
+                const errorMsg = "error: first or last time not specified in filter time range criteria";
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+            }
+
+            // handle first timestamp
+            let firstTimeMillis = Date.parse(firstTime);
+            console.log(firstTimeMillis);
+            if (isNaN(firstTimeMillis)) {
+                const errorMsg = "error: invalid ISO date format for first time: " + firstTime;
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+            }
+            let firstTimeSeconds = Math.round(firstTimeMillis / 1000);
+            let firstTimestamp = new Timestamp();
+            firstTimestamp.setEpochseconds(firstTimeSeconds);
+            firstTimestamp.setNanoseconds(0);
+
+            // handle last timestamp
+            let lastTimeMillis = Date.parse(lastTime);
+            if (isNaN(lastTimeMillis)) {
+                const errorMsg = "error: invalid ISO date format for last time: " + lastTime;
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+            }
+            let lastTimeSeconds = Math.round(lastTimeMillis / 1000);
+            let lastTimestamp = new Timestamp();
+            lastTimestamp.setEpochseconds(lastTimeSeconds);
+            lastTimestamp.setNanoseconds(0);
+
+            // check that firstTime <= lastTime
+            if (firstTimeMillis > lastTimeMillis) {
+                const errorMsg = "error: first time: " + firstTime + " greater than last time: " + lastTime;
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+            }
+
+            // build TimestampClause
+            timestampClause = new TimestampClause();
+            timestampClause.setSelector(SnapshotTimestampClauseSelector.SNAPSHOT_TIMESTAMP);
+            timestampClause.setPredicate(SnapshotTimestampClausePredicate.BETWEEN);
+            timestampClause.setTimestamp(firstTimestamp);
+            timestampClause.setEndtimestamp(lastTimestamp);
+            snapshotQuery.addTimestampclauses(timestampClause);
+            valid = true;
+        }
+
+        // process attribute filter
+        if (filter.attributeCriteriaList.length > 0) {
+            for (let attributeCriteria of filter.attributeCriteriaList) {
+                const attributeName = attributeCriteria.name;
+                const attributeValue = attributeCriteria.value;
+
+                if (attributeName === null || attributeName === "") {
+                    const errorMsg = "error: no attribute name specified in attribute filter criteria";
+                    console.log(errorMsg);
+                    return errorHandler(errorMsg);
+                }
+
+                if (attributeValue === null || attributeValue === "") {
+                    const errorMsg = "error: no attribute value specified in attribute filter criteria";
+                    console.log(errorMsg);
+                    return errorHandler(errorMsg);
+                }
+
+                const queryAttribute = new Attribute();
+                queryAttribute.setName(attributeName);
+                queryAttribute.setValue(attributeValue);
+                snapshotQuery.addAttributeclauses(queryAttribute);
+                valid = true;
+            }
+        }
+
+        // check if query is valid, e.g., at least one filter applied
+        if (!valid) {
+            const errorMsg = "error: no filter criteria specified";
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
+        }
 
         // execute query
         const result = this.client.listSnapshots(snapshotQuery, {}, (err, response) => {
