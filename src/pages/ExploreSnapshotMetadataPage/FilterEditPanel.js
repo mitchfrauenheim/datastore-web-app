@@ -5,12 +5,20 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     let snapshotMetadataFilter = filter;
     let updateCriteria = updateCriteriaFunction;
 
-    const input1Ref = useRef(null);
-    const input2Ref = useRef(null);
+    const firstTimeRef = useRef(null);
+    const lastTimeRef = useRef(null);
+    const attributeNameRef = useRef(null);
+    const attributeValueRef = useRef(null);
 
     function handleAddTimeRangeFilter() {
         console.log("FilterEditPanel.handleAddTimeRangeFilter()");
-        snapshotMetadataFilter.addTimeRangeCriteria(input1Ref, input2Ref);
+        snapshotMetadataFilter.addTimeRangeCriteria(firstTimeRef.current.value, lastTimeRef.current.value);
+        updateCriteria();
+    }
+
+    function handleAddAttributeFilter() {
+        console.log("FilterEditPanel.handleAddAttributeFilter()");
+        snapshotMetadataFilter.addAttributeCriteria(attributeNameRef.current.value, attributeValueRef.current.value);
         updateCriteria();
     }
 
@@ -22,13 +30,23 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
             <div>
                 <label>
                     time range filter
-                    <input type="text" ref={input1Ref}
+                    <input type="text" ref={firstTimeRef}
                            placeholder="2022-09-21T03:03:19.000Z"
                            defaultValue="2022-09-21T03:03:19.000Z"/>
-                    <input type="text" ref={input2Ref}
+                    <input type="text" ref={lastTimeRef}
                            placeholder="2022-09-21T03:03:19.999Z"
                            defaultValue="2022-09-21T03:03:19.999Z"/>
                     <button onClick={handleAddTimeRangeFilter}>Add</button>
+                </label>
+            </div>
+            <div>
+                <label>
+                    attribute filter
+                    <input type="text" ref={attributeNameRef}
+                           placeholder="attribute name ('classification')"/>
+                    <input type="text" ref={attributeValueRef}
+                           placeholder="attribute value ('test')"/>
+                    <button onClick={handleAddAttributeFilter}>Add</button>
                 </label>
             </div>
         </div>
