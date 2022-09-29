@@ -47,7 +47,7 @@ export default function ExploreSnapshotMetadataPage({client}) {
 
         // request snapshot metadata query
         console.log("requesting snapshot metadata query using filter");
-        client.querySnapshotMetadataUsingFilter(filter, handleSnapshotMetadataQueryResult, handleSnapshotMetadataQueryError);
+        client.queryListSnapshotsUsingFilter(filter, handleSnapshotMetadataQueryResult, handleSnapshotMetadataQueryError);
     }
 
     return (
