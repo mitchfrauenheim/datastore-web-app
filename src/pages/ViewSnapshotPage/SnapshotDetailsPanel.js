@@ -1,14 +1,17 @@
 import {epochSecondsToLocaleString} from "../../domain/utils/timestamp";
 import React from "react";
 
-export default function SnapshotDetailsPanel({ snapshotId, firstSeconds, lastSeconds }) {
+export default function SnapshotDetailsPanel({ snapshotDetails }) {
 
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
             <h1>Snapshot Details</h1>
-            <p>Snapshot ID: {snapshotId}</p>
-            <p>First Sample Time: {epochSecondsToLocaleString(firstSeconds)}</p>
-            <p>Last Sample Time: {epochSecondsToLocaleString(lastSeconds)}</p>
+            <b>ID: </b><p>{snapshotDetails.id}</p>
+            <b>Trigger Timestamp: </b><p>{snapshotDetails.timestamp}</p>
+            <b>First Sample Time: </b><p>{snapshotDetails.firstTime}</p>
+            <b>Last Sample Time: </b><p>{snapshotDetails.lastTime}</p>
+            <b>PV Names: </b><p>{snapshotDetails.pvNamesString}</p>
+            <b>Attributes: </b><p>{snapshotDetails.attributesString}</p>
         </div>
     );
 
