@@ -1,5 +1,5 @@
 import React from "react";
-import SnapshotMetadataTableRow from "./SnapshotMetadataTableRow";
+import SnapshotListTableRow from "./SnapshotListTableRow";
 import {Link} from "react-router-dom";
 
 export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}) {
@@ -10,7 +10,7 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}
     function renderFilterCriteriaPanel() {
         return (
             <div>
-                <h1>Snapshot Metadata Query Filter Criteria</h1>
+                <h1>Snapshot List Filter Criteria</h1>
                 <div>
                     <table>
                         <tbody>
@@ -24,7 +24,7 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}
                     </table>
                 </div>
                 <div>
-                    <button onClick={handleSubmit}>Submit</button>
+                    <button onClick={handleSubmit}>Submit Filter</button>
                 </div>
             </div>
         );
@@ -33,7 +33,7 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}
     function renderNoFilterCriteriaPanel() {
         return (
             <div>
-                <h1>Add snapshot metadata query filter criteria to begin.</h1>;
+                <h1>To begin, add criteria to snapshot list filter.</h1>
             </div>
         );
     }

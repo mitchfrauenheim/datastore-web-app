@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Layout from "./pages/Layout";
 import HomePage from "./pages/HomePage";
-import ExploreSnapshotMetadataPage from "./pages/ExploreSnapshotMetadataPage/ExploreSnapshotMetadataPage";
+import ListSnapshotsPage from "./pages/ListSnapshotsPage/ListSnapshotsPage";
 import ViewSnapshotPage from "./pages/ViewSnapshotPage/ViewSnapshotPage";
 import NoPage from "./pages/NoPage";
 
@@ -20,7 +20,7 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Layout />}>
                     <Route index element={<HomePage />} />
-                    <Route path="explore" element={<ExploreSnapshotMetadataPage client={datastoreApi}/>} />
+                    <Route path="explore" element={<ListSnapshotsPage client={datastoreApi}/>} />
                     <Route path="snapshot" element={<ViewSnapshotPage client={datastoreApi}/>} />
                     <Route path="*" element={<NoPage />} />
                 </Route>

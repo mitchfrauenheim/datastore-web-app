@@ -1,6 +1,6 @@
 import {useSearchParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
-import SnapshotMetadataPanel from "./SnapshotMetadataPanel";
+import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
 import FilterPanel from "./FilterPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
 import SnapshotDataPage from "../../domain/SnapshotDataPage";
@@ -57,7 +57,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     function renderSnapshotPage() {
         return (
             <div>
-                <SnapshotMetadataPanel snapshotId={snapshotId} firstSeconds={firstSeconds} lastSeconds={lastSeconds} />
+                <SnapshotDetailsPanel snapshotId={snapshotId} firstSeconds={firstSeconds} lastSeconds={lastSeconds} />
                 <FilterPanel/>
                 <SnapshotDataPanel snapshotDataPage={snapshotDataPage}/>
             </div>

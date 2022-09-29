@@ -5,7 +5,7 @@ import FilterCriteriaPanel from "./FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import SnapshotMetadataFilter from "../../domain/SnapshotMetadataFilter";
 
-export default function ExploreSnapshotMetadataPage({client}) {
+export default function ListSnapshotsPage({client}) {
 
     let [filter, setFilter] = useState(new SnapshotMetadataFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
@@ -16,17 +16,17 @@ export default function ExploreSnapshotMetadataPage({client}) {
     // useEffect(() => {
     //
     //     // place code here that should only be called once per render cycle
-    //     console.log("ExploreSnapshotMetadataPage.useEffect()");
+    //     console.log("ListSnapshotsPage.useEffect()");
     //
     // }, []);
 
     function updateCriteria () {
-        console.log("ExploreSnapshotMetadataPage.updateCriteria()");
+        console.log("ListSnapshotsPage.updateCriteria()");
         setFilterCriteria(filter.criteriaList);
     }
 
     function handleSubmit() {
-        console.log("ExploreSnapshotMetadataPage.handleSubmit()");
+        console.log("ListSnapshotsPage.handleSubmit()");
         getSnapshotMetadata();
     }
 
@@ -40,7 +40,7 @@ export default function ExploreSnapshotMetadataPage({client}) {
 
     function getSnapshotMetadata() {
 
-        console.log("ExploreSnapshotMetadataPage.getSnapshotMetadata()");
+        console.log("ListSnapshotsPage.getSnapshotMetadata()");
 
         if (snapshotQuerySubmitted) return;
         snapshotQuerySubmitted = true;
