@@ -33,7 +33,7 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     // remove and just use placeholder instead
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            <h1>Edit Snapshot Metadata Query Filter</h1>
+            <h1>Snapshot List Filter</h1>
             <div>
                 <label>
                     time range filter

@@ -1,5 +1,5 @@
 import React from "react";
-import SnapshotMetadataTable from "./SnapshotMetadataTable";
+import SnapshotListTable from "./SnapshotListTable";
 
 export default function QueryResultsPanel({snapshots, errorMsg}) {
 
@@ -10,7 +10,7 @@ export default function QueryResultsPanel({snapshots, errorMsg}) {
             <div>
                 <div>
                     <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-                        <SnapshotMetadataTable snapshots={snapshots}/>
+                        <SnapshotListTable snapshots={snapshots}/>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import {epochSecondsToLocaleString} from "../../domain/utils/timestamp";
 import React from "react";
 
-export default function SnapshotMetadataPanel({ snapshotId, firstSeconds, lastSeconds }) {
+export default function SnapshotDetailsPanel({ snapshotId, firstSeconds, lastSeconds }) {
 
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
