@@ -9,6 +9,7 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     const lastTimeRef = useRef(null);
     const attributeNameRef = useRef(null);
     const attributeValueRef = useRef(null);
+    const pvPatternRef = useRef(null);
 
     function handleAddTimeRangeFilter() {
         console.log("FilterEditPanel.handleAddTimeRangeFilter()");
@@ -19,6 +20,12 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     function handleAddAttributeFilter() {
         console.log("FilterEditPanel.handleAddAttributeFilter()");
         snapshotMetadataFilter.addAttributeCriteria(attributeNameRef.current.value, attributeValueRef.current.value);
+        updateCriteria();
+    }
+
+    function handleAddPVFilter() {
+        console.log("FilterEditPanel.handleAddPVFilter()");
+        snapshotMetadataFilter.addPvCriteria(pvPatternRef.current.value);
         updateCriteria();
     }
 
@@ -47,6 +54,14 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                     <input type="text" ref={attributeValueRef}
                            placeholder="attribute value ('test')"/>
                     <button onClick={handleAddAttributeFilter}>Add</button>
+                </label>
+            </div>
+            <div>
+                <label>
+                    PV filter
+                    <input type="text" ref={pvPatternRef}
+                           placeholder="PV name (e.g., 'mpexPv09' or 'mpexPv0*')"/>
+                    <button onClick={handleAddPVFilter}>Add</button>
                 </label>
             </div>
         </div>

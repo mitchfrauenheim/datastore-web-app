@@ -19,10 +19,10 @@ class DatastoreApi {
         this.client = new QueryServiceClient("http://localhost:8080", null, null);
     }
 
-    querySnapshotMetadataUsingFilter(filter, resultHandler, errorHandler) {
+    queryListSnapshotsUsingFilter(filter, resultHandler, errorHandler) {
 
         // execute grpc snapshot metadata query
-        console.log("DatastoreApi.querySnapshotMetadataUsingFilter()");
+        console.log("DatastoreApi.queryListSnapshotsUsingFilter()");
 
         // filter must include time range, attribute, or pv criteria
         let valid = false;
