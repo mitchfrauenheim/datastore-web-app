@@ -4,9 +4,11 @@ const {
     TimestampClause,
     SnapshotTimestampClauseSelector,
     SnapshotTimestampClausePredicate,
-    SnapshotQuery
+    SnapshotQuery,
+    Query
 } = require("../grpc-proto/query_pb");
 const Snapshot = require("./Snapshot");
+const SnapshotDataPage = require("./SnapshotDataPage");
 
 class DatastoreApi {
 
@@ -17,6 +19,36 @@ class DatastoreApi {
     connect() {
         console.log("DatastoreApi.connect()");
         this.client = new QueryServiceClient("http://localhost:8080", null, null);
+    }
+
+    extractAndValidateTimeRange(filter) {
+
+        let errorMsg = "";
+        const firstTime = filter.timeRangeCriteria.firstTime;
+        const lastTime = filter.timeRangeCriteria.lastTime;
+
+        if (firstTime === null || firstTime === "" || lastTime === null || lastTime === "") {
+            errorMsg = "error: first or last time not specified in filter time range criteria";
+        }
+
+        // handle first timestamp
+        let firstTimeMillis = Date.parse(firstTime);
+        if (isNaN(firstTimeMillis)) {
+            errorMsg = "error: invalid ISO date format for first time: " + firstTime;
+        }
+
+        // handle last timestamp
+        let lastTimeMillis = Date.parse(lastTime);
+        if (isNaN(lastTimeMillis)) {
+            errorMsg = "error: invalid ISO date format for last time: " + lastTime;
+        }
+
+        // check that firstTime <= lastTime
+        if (firstTimeMillis > lastTimeMillis) {
+            errorMsg = "error: first time: " + firstTime + " greater than last time: " + lastTime;
+        }
+
+        return [firstTime, lastTime, errorMsg, firstTimeMillis, lastTimeMillis];
     }
 
     queryListSnapshotsUsingFilter(filter, resultHandler, errorHandler) {
@@ -32,45 +64,33 @@ class DatastoreApi {
         // process time range from filter
         if (filter.timeRangeCriteria !== null) {
 
-            let firstTime = filter.timeRangeCriteria.firstTime;
-            let lastTime = filter.timeRangeCriteria.lastTime;
-            if (firstTime === null || firstTime === "" || lastTime === null || lastTime === "") {
-                const errorMsg = "error: first or last time not specified in filter time range criteria";
+            const timeRangeResult = this.extractAndValidateTimeRange(filter);
+            if (timeRangeResult.length !== 5) {
+                const errorMsg = "error: unexpected result length from extractAndValidateTimeRange()";
                 console.log(errorMsg);
                 return errorHandler(errorMsg);
             }
+            const validationErrorMsg = timeRangeResult[2];
+            if (validationErrorMsg !== "") {
+                console.log(validationErrorMsg);
+                return errorHandler(validationErrorMsg);
+            }
+            const firstTime = timeRangeResult[0];
+            const lastTime = timeRangeResult[1];
+            const firstTimeMillis = timeRangeResult[3];
+            const lastTimeMillis = timeRangeResult[4];
 
-            // handle first timestamp
-            let firstTimeMillis = Date.parse(firstTime);
-            console.log(firstTimeMillis);
-            if (isNaN(firstTimeMillis)) {
-                const errorMsg = "error: invalid ISO date format for first time: " + firstTime;
-                console.log(errorMsg);
-                return errorHandler(errorMsg);
-            }
+            // handle first time
             let firstTimeSeconds = Math.round(firstTimeMillis / 1000);
             let firstTimestamp = new Timestamp();
             firstTimestamp.setEpochseconds(firstTimeSeconds);
             firstTimestamp.setNanoseconds(0);
 
-            // handle last timestamp
-            let lastTimeMillis = Date.parse(lastTime);
-            if (isNaN(lastTimeMillis)) {
-                const errorMsg = "error: invalid ISO date format for last time: " + lastTime;
-                console.log(errorMsg);
-                return errorHandler(errorMsg);
-            }
+            // handle last time
             let lastTimeSeconds = Math.round(lastTimeMillis / 1000);
             let lastTimestamp = new Timestamp();
             lastTimestamp.setEpochseconds(lastTimeSeconds);
             lastTimestamp.setNanoseconds(0);
-
-            // check that firstTime <= lastTime
-            if (firstTimeMillis > lastTimeMillis) {
-                const errorMsg = "error: first time: " + firstTime + " greater than last time: " + lastTime;
-                console.log(errorMsg);
-                return errorHandler(errorMsg);
-            }
 
             // build TimestampClause
             timestampClause = new TimestampClause();
@@ -116,7 +136,7 @@ class DatastoreApi {
         }
 
         // execute query
-        const result = this.client.listSnapshots(snapshotQuery, {}, (err, response) => {
+        this.client.listSnapshots(snapshotQuery, {}, (err, response) => {
 
             if (err) {
                 const errorMsg = "error executing snapshot metadata query: " + err;
@@ -136,33 +156,56 @@ class DatastoreApi {
     }
 
     queryListSnapshotDataUsingFilter(filter, resultHandler, errorHandler) {
+
+        // execute grpc query to retrieve snapshot data
         console.log("DatastoreApi.queryListSnapshotDataUsingFilter()");
-//
-//         // execute query to retrieve snapshot data
-//
-//         console.log("executing grpc snapshot data query");
-// //        let firstTimeString = new Date(firstSeconds*1000).toISOString();
-// //        let lastTimeString = new Date(lastSeconds*1000).toISOString();
-//         let firstTimeString = "2022-09-21T03:03:19.504Z";
-//         let lastTimeString = "2022-09-21T03:03:19.514Z";
-//         let queryString = "SELECT `*.*` WHERE time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
-//         console.log(queryString);
-//
-//         const {
-//             Query
-//         } = require('../../grpc-proto/query_pb.js');
-//
-//         let snapshotQuery = new Query();
-//         snapshotQuery.setQuery(queryString);
-//         client.listSnapshotData(snapshotQuery, {}, (err, response) => {
-//             if (err) {
-//                 const errorMsg = response.getMsg();
-//                 console.log("error executing snapshot data query: " + errorMsg);
-//             } else {
-//                 console.log("snapshot data query success");
-//                 setSnapshotDataPage(new SnapshotDataPage(response));
-//             }
-//         });
+
+//        let firstTimeString = new Date(firstSeconds*1000).toISOString();
+//        let lastTimeString = new Date(lastSeconds*1000).toISOString();
+//        let firstTimeString = "2022-09-21T03:03:19.504Z";
+//        let lastTimeString = "2022-09-21T03:03:19.514Z";
+
+        let timeRangeWhereClause = "";
+        if (filter.timeRangeCriteria !== null) {
+            const timeRangeResult = this.extractAndValidateTimeRange(filter);
+            if (timeRangeResult.length !== 5) {
+                const errorMsg = "error: unexpected result length from extractAndValidateTimeRange()";
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+            }
+            const validationErrorMsg = timeRangeResult[2];
+            if (validationErrorMsg !== "") {
+                console.log(validationErrorMsg);
+                return errorHandler(validationErrorMsg);
+            }
+            const firstTimeString = timeRangeResult[0];
+            const lastTimeString = timeRangeResult[1];
+            timeRangeWhereClause = "time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
+        }
+
+        if (timeRangeWhereClause === "") {
+            const errorMsg = "error: missing time range where clause building query";
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
+        }
+        const selectClause = "`*.*`";
+        // const selectClause = "`mpexPv01`";
+        const queryString = "SELECT " + selectClause + " WHERE " + timeRangeWhereClause;
+        console.log(queryString);
+
+        let snapshotQuery = new Query();
+        snapshotQuery.setQuery(queryString);
+        this.client.listSnapshotData(snapshotQuery, {}, (err, response) => {
+            if (err) {
+                const errorMsg = "error executing snapshot data query: " + err;
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+
+            } else {
+                console.log("snapshot data query success");
+                return resultHandler(new SnapshotDataPage(response));
+            }
+        });
     }
 
 }
