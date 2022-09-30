@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import FilterEditPanel from "./FilterEditPanel";
-import FilterCriteriaPanel from "./FilterCriteriaPanel";
+import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/QueryFilter";
 
@@ -44,7 +44,7 @@ export default function ListSnapshotsPage({client}) {
     return (
         <div>
             <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-            <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit}/>
+            <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} heading="Snapshot List Filter Criteria" beginPrompt="To begin, add criteria to snapshot list filter." />
             <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg}/>
         </div>
     );

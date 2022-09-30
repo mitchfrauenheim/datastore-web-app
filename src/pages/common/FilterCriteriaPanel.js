@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}) {
+export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction, heading, beginPrompt}) {
 
     let criteriaDisplayList = criteriaList;
     let handleSubmit = handleSubmitFunction;
@@ -8,7 +8,7 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}
     function renderFilterCriteriaPanel() {
         return (
             <div>
-                <h1>Snapshot List Filter Criteria</h1>
+                <h1>{heading}</h1>
                 <div>
                     <table>
                         <tbody>
@@ -31,7 +31,7 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction}
     function renderNoFilterCriteriaPanel() {
         return (
             <div>
-                <h1>To begin, add criteria to snapshot list filter.</h1>
+                <h1>{beginPrompt}</h1>
             </div>
         );
     }

@@ -1,8 +1,7 @@
-import {useSearchParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
 import FilterEditPanel from "./FilterEditPanel";
-import FilterCriteriaPanel from "./FilterCriteriaPanel";
+import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
 import SnapshotDetails from "../../domain/SnapshotDetails";
 import QueryFilter from "../../domain/QueryFilter";
@@ -17,7 +16,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     let snapshotQuerySubmitted = false;
 
-    let [searchParams, setSearchParams] = useSearchParams();
+    // let [searchParams, setSearchParams] = useSearchParams();
 
     // get url search params
     // let snapshotId = searchParams.get("id");
@@ -34,7 +33,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
         // retrieve selected snapshot item from storage (saved if navigating from snapshot list)
         const savedSnapshotString = window.localStorage.getItem("snapshot");
         const savedSnapshotParsed = JSON.parse(savedSnapshotString);
-        const savedSnapshotObject = Object.assign(new SnapshotDetails, savedSnapshotParsed);
+        const savedSnapshotObject = Object.assign(new SnapshotDetails(), savedSnapshotParsed);
         setSnapshotDetails(savedSnapshotObject);
     }
 
@@ -73,7 +72,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
             <div>
                 <SnapshotDetailsPanel snapshotDetails={snapshotDetails} />
                 <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-                <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit}/>
+                <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} heading="Snapshot Data Filter Criteria" beginPrompt="To begin, add criteria to snapshot data filter." />
                 <SnapshotDataPanel snapshotDataPage={snapshotDataPage} errorMsg={queryErrorMsg}/>
             </div>
         );
