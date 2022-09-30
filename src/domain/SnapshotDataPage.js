@@ -21,7 +21,6 @@ class SnapshotDataPage {
             let snapshotDataRowList = []
             let rowIndex = 0;
             for (const timestamp of this.timestampsList) {
-                console.log(timestamp.getEpochseconds(), timestamp.getNanoseconds());
                 let rowDataList = [];
                 for (const column of columnList) {
                     let columnDataList = column.getDataList();

@@ -181,6 +181,10 @@ class DatastoreApi {
             const firstTimeString = timeRangeResult[0];
             const lastTimeString = timeRangeResult[1];
             timeRangeWhereClause = "time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
+        } else {
+            const errorMsg = "error: time range filter must be specified for snapshot data query to limit result size";
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
         }
 
         if (timeRangeWhereClause === "") {
@@ -188,8 +192,13 @@ class DatastoreApi {
             console.log(errorMsg);
             return errorHandler(errorMsg);
         }
-        const selectClause = "`*.*`";
-        // const selectClause = "`mpexPv01`";
+
+        let selectClause = "`*.*`";
+        if (filter.pvCriteria !== null) {
+            // const selectClause = "`mpexPv01`";
+            selectClause = "'" + filter.pvCriteria.pattern + "'";
+        }
+
         const queryString = "SELECT " + selectClause + " WHERE " + timeRangeWhereClause;
         console.log(queryString);
 
