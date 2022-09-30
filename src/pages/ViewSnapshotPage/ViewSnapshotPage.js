@@ -1,15 +1,19 @@
 import {useSearchParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
-import FilterPanel from "./FilterPanel";
+import FilterEditPanel from "./FilterEditPanel";
+import FilterCriteriaPanel from "./FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
-import SnapshotDataPage from "../../domain/SnapshotDataPage";
 import SnapshotDetails from "../../domain/SnapshotDetails";
+import SnapshotMetadataFilter from "../../domain/SnapshotMetadataFilter";
 
 export default function ViewSnapshotPage({ client, onOpen }) {
 
-    let [snapshotDataPage, setSnapshotDataPage] = useState(null);
     let [snapshotDetails, setSnapshotDetails] = useState(null);
+    let [filter, setFilter] = useState(new SnapshotMetadataFilter());
+    let [filterCriteria, setFilterCriteria] = useState([]);
+    let [snapshotDataPage, setSnapshotDataPage] = useState(null);
+    let [queryErrorMsg, setQueryErrorMsg] = useState(null);
 
     let snapshotQuerySubmitted = false;
 
@@ -21,59 +25,61 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     useEffect(() => {
         console.log("ViewSnapshotPage.useEffect()");
-        getSnapshot();
+        getSnapshotDetails();
     }, []);
 
-    function getSnapshot() {
-        console.log("ViewSnapshotPage.getSnapshot()");
-
+    function getSnapshotDetails() {
+        console.log("ViewSnapshotPage.getSnapshotDetails()");
         // retrieve selected snapshot item from storage (saved if navigating from snapshot list)
         const savedSnapshotString = window.localStorage.getItem("snapshot");
         const savedSnapshotParsed = JSON.parse(savedSnapshotString);
         const savedSnapshotObject = Object.assign(new SnapshotDetails, savedSnapshotParsed);
         setSnapshotDetails(savedSnapshotObject);
+    }
 
-//         if (snapshotQuerySubmitted) return;
-//         snapshotQuerySubmitted = true;
-//
-//         // execute query to retrieve snapshot data
-//
-//         console.log("executing grpc snapshot data query");
-// //        let firstTimeString = new Date(firstSeconds*1000).toISOString();
-// //        let lastTimeString = new Date(lastSeconds*1000).toISOString();
-//         let firstTimeString = "2022-09-21T03:03:19.504Z";
-//         let lastTimeString = "2022-09-21T03:03:19.514Z";
-//         let queryString = "SELECT `*.*` WHERE time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
-//         console.log(queryString);
-//
-//         const {
-//             Query
-//         } = require('../../grpc-proto/query_pb.js');
-//
-//         let snapshotQuery = new Query();
-//         snapshotQuery.setQuery(queryString);
-//         client.listSnapshotData(snapshotQuery, {}, (err, response) => {
-//             if (err) {
-//                 const errorMsg = response.getMsg();
-//                 console.log("error executing snapshot data query: " + errorMsg);
-//             } else {
-//                 console.log("snapshot data query success");
-//                 setSnapshotDataPage(new SnapshotDataPage(response));
-//             }
-//         });
+    function updateCriteria () {
+        console.log("ViewSnapshotPage.updateCriteria()");
+        setFilterCriteria(filter.criteriaList);
+    }
+
+    function handleSubmit() {
+        console.log("ViewSnapshotPage.handleSubmit()");
+        getSnapshotData();
+    }
+
+    function handleSnapshotDataQueryResult(snapshotDataPage) {
+        console.log("ViewSnapshotPage.handleSnapshotDataQueryResult()");
+        setSnapshotDataPage(snapshotDataPage);
+    }
+
+    function handleSnapshotDataQueryError(errorMsg) {
+        console.log("ViewSnapshotPage.handleSnapshotDataQueryError()");
+        setQueryErrorMsg(errorMsg);
+    }
+
+    function getSnapshotData() {
+        console.log("ViewSnapshotPage.getSnapshot()");
+        if (snapshotQuerySubmitted) return;
+        snapshotQuerySubmitted = true;
+        // build and execute listSnapshots query
+        console.log("requesting snapshot metadata query using filter");
+        client.queryListSnapshotDataUsingFilter(filter, handleSnapshotDataQueryResult, handleSnapshotDataQueryError);
     }
 
     function renderSnapshotPage() {
+        console.log("ViewSnapshotPage.renderSnapshotPage()");
         return (
             <div>
                 <SnapshotDetailsPanel snapshotDetails={snapshotDetails} />
-                <FilterPanel/>
-                <SnapshotDataPanel snapshotDataPage={snapshotDataPage}/>
+                <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
+                <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit}/>
+                <SnapshotDataPanel snapshotDataPage={snapshotDataPage} errorMsg={queryErrorMsg}/>
             </div>
         );
     }
 
     function renderNoSnapshotPage() {
+        console.log("ViewSnapshotPage.renderSnapshotPage()");
         return <h1>No Snapshot ID Specified</h1>;
     }
 

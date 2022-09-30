@@ -31,21 +31,20 @@ export default function ListSnapshotsPage({client}) {
     }
 
     function handleSnapshotMetadataQueryResult(resultList) {
+        console.log("ListSnapshotsPage.handleSnapshotMetadataQueryResult()");
         setSnapshots(resultList);
     }
 
     function handleSnapshotMetadataQueryError(errorMsg) {
+        console.log("ListSnapshotsPage.handleSnapshotMetadataQueryError()");
         setQueryErrorMsg(errorMsg);
     }
 
     function getSnapshotMetadata() {
-
         console.log("ListSnapshotsPage.getSnapshotMetadata()");
-
         if (snapshotQuerySubmitted) return;
         snapshotQuerySubmitted = true;
-
-        // request snapshot metadata query
+        // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
         client.queryListSnapshotsUsingFilter(filter, handleSnapshotMetadataQueryResult, handleSnapshotMetadataQueryError);
     }
