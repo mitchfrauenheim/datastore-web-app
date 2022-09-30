@@ -1,6 +1,6 @@
 const {epochSecondsToLocaleString} = require("./utils/timestamp");
 
-class SnapshotDataRow {
+class SnapshotDataRowModel {
 
     constructor(timestamp, columnValueList) {
         this.timestamp = timestamp;
@@ -29,4 +29,4 @@ class SnapshotDataRow {
 
 }
 
-module.exports = SnapshotDataRow
+module.exports = SnapshotDataRowModel

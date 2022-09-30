@@ -1,24 +1,16 @@
 import React, {useEffect, useState} from "react";
-import Snapshot from "../../domain/Snapshot";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "./FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
-import SnapshotMetadataFilter from "../../domain/SnapshotMetadataFilter";
+import QueryFilter from "../../domain/QueryFilter";
 
 export default function ListSnapshotsPage({client}) {
 
-    let [filter, setFilter] = useState(new SnapshotMetadataFilter());
+    let [filter, setFilter] = useState(new QueryFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
-    let [snapshots, setSnapshots] = useState([]);
+    let [snapshotList, setSnapshotList] = useState([]);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
     let snapshotQuerySubmitted = false;
-
-    // useEffect(() => {
-    //
-    //     // place code here that should only be called once per render cycle
-    //     console.log("ListSnapshotsPage.useEffect()");
-    //
-    // }, []);
 
     function updateCriteria () {
         console.log("ListSnapshotsPage.updateCriteria()");
@@ -27,33 +19,33 @@ export default function ListSnapshotsPage({client}) {
 
     function handleSubmit() {
         console.log("ListSnapshotsPage.handleSubmit()");
-        getSnapshotMetadata();
+        getSnapshotList();
     }
 
-    function handleSnapshotMetadataQueryResult(resultList) {
-        console.log("ListSnapshotsPage.handleSnapshotMetadataQueryResult()");
-        setSnapshots(resultList);
+    function handleListSnapshotsQueryResult(resultList) {
+        console.log("ListSnapshotsPage.handleListSnapshotsQueryResult()");
+        setSnapshotList(resultList);
     }
 
-    function handleSnapshotMetadataQueryError(errorMsg) {
-        console.log("ListSnapshotsPage.handleSnapshotMetadataQueryError()");
+    function handleListSnapshotsQueryError(errorMsg) {
+        console.log("ListSnapshotsPage.handleListSnapshotsQueryError()");
         setQueryErrorMsg(errorMsg);
     }
 
-    function getSnapshotMetadata() {
-        console.log("ListSnapshotsPage.getSnapshotMetadata()");
+    function getSnapshotList() {
+        console.log("ListSnapshotsPage.getSnapshotList()");
         if (snapshotQuerySubmitted) return;
         snapshotQuerySubmitted = true;
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
-        client.queryListSnapshotsUsingFilter(filter, handleSnapshotMetadataQueryResult, handleSnapshotMetadataQueryError);
+        client.queryListSnapshotsUsingFilter(filter, handleListSnapshotsQueryResult, handleListSnapshotsQueryError);
     }
 
     return (
         <div>
             <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
             <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit}/>
-            <QueryResultsPanel snapshots={snapshots} errorMsg={queryErrorMsg}/>
+            <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg}/>
         </div>
     );
 

@@ -8,7 +8,7 @@ const {
     Query
 } = require("../grpc-proto/query_pb");
 const Snapshot = require("./Snapshot");
-const SnapshotDataPage = require("./SnapshotDataPage");
+const SnapshotDataPage = require("./SnapshotDataPageModel");
 
 class DatastoreApi {
 
