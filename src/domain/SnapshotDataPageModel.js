@@ -1,6 +1,6 @@
-const SnapshotDataRow = require("./SnapshotDataRow");
+const SnapshotDataRow = require("./SnapshotDataRowModel");
 
-class SnapshotDataPage {
+class SnapshotDataPageModel {
 
     constructor(apiPaginatedResponse) {
         this.apiPaginatedResponse = apiPaginatedResponse;
@@ -76,4 +76,4 @@ class SnapshotDataPage {
     }
 }
 
-module.exports = SnapshotDataPage
+module.exports = SnapshotDataPageModel

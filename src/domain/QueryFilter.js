@@ -1,9 +1,9 @@
-const SnapshotDataRow = require("./SnapshotDataRow");
+const SnapshotDataRow = require("./SnapshotDataRowModel");
 const TimeRangeFilterCriteria = require("./TimeRangeFilterCriteria");
 const AttributeFilterCriteria = require("./AttributeFilterCriteria");
 const PvFilterCriteria = require("./PvFilterCriteria");
 
-class SnapshotMetadataFilter {
+class QueryFilter {
 
     constructor() {
         this.timeRangeCriteria = null;
@@ -12,22 +12,22 @@ class SnapshotMetadataFilter {
     }
 
     addTimeRangeCriteria(firstTime, lastTime) {
-        console.log("SnapshotMetadataFilter.addTimeRangeCriteria()");
+        console.log("QueryFilter.addTimeRangeCriteria()");
         this.timeRangeCriteria = new TimeRangeFilterCriteria(firstTime, lastTime);
     }
 
     addAttributeCriteria(attributeName, attributeValue) {
-        console.log("SnapshotMetadataFilter.addAttributeCriteria()");
+        console.log("QueryFilter.addAttributeCriteria()");
         this.attributeCriteriaList.push(new AttributeFilterCriteria(attributeName, attributeValue));
     }
 
     addPvCriteria(pvPattern) {
-        console.log("SnapshotMetadataFilter.addPvCriteria()");
+        console.log("QueryFilter.addPvCriteria()");
         this.pvCriteria = new PvFilterCriteria(pvPattern);
     }
 
     get criteriaList() {
-        console.log("SnapshotMetadataFilter.criteriaList()");
+        console.log("QueryFilter.criteriaList()");
         let result = []
         if (this.timeRangeCriteria !== null) {
             result.push(this.timeRangeCriteria.displayString);
@@ -43,4 +43,4 @@ class SnapshotMetadataFilter {
 
 }
 
-module.exports = SnapshotMetadataFilter
+module.exports = QueryFilter

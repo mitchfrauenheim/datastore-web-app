@@ -5,12 +5,12 @@ import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "./FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
 import SnapshotDetails from "../../domain/SnapshotDetails";
-import SnapshotMetadataFilter from "../../domain/SnapshotMetadataFilter";
+import QueryFilter from "../../domain/QueryFilter";
 
 export default function ViewSnapshotPage({ client, onOpen }) {
 
     let [snapshotDetails, setSnapshotDetails] = useState(null);
-    let [filter, setFilter] = useState(new SnapshotMetadataFilter());
+    let [filter, setFilter] = useState(new QueryFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
     let [snapshotDataPage, setSnapshotDataPage] = useState(null);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
@@ -19,9 +19,10 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     let [searchParams, setSearchParams] = useSearchParams();
 
-    let snapshotId = searchParams.get("id");
-    let firstSeconds = searchParams.get("first");
-    let lastSeconds = searchParams.get("last");
+    // get url search params
+    // let snapshotId = searchParams.get("id");
+    // let firstSeconds = searchParams.get("first");
+    // let lastSeconds = searchParams.get("last");
 
     useEffect(() => {
         console.log("ViewSnapshotPage.useEffect()");
