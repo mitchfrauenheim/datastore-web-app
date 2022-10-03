@@ -11,7 +11,7 @@ export default function SnapshotListTable({ snapshots = [] }) {
                 <th>First Sample Time</th>
                 <th>Last Sample Time</th>
                 <th>PV Names</th>
-                <th>Description</th>
+                <th>Attributes (name=>value)</th>
             </tr>
             {snapshots?.map((snapshot, i) => {
                 return <SnapshotListTableRow snapshot={snapshot} key={i} />;
