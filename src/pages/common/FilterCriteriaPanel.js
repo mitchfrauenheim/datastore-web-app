@@ -1,9 +1,6 @@
 import React from "react";
 
-export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction, heading, beginPrompt}) {
-
-    let criteriaDisplayList = criteriaList;
-    let handleSubmit = handleSubmitFunction;
+export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction, handleResetFunction, heading, beginPrompt}) {
 
     function renderFilterCriteriaPanel() {
         return (
@@ -15,14 +12,15 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction,
                         <tr>
                             <th>Filter Clauses</th>
                         </tr>
-                        {criteriaDisplayList?.map((criteria, i) => {
+                        {criteriaList?.map((criteria, i) => {
                             return (<tr key={i}><td>{criteria}</td></tr>);
                         })}
                         </tbody>
                     </table>
                 </div>
                 <div>
-                    <button onClick={handleSubmit}>Submit Filter</button>
+                    <button onClick={handleResetFunction}>Reset Filter</button>
+                    <button onClick={handleSubmitFunction}>Submit Filter</button>
                 </div>
             </div>
         );
@@ -38,7 +36,7 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction,
 
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            {(criteriaDisplayList.length === 0) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()}
+            {(criteriaList.length === 0) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()}
         </div>
     );
 

@@ -10,7 +10,6 @@ export default function ListSnapshotsPage({client}) {
     let [filterCriteria, setFilterCriteria] = useState([]);
     let [snapshotList, setSnapshotList] = useState([]);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
-    let snapshotQuerySubmitted = false;
 
     function updateCriteria () {
         console.log("ListSnapshotsPage.updateCriteria()");
@@ -19,7 +18,17 @@ export default function ListSnapshotsPage({client}) {
 
     function handleSubmit() {
         console.log("ListSnapshotsPage.handleSubmit()");
+        setSnapshotList([]);
+        setQueryErrorMsg(null);
         getSnapshotList();
+    }
+
+    function handleReset() {
+        console.log("ListSnapshotsPage.handleReset()");
+        setFilter(new QueryFilter());
+        setFilterCriteria([]);
+        setSnapshotList([]);
+        setQueryErrorMsg(null);
     }
 
     function handleListSnapshotsQueryResult(resultList) {
@@ -34,8 +43,6 @@ export default function ListSnapshotsPage({client}) {
 
     function getSnapshotList() {
         console.log("ListSnapshotsPage.getSnapshotList()");
-        if (snapshotQuerySubmitted) return;
-        snapshotQuerySubmitted = true;
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
         client.queryListSnapshotsUsingFilter(filter, handleListSnapshotsQueryResult, handleListSnapshotsQueryError);
@@ -44,7 +51,7 @@ export default function ListSnapshotsPage({client}) {
     return (
         <div>
             <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-            <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} heading="Snapshot List Filter Criteria" beginPrompt="To begin, add criteria to snapshot list filter." />
+            <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} handleResetFunction={handleReset} heading="Snapshot List Filter Criteria" beginPrompt="To begin, add criteria to snapshot list filter." />
             <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg}/>
         </div>
     );
