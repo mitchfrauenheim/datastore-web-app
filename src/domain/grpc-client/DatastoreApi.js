@@ -1,14 +1,14 @@
-const {QueryServiceClient} = require("../grpc-proto/query_grpc_web_pb");
-const {Timestamp, Attribute} = require("../grpc-proto/common_pb");
+const {QueryServiceClient} = require("./grpc-proto/query_grpc_web_pb");
+const {Timestamp, Attribute} = require("./grpc-proto/common_pb");
 const {
     TimestampClause,
     SnapshotTimestampClauseSelector,
     SnapshotTimestampClausePredicate,
     SnapshotQuery,
     Query
-} = require("../grpc-proto/query_pb");
-const Snapshot = require("./Snapshot");
-const SnapshotDataPage = require("./SnapshotDataPageModel");
+} = require("./grpc-proto/query_pb");
+const Snapshot = require("../models/Snapshot");
+const SnapshotDataPage = require("../models/SnapshotDataPageModel");
 
 class DatastoreApi {
 

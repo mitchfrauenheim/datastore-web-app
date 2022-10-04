@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import SnapshotDetails from "../../domain/SnapshotDetails";
+import SnapshotDetails from "../../domain/models/SnapshotDetails";
 
 export default function SnapshotListTableRow({ snapshot }) {
 
