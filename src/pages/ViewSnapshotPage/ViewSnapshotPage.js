@@ -14,8 +14,6 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     let [snapshotDataPage, setSnapshotDataPage] = useState(null);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
 
-    let snapshotQuerySubmitted = false;
-
     // let [searchParams, setSearchParams] = useSearchParams();
 
     // get url search params
@@ -44,7 +42,17 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     function handleSubmit() {
         console.log("ViewSnapshotPage.handleSubmit()");
+        setSnapshotDataPage(null);
+        setQueryErrorMsg(null);
         getSnapshotData();
+    }
+
+    function handleReset() {
+        console.log("ViewSnapshotPage.handleReset()");
+        setFilter(new QueryFilter());
+        setFilterCriteria([]);
+        setSnapshotDataPage(null);
+        setQueryErrorMsg(null);
     }
 
     function handleSnapshotDataQueryResult(snapshotDataPage) {
@@ -59,8 +67,6 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     function getSnapshotData() {
         console.log("ViewSnapshotPage.getSnapshot()");
-        if (snapshotQuerySubmitted) return;
-        snapshotQuerySubmitted = true;
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
         client.queryListSnapshotDataUsingFilter(filter, handleSnapshotDataQueryResult, handleSnapshotDataQueryError);
@@ -72,7 +78,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
             <div>
                 <SnapshotDetailsPanel snapshotDetails={snapshotDetails} />
                 <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-                <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} heading="Snapshot Data Filter Criteria" beginPrompt="To begin, add criteria to snapshot data filter." />
+                <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} handleResetFunction={handleReset} heading="Snapshot Data Filter Criteria" beginPrompt="To begin, add criteria to snapshot data filter." />
                 <SnapshotDataPanel snapshotDataPage={snapshotDataPage} errorMsg={queryErrorMsg}/>
             </div>
         );
