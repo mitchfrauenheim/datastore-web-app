@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
-import QueryFilter from "../../domain/QueryFilter";
+import QueryFilter from "../../domain/filter/QueryFilter";
 
 export default function ListSnapshotsPage({client}) {
 

@@ -3,8 +3,8 @@ import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
-import SnapshotDetails from "../../domain/SnapshotDetails";
-import QueryFilter from "../../domain/QueryFilter";
+import SnapshotDetails from "../../domain/models/SnapshotDetails";
+import QueryFilter from "../../domain/filter/QueryFilter";
 
 export default function ViewSnapshotPage({ client, onOpen }) {
 

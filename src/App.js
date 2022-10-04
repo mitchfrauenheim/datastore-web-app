@@ -9,7 +9,7 @@ import NoPage from "./pages/NoPage";
 import './App.css';
 
 import React, { useEffect, useState } from "react";
-import DatastoreApi from "./domain/DatastoreApi";
+import DatastoreApi from "./domain/grpc-client/DatastoreApi";
 
 const datastoreApi = new DatastoreApi();
 datastoreApi.connect();

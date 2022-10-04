@@ -1,4 +1,4 @@
-const SnapshotDataRow = require("./SnapshotDataRowModel");
+const SnapshotDataRow = require("../models/SnapshotDataRowModel");
 const TimeRangeFilterCriteria = require("./TimeRangeFilterCriteria");
 const AttributeFilterCriteria = require("./AttributeFilterCriteria");
 const PvFilterCriteria = require("./PvFilterCriteria");

@@ -1,4 +1,4 @@
-const {epochSecondsToLocaleString} = require("./utils/timestamp");
+const {epochSecondsToLocaleString} = require("../utils/timestamp");
 
 class SnapshotDataRowModel {
 
