@@ -36,6 +36,11 @@ export default function ListSnapshotsPage({client}) {
         setSnapshotList(resultList);
     }
 
+    function handleListSnapshotsQueryNoResult(errorMsg) {
+        console.log("ListSnapshotsPage.handleListSnapshotsQueryNoResult()");
+        setQueryErrorMsg(errorMsg);
+    }
+
     function handleListSnapshotsQueryError(errorMsg) {
         console.log("ListSnapshotsPage.handleListSnapshotsQueryError()");
         setQueryErrorMsg(errorMsg);
@@ -45,7 +50,7 @@ export default function ListSnapshotsPage({client}) {
         console.log("ListSnapshotsPage.getSnapshotList()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
-        client.queryListSnapshotsUsingFilter(filter, handleListSnapshotsQueryResult, handleListSnapshotsQueryError);
+        client.queryListSnapshotsUsingFilter(filter, handleListSnapshotsQueryResult, handleListSnapshotsQueryNoResult, handleListSnapshotsQueryError);
     }
 
     return (

@@ -60,6 +60,11 @@ export default function ViewSnapshotPage({ client, onOpen }) {
         setSnapshotDataPage(snapshotDataPage);
     }
 
+    function handleSnapshotDataQueryNoResult(errorMsg) {
+        console.log("ViewSnapshotPage.handleSnapshotDataQueryNoResult()");
+        setQueryErrorMsg(errorMsg);
+    }
+
     function handleSnapshotDataQueryError(errorMsg) {
         console.log("ViewSnapshotPage.handleSnapshotDataQueryError()");
         setQueryErrorMsg(errorMsg);
@@ -69,7 +74,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
         console.log("ViewSnapshotPage.getSnapshot()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
-        client.queryListSnapshotDataUsingFilter(filter, handleSnapshotDataQueryResult, handleSnapshotDataQueryError);
+        client.queryListSnapshotDataUsingFilter(filter, handleSnapshotDataQueryResult, handleSnapshotDataQueryNoResult, handleSnapshotDataQueryError);
     }
 
     function renderSnapshotPage() {

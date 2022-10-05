@@ -8,7 +8,7 @@ const {
     Query
 } = require("./grpc-proto/query_pb");
 const Snapshot = require("../models/Snapshot");
-const SnapshotDataPage = require("../models/SnapshotDataPageModel");
+const SnapshotDataPageModel = require("../models/SnapshotDataPageModel");
 
 class DatastoreApi {
 
@@ -51,7 +51,7 @@ class DatastoreApi {
         return [firstTime, lastTime, errorMsg, firstTimeMillis, lastTimeMillis];
     }
 
-    queryListSnapshotsUsingFilter(filter, resultHandler, errorHandler) {
+    queryListSnapshotsUsingFilter(filter, resultHandler, noResultHandler, errorHandler) {
 
         // execute grpc snapshot metadata query
         console.log("DatastoreApi.queryListSnapshotsUsingFilter()");
@@ -146,6 +146,11 @@ class DatastoreApi {
             } else {
                 let resultList = response?.getSnapshotsList() || [];
                 console.log("snapshot metadata query success, result length: " + resultList.length);
+                if (resultList.length === 0) {
+                    const errorMsg = "query result is empty";
+                    console.log(errorMsg);
+                    return noResultHandler(errorMsg);
+                }
                 resultList = resultList
                     .map((snapshot) => {
                         return new Snapshot(snapshot);
@@ -155,7 +160,7 @@ class DatastoreApi {
         });
     }
 
-    queryListSnapshotDataUsingFilter(filter, resultHandler, errorHandler) {
+    queryListSnapshotDataUsingFilter(filter, resultHandler, noResultHandler, errorHandler) {
 
         // execute grpc query to retrieve snapshot data
         console.log("DatastoreApi.queryListSnapshotDataUsingFilter()");
@@ -212,7 +217,12 @@ class DatastoreApi {
 
             } else {
                 console.log("snapshot data query success");
-                return resultHandler(new SnapshotDataPage(response));
+                if (response.getTotalrows() === 0) {
+                    const errorMsg = "query result is empty";
+                    console.log(errorMsg);
+                    return noResultHandler(errorMsg);
+                }
+                return resultHandler(new SnapshotDataPageModel(response));
             }
         });
     }
