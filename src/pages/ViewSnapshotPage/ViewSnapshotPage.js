@@ -31,13 +31,20 @@ export default function ViewSnapshotPage({ client, onOpen }) {
         // retrieve selected snapshot item from storage (saved if navigating from snapshot list)
         const savedSnapshotString = window.localStorage.getItem("snapshot");
         const savedSnapshotParsed = JSON.parse(savedSnapshotString);
-        const savedSnapshotObject = Object.assign(new SnapshotDetails(), savedSnapshotParsed);
+        const savedSnapshotObject = Object.assign(
+            new SnapshotDetails(), savedSnapshotParsed);
         setSnapshotDetails(savedSnapshotObject);
     }
 
     function updateCriteria () {
         console.log("ViewSnapshotPage.updateCriteria()");
         setFilterCriteria(filter.criteriaList);
+    }
+
+    function handleDeleteCriteria(criteria) {
+        console.log("ViewSnapshotPage.handleDeleteCriteria(): " + criteria.displayString);
+        filter.deleteCriteria(criteria);
+        updateCriteria();
     }
 
     function handleSubmit() {
@@ -74,7 +81,11 @@ export default function ViewSnapshotPage({ client, onOpen }) {
         console.log("ViewSnapshotPage.getSnapshot()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
-        client.queryListSnapshotDataUsingFilter(filter, handleSnapshotDataQueryResult, handleSnapshotDataQueryNoResult, handleSnapshotDataQueryError);
+        client.queryListSnapshotDataUsingFilter(
+            filter,
+            handleSnapshotDataQueryResult,
+            handleSnapshotDataQueryNoResult,
+            handleSnapshotDataQueryError);
     }
 
     function renderSnapshotPage() {
@@ -83,7 +94,13 @@ export default function ViewSnapshotPage({ client, onOpen }) {
             <div>
                 <SnapshotDetailsPanel snapshotDetails={snapshotDetails} />
                 <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-                <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} handleResetFunction={handleReset} heading="Snapshot Data Filter Criteria" beginPrompt="To begin, add criteria to snapshot data filter." />
+                <FilterCriteriaPanel
+                    criteriaList={filterCriteria}
+                    handleSubmitFunction={handleSubmit}
+                    handleResetFunction={handleReset}
+                    handleDeleteCriteriaFunction={handleDeleteCriteria}
+                    heading="Snapshot Data Filter Criteria"
+                    beginPrompt="To begin, add criteria to snapshot data filter." />
                 <SnapshotDataPanel snapshotDataPage={snapshotDataPage} errorMsg={queryErrorMsg}/>
             </div>
         );
