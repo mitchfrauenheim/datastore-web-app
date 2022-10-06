@@ -1,6 +1,9 @@
-class TimeRangeFilterCriteria {
+const FilterCriteriaBase = require("./FilterCriteriaBase");
+
+class TimeRangeFilterCriteria extends FilterCriteriaBase {
 
     constructor(firstTime, lastTime) {
+        super();
         this.firstTime = firstTime;
         this.lastTime = lastTime;
     }

@@ -1,6 +1,9 @@
-class AttributeFilterCriteria {
+const FilterCriteriaBase = require("./FilterCriteriaBase");
+
+class AttributeFilterCriteria extends FilterCriteriaBase {
 
     constructor(name, value) {
+        super();
         this.name = name;
         this.value = value;
     }

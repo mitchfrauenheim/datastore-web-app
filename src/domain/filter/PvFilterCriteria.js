@@ -1,6 +1,9 @@
-class PvFilterCriteria {
+const FilterCriteriaBase = require("./FilterCriteriaBase");
+
+class PvFilterCriteria extends FilterCriteriaBase {
 
     constructor(pvPattern) {
+        super();
         this.pattern = pvPattern;
     }
 
