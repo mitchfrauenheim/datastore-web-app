@@ -1,6 +1,8 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
-export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction, handleResetFunction, heading, beginPrompt}) {
+export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction, handleResetFunction,
+                                                handleDeleteCriteriaFunction, heading, beginPrompt}) {
 
     function renderFilterCriteriaPanel() {
         return (
@@ -13,7 +15,17 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction,
                             <th>Filter Clauses</th>
                         </tr>
                         {criteriaList?.map((criteria, i) => {
-                            return (<tr key={i}><td>{criteria}</td></tr>);
+                            return (
+                                <tr key={i}>
+                                    <td>
+                                        {criteria.displayString}
+                                        &nbsp;
+                                        <Link
+                                            onClick={() => handleDeleteCriteriaFunction(criteria)} >
+                                            {"remove"}
+                                        </Link>
+                                    </td>
+                                </tr>);
                         })}
                         </tbody>
                     </table>

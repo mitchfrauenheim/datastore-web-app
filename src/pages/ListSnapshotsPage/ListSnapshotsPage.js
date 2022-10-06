@@ -16,6 +16,12 @@ export default function ListSnapshotsPage({client}) {
         setFilterCriteria(filter.criteriaList);
     }
 
+    function handleDeleteCriteria(criteria) {
+        console.log("ListSnapshotsPage.handleDeleteCriteria(): " + criteria.displayString);
+        filter.deleteCriteria(criteria);
+        updateCriteria();
+    }
+
     function handleSubmit() {
         console.log("ListSnapshotsPage.handleSubmit()");
         setSnapshotList([]);
@@ -50,13 +56,20 @@ export default function ListSnapshotsPage({client}) {
         console.log("ListSnapshotsPage.getSnapshotList()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
-        client.queryListSnapshotsUsingFilter(filter, handleListSnapshotsQueryResult, handleListSnapshotsQueryNoResult, handleListSnapshotsQueryError);
+        client.queryListSnapshotsUsingFilter(
+            filter, handleListSnapshotsQueryResult, handleListSnapshotsQueryNoResult, handleListSnapshotsQueryError);
     }
 
     return (
         <div>
             <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-            <FilterCriteriaPanel criteriaList={filterCriteria} handleSubmitFunction={handleSubmit} handleResetFunction={handleReset} heading="Snapshot List Filter Criteria" beginPrompt="To begin, add criteria to snapshot list filter." />
+            <FilterCriteriaPanel
+                criteriaList={filterCriteria}
+                handleSubmitFunction={handleSubmit}
+                handleResetFunction={handleReset}
+                handleDeleteCriteriaFunction={handleDeleteCriteria}
+                heading="Snapshot List Filter Criteria"
+                beginPrompt="To begin, add criteria to snapshot list filter." />
             <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg}/>
         </div>
     );

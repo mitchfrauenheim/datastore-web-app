@@ -11,11 +11,19 @@ export default function SnapshotListTableRow({ snapshot }) {
 
     return (
         <tr>
-            <td><Link
-                onClick={() => handleClickSnapshotLink(snapshot)} to={`/snapshot?id=${snapshot.id}&first=${snapshot.firstTimestampSeconds}&last=${snapshot.lastTimestampSeconds}`}>{snapshot.id || "No id"}</Link>
+            <td>
+                <Link
+                    onClick={() => handleClickSnapshotLink(snapshot)}
+                    to={`/snapshot?id=${snapshot.id}&first=${snapshot.firstTimestampSeconds}&last=${snapshot.lastTimestampSeconds}`}>
+                    {snapshot.id || "No id"}
+                </Link>
             </td>
-            <td><Link
-                onClick={() => handleClickSnapshotLink(snapshot)} to={`/snapshot?id=${snapshot.id}&first=${snapshot.firstTimestampSeconds}&last=${snapshot.lastTimestampSeconds}`}>{snapshot.snapshotTimestampLocaleString || ""}</Link>
+            <td>
+                <Link
+                    onClick={() => handleClickSnapshotLink(snapshot)}
+                    to={`/snapshot?id=${snapshot.id}&first=${snapshot.firstTimestampSeconds}&last=${snapshot.lastTimestampSeconds}`}>
+                    {snapshot.snapshotTimestampLocaleString || ""}
+                </Link>
             </td>
             <td>{snapshot?.firstTimestampLocaleString || ""}</td>
             <td>{snapshot?.lastTimestampLocaleString || ""}</td>

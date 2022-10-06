@@ -99,6 +99,7 @@ class DatastoreApi {
             timestampClause.setTimestamp(firstTimestamp);
             timestampClause.setEndtimestamp(lastTimestamp);
             snapshotQuery.addTimestampclauses(timestampClause);
+            console.log("adding time range clause first: " + firstTime + " last: " + lastTime);
             valid = true;
         }
 
@@ -124,6 +125,7 @@ class DatastoreApi {
                 queryAttribute.setName(attributeName);
                 queryAttribute.setValue(attributeValue);
                 snapshotQuery.addAttributeclauses(queryAttribute);
+                console.log("adding attribute clause name: " + attributeName + " value: " + attributeValue);
                 valid = true;
             }
         }
