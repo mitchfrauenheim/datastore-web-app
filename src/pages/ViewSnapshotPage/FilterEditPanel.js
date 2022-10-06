@@ -2,23 +2,21 @@ import React, {useRef} from "react";
 
 export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
-    let snapshotDataFilter = filter;
-    let updateCriteria = updateCriteriaFunction;
-
     const firstTimeRef = useRef(null);
     const lastTimeRef = useRef(null);
     const pvPatternRef = useRef(null);
 
     function handleAddTimeRangeFilter() {
         console.log("FilterEditPanel.handleAddTimeRangeFilter()");
-        snapshotDataFilter.addTimeRangeCriteria(firstTimeRef.current.value, lastTimeRef.current.value);
-        updateCriteria();
+        filter.addTimeRangeCriteria(
+            firstTimeRef.current.value, lastTimeRef.current.value);
+        updateCriteriaFunction();
     }
 
     function handleAddPVFilter() {
         console.log("FilterEditPanel.handleAddPVFilter()");
-        snapshotDataFilter.addPvCriteria(pvPatternRef.current.value);
-        updateCriteria();
+        filter.addPvCriteria(pvPatternRef.current.value);
+        updateCriteriaFunction();
     }
 
     // TODO: using defaultValue in input fields for now to hardwire some meaningful values,
@@ -35,7 +33,9 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                     <input type="text" ref={lastTimeRef}
                            placeholder="2022-09-21T03:03:19.999Z"
                            defaultValue="2022-09-21T03:03:19.514Z"/>
-                    <button onClick={handleAddTimeRangeFilter}>Add</button>
+                    <button onClick={handleAddTimeRangeFilter}>
+                        {filter.timeRangeCriteriaButtonLabel}
+                    </button>
                 </label>
             </div>
             <div>

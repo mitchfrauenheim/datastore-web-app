@@ -16,6 +16,15 @@ class QueryFilter {
         this.timeRangeCriteria = new TimeRangeFilterCriteria(firstTime, lastTime);
     }
 
+    get timeRangeCriteriaButtonLabel() {
+        console.log("QueryFilter.timeRangeCriteriaButtonLabel()");
+        if (this.timeRangeCriteria === null) {
+            return "Add";
+        } else {
+            return "Update";
+        }
+    }
+
     addAttributeCriteria(attributeName, attributeValue) {
         console.log("QueryFilter.addAttributeCriteria()");
         this.attributeCriteriaList.push(new AttributeFilterCriteria(attributeName, attributeValue));

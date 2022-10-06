@@ -2,9 +2,6 @@ import React, {useRef} from "react";
 
 export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
-    let snapshotMetadataFilter = filter;
-    let updateCriteria = updateCriteriaFunction;
-
     const firstTimeRef = useRef(null);
     const lastTimeRef = useRef(null);
     const attributeNameRef = useRef(null);
@@ -13,20 +10,22 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
     function handleAddTimeRangeFilter() {
         console.log("FilterEditPanel.handleAddTimeRangeFilter()");
-        snapshotMetadataFilter.addTimeRangeCriteria(firstTimeRef.current.value, lastTimeRef.current.value);
-        updateCriteria();
+        filter.addTimeRangeCriteria(
+            firstTimeRef.current.value, lastTimeRef.current.value);
+        updateCriteriaFunction();
     }
 
     function handleAddAttributeFilter() {
         console.log("FilterEditPanel.handleAddAttributeFilter()");
-        snapshotMetadataFilter.addAttributeCriteria(attributeNameRef.current.value, attributeValueRef.current.value);
-        updateCriteria();
+        filter.addAttributeCriteria(
+            attributeNameRef.current.value, attributeValueRef.current.value);
+        updateCriteriaFunction();
     }
 
     function handleAddPVFilter() {
         console.log("FilterEditPanel.handleAddPVFilter()");
-        snapshotMetadataFilter.addPvCriteria(pvPatternRef.current.value);
-        updateCriteria();
+        filter.addPvCriteria(pvPatternRef.current.value);
+        updateCriteriaFunction();
     }
 
     // TODO: using defaultValue in input fields for now to hardwire some meaningful values,
@@ -43,7 +42,9 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                     <input type="text" ref={lastTimeRef}
                            placeholder="2022-09-21T03:03:19.999Z"
                            defaultValue="2022-09-21T03:03:19.999Z"/>
-                    <button onClick={handleAddTimeRangeFilter}>Add</button>
+                    <button onClick={handleAddTimeRangeFilter}>
+                        {filter.timeRangeCriteriaButtonLabel}
+                    </button>
                 </label>
             </div>
             <div>
