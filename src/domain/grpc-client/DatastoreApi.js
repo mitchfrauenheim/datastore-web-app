@@ -21,14 +21,39 @@ class DatastoreApi {
         this.client = new QueryServiceClient("http://localhost:8080", null, null);
     }
 
+    handleApiError(error, errorHandler) {
+
+        console.log("DatastoreApi.handleApiError()");
+        console.log("api error follows...");
+        console.log(error);
+        
+        let userErrorMsg = "";
+        const apiErrorMsg = error.message;
+
+        const serviceNotRunningMsg = "RpcError: Http response at 400 or 500 level";
+        if (apiErrorMsg == serviceNotRunningMsg) {
+            userErrorMsg =
+                "Error connecting to envoy proxy or datastore query services (" +
+                serviceNotRunningMsg +
+                ")";
+        } else {
+            userErrorMsg =
+                "Unexpected exception invoking datastore query API (" + apiErrorMsg + ")";
+        }
+
+        errorHandler(userErrorMsg);
+    }
+
     extractAndValidateTimeRange(filter) {
 
+        console.log("DatastoreApi.extractAndValidateTimeRange()");
         let errorMsg = "";
         const firstTime = filter.timeRangeCriteria.firstTime;
         const lastTime = filter.timeRangeCriteria.lastTime;
 
         if (firstTime === null || firstTime === "" || lastTime === null || lastTime === "") {
-            errorMsg = "error: first or last time not specified in filter time range criteria";
+            errorMsg =
+                "error: first or last time not specified in filter time range criteria";
         }
 
         // handle first timestamp
@@ -45,7 +70,8 @@ class DatastoreApi {
 
         // check that firstTime <= lastTime
         if (firstTimeMillis > lastTimeMillis) {
-            errorMsg = "error: first time: " + firstTime + " greater than last time: " + lastTime;
+            errorMsg =
+                "error: first time: " + firstTime + " greater than last time: " + lastTime;
         }
 
         return [firstTime, lastTime, errorMsg, firstTimeMillis, lastTimeMillis];
@@ -66,7 +92,8 @@ class DatastoreApi {
 
             const timeRangeResult = this.extractAndValidateTimeRange(filter);
             if (timeRangeResult.length !== 5) {
-                const errorMsg = "error: unexpected result length from extractAndValidateTimeRange()";
+                const errorMsg =
+                    "error: unexpected result length from extractAndValidateTimeRange()";
                 console.log(errorMsg);
                 return errorHandler(errorMsg);
             }
@@ -99,7 +126,8 @@ class DatastoreApi {
             timestampClause.setTimestamp(firstTimestamp);
             timestampClause.setEndtimestamp(lastTimestamp);
             snapshotQuery.addTimestampclauses(timestampClause);
-            console.log("adding time range clause first: " + firstTime + " last: " + lastTime);
+            console.log(
+                "adding time range clause first: " + firstTime + " last: " + lastTime);
             valid = true;
         }
 
@@ -110,13 +138,15 @@ class DatastoreApi {
                 const attributeValue = attributeCriteria.value;
 
                 if (attributeName === null || attributeName === "") {
-                    const errorMsg = "error: no attribute name specified in attribute filter criteria";
+                    const errorMsg =
+                        "error: no attribute name specified in attribute filter criteria";
                     console.log(errorMsg);
                     return errorHandler(errorMsg);
                 }
 
                 if (attributeValue === null || attributeValue === "") {
-                    const errorMsg = "error: no attribute value specified in attribute filter criteria";
+                    const errorMsg =
+                        "error: no attribute value specified in attribute filter criteria";
                     console.log(errorMsg);
                     return errorHandler(errorMsg);
                 }
@@ -125,7 +155,11 @@ class DatastoreApi {
                 queryAttribute.setName(attributeName);
                 queryAttribute.setValue(attributeValue);
                 snapshotQuery.addAttributeclauses(queryAttribute);
-                console.log("adding attribute clause name: " + attributeName + " value: " + attributeValue);
+                console.log(
+                    "adding attribute clause name: " +
+                    attributeName +
+                    " value: " +
+                    attributeValue);
                 valid = true;
             }
         }
@@ -141,13 +175,13 @@ class DatastoreApi {
         this.client.listSnapshots(snapshotQuery, {}, (err, response) => {
 
             if (err) {
-                const errorMsg = "error executing snapshot metadata query: " + err;
-                console.log(errorMsg);
-                return errorHandler(errorMsg);
+                return this.handleApiError(err, errorHandler);
 
             } else {
                 let resultList = response?.getSnapshotsList() || [];
-                console.log("snapshot metadata query success, result length: " + resultList.length);
+                console.log(
+                    "snapshot metadata query success, result length: " +
+                    resultList.length);
                 if (resultList.length === 0) {
                     const errorMsg = "query result is empty";
                     console.log(errorMsg);
@@ -176,7 +210,8 @@ class DatastoreApi {
         if (filter.timeRangeCriteria !== null) {
             const timeRangeResult = this.extractAndValidateTimeRange(filter);
             if (timeRangeResult.length !== 5) {
-                const errorMsg = "error: unexpected result length from extractAndValidateTimeRange()";
+                const errorMsg =
+                    "error: unexpected result length from extractAndValidateTimeRange()";
                 console.log(errorMsg);
                 return errorHandler(errorMsg);
             }
@@ -187,9 +222,11 @@ class DatastoreApi {
             }
             const firstTimeString = timeRangeResult[0];
             const lastTimeString = timeRangeResult[1];
-            timeRangeWhereClause = "time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
+            timeRangeWhereClause =
+                "time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
         } else {
-            const errorMsg = "error: time range filter must be specified for snapshot data query to limit result size";
+            const errorMsg =
+                "error: time range filter must be specified for snapshot data query to limit result size";
             console.log(errorMsg);
             return errorHandler(errorMsg);
         }
@@ -213,9 +250,7 @@ class DatastoreApi {
         snapshotQuery.setQuery(queryString);
         this.client.listSnapshotData(snapshotQuery, {}, (err, response) => {
             if (err) {
-                const errorMsg = "error executing snapshot data query: " + err;
-                console.log(errorMsg);
-                return errorHandler(errorMsg);
+                return this.handleApiError(err, errorHandler);
 
             } else {
                 console.log("snapshot data query success");
