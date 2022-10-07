@@ -26,11 +26,11 @@ class DatastoreApi {
         console.log("DatastoreApi.handleApiError()");
         console.log("api error follows...");
         console.log(error);
-        
+
         let userErrorMsg = "";
         const apiErrorMsg = error.message;
 
-        const serviceNotRunningMsg = "RpcError: Http response at 400 or 500 level";
+        const serviceNotRunningMsg = "Http response at 400 or 500 level";
         if (apiErrorMsg == serviceNotRunningMsg) {
             userErrorMsg =
                 "Error connecting to envoy proxy or datastore query services (" +
