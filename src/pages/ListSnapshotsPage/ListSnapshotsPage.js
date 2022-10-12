@@ -3,6 +3,8 @@ import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
+import {useSearchParams} from "react-router-dom";
+import FilterConstants from "../../domain/filter/FilterConstants";
 
 export default function ListSnapshotsPage({client}) {
 
@@ -10,6 +12,32 @@ export default function ListSnapshotsPage({client}) {
     let [filterCriteria, setFilterCriteria] = useState([]);
     let [snapshotList, setSnapshotList] = useState([]);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
+
+    let handledParams = false;
+
+    let [searchParams, setSearchParams] = useSearchParams();
+
+    useEffect(() => {
+        console.log("ListSnapshotsPage.useEffect()");
+        // const currentSearchParams = Object.fromEntries([...searchParams]);
+        // console.log(currentSearchParams);
+        if (handledParams) return;
+        handledParams = true;
+        console.log("handling URL parameters");
+        applyUrlParams();
+    }, [searchParams]);
+
+    function applyUrlParams() {
+        console.log("ListSnapshotsPage.applyUrlParams()");
+        // get url search params
+        const firstTime = searchParams.get(FilterConstants.FIRSTTIME);
+        const lastTime = searchParams.get(FilterConstants.LASTTIME);
+        if (firstTime !== null && lastTime !== null) {
+            filter.addTimeRangeCriteria(firstTime, lastTime);
+            setFilterCriteria(filter.criteriaList);
+            getSnapshotList();
+        }
+    }
 
     function updateCriteria () {
         console.log("ListSnapshotsPage.updateCriteria()");
@@ -24,9 +52,7 @@ export default function ListSnapshotsPage({client}) {
 
     function handleSubmit() {
         console.log("ListSnapshotsPage.handleSubmit()");
-        setSnapshotList([]);
-        setQueryErrorMsg(null);
-        getSnapshotList();
+        setSearchParams(filter.urlParams);
     }
 
     function handleReset() {
@@ -35,6 +61,7 @@ export default function ListSnapshotsPage({client}) {
         setFilterCriteria([]);
         setSnapshotList([]);
         setQueryErrorMsg(null);
+        setSearchParams({});
     }
 
     function handleListSnapshotsQueryResult(resultList) {

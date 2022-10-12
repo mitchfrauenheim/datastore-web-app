@@ -2,6 +2,7 @@ const SnapshotDataRow = require("../models/SnapshotDataRowModel");
 const TimeRangeFilterCriteria = require("./TimeRangeFilterCriteria");
 const AttributeFilterCriteria = require("./AttributeFilterCriteria");
 const PvFilterCriteria = require("./PvFilterCriteria");
+const FilterConstants = require("./FilterConstants");
 
 class QueryFilter {
 
@@ -48,6 +49,22 @@ class QueryFilter {
             result.push(this.pvCriteria);
         }
         return result;
+    }
+
+    get urlParams() {
+        console.log("QueryFilter.urlParams()");
+        let params = {};
+        if (this.timeRangeCriteria !== null) {
+            const firstTime = this.timeRangeCriteria.firstTime;
+            const lastTime = this.timeRangeCriteria.lastTime;
+            if (firstTime !== null) {
+                params[FilterConstants.FIRSTTIME] = firstTime;
+            }
+            if (lastTime !== null) {
+                params[FilterConstants.LASTTIME] = lastTime;
+            }
+        }
+        return params;
     }
 
     deleteCriteria(criteria) {
