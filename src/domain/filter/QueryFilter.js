@@ -1,4 +1,3 @@
-const SnapshotDataRow = require("../models/SnapshotDataRowModel");
 const TimeRangeFilterCriteria = require("./TimeRangeFilterCriteria");
 const AttributeFilterCriteria = require("./AttributeFilterCriteria");
 const PvFilterCriteria = require("./PvFilterCriteria");
@@ -7,6 +6,10 @@ const FilterConstants = require("./FilterConstants");
 class QueryFilter {
 
     constructor() {
+        this.reset();
+    }
+
+    reset() {
         this.timeRangeCriteria = null;
         this.attributeCriteriaList = [];
         this.pvCriteria = null;
@@ -52,8 +55,11 @@ class QueryFilter {
     }
 
     get urlParams() {
+
         console.log("QueryFilter.urlParams()");
+
         let params = {};
+
         if (this.timeRangeCriteria !== null) {
             const firstTime = this.timeRangeCriteria.firstTime;
             const lastTime = this.timeRangeCriteria.lastTime;
@@ -64,7 +70,60 @@ class QueryFilter {
                 params[FilterConstants.LASTTIME] = lastTime;
             }
         }
+
+        let attributeCount = 1;
+        for (const attributeCriteria of this.attributeCriteriaList) {
+            const attributeName = FilterConstants.ATTRIBUTENAME + attributeCount;
+            const attributeValue = FilterConstants.ARRRIBUTEVALUE + attributeCount;
+            params[attributeName] = attributeCriteria.name;
+            params[attributeValue] = attributeCriteria.value;
+            attributeCount = attributeCount + 1;
+        }
+
+        if (this.pvCriteria !== null) {
+            const pvPattern = this.pvCriteria.pattern;
+            if (pvPattern !== null) {
+                params[FilterConstants.PV] = pvPattern;
+            }
+        }
+
         return params;
+    }
+
+    initFromUrlParams(searchParams) {
+
+        this.reset();
+
+        // handle time range params
+        const firstTime = searchParams.get(FilterConstants.FIRSTTIME);
+        const lastTime = searchParams.get(FilterConstants.LASTTIME);
+        if (firstTime !== null && lastTime !== null) {
+            this.addTimeRangeCriteria(firstTime, lastTime);
+        }
+
+        // handle attribute params
+        let attributeCount = 1;
+        let foundAttributeCriteria = true;
+        while (foundAttributeCriteria) {
+            const attributeName = FilterConstants.ATTRIBUTENAME + attributeCount;
+            const attributeValue = FilterConstants.ARRRIBUTEVALUE + attributeCount;
+            const attributeNameParam = searchParams.get(attributeName);
+            const attributeValueParam = searchParams.get(attributeValue);
+            if (attributeNameParam != null && attributeValueParam != null) {
+                this.addAttributeCriteria(attributeNameParam, attributeValueParam);
+                foundAttributeCriteria = true;
+                attributeCount = attributeCount + 1;
+            }  else {
+                foundAttributeCriteria = false;
+            }
+        }
+
+        // handle pv param
+        const pvPattern = searchParams.get(FilterConstants.PV);
+        if (pvPattern !== null) {
+            this.addPvCriteria(pvPattern);
+        }
+
     }
 
     deleteCriteria(criteria) {

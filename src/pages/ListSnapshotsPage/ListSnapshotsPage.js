@@ -3,7 +3,7 @@ import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
-import {useSearchParams} from "react-router-dom";
+import {createSearchParams, useSearchParams} from "react-router-dom";
 import FilterConstants from "../../domain/filter/FilterConstants";
 
 export default function ListSnapshotsPage({client}) {
@@ -29,15 +29,12 @@ export default function ListSnapshotsPage({client}) {
 
     function applyUrlParams() {
         console.log("ListSnapshotsPage.applyUrlParams()");
-        // get url search params
-        const firstTime = searchParams.get(FilterConstants.FIRSTTIME);
-        const lastTime = searchParams.get(FilterConstants.LASTTIME);
-        if (firstTime !== null && lastTime !== null) {
-            filter.addTimeRangeCriteria(firstTime, lastTime);
-            setFilterCriteria(filter.criteriaList);
+        filter.initFromUrlParams(searchParams);
+        setFilterCriteria(filter.criteriaList);
+        if (filter.criteriaList.length > 0) {
             getSnapshotList();
         }
-    }
+     }
 
     function updateCriteria () {
         console.log("ListSnapshotsPage.updateCriteria()");
