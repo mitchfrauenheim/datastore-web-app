@@ -20,10 +20,9 @@ export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction,
                                     <td>
                                         {criteria.displayString}
                                         &nbsp;
-                                        <Link
-                                            onClick={() => handleDeleteCriteriaFunction(criteria)} >
-                                            {"remove"}
-                                        </Link>
+                                        <button onClick={(e) => handleDeleteCriteriaFunction(criteria)}>
+                                            remove
+                                        </button>
                                     </td>
                                 </tr>);
                         })}
