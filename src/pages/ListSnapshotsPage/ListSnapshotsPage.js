@@ -13,9 +13,9 @@ export default function ListSnapshotsPage({client}) {
     let [snapshotList, setSnapshotList] = useState([]);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
 
-    let handledParams = false;
-
     let [searchParams, setSearchParams] = useSearchParams();
+
+    let handledParams = false;
 
     useEffect(() => {
         console.log("ListSnapshotsPage.useEffect()");

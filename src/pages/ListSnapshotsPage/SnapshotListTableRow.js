@@ -14,14 +14,14 @@ export default function SnapshotListTableRow({ snapshot }) {
             <td>
                 <Link
                     onClick={() => handleClickSnapshotLink(snapshot)}
-                    to={`/snapshot?id=${snapshot.id}&first=${snapshot.firstTimestampSeconds}&last=${snapshot.lastTimestampSeconds}`}>
+                    to={`/snapshot?id=${snapshot.id}}`}>
                     {snapshot.id || "No id"}
                 </Link>
             </td>
             <td>
                 <Link
                     onClick={() => handleClickSnapshotLink(snapshot)}
-                    to={`/snapshot?id=${snapshot.id}&first=${snapshot.firstTimestampSeconds}&last=${snapshot.lastTimestampSeconds}`}>
+                    to={`/snapshot?id=${snapshot.id}}`}>
                     {snapshot.snapshotTimestampLocaleString || ""}
                 </Link>
             </td>

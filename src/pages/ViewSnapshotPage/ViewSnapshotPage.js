@@ -5,6 +5,7 @@ import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
 import SnapshotDetails from "../../domain/models/SnapshotDetails";
 import QueryFilter from "../../domain/filter/QueryFilter";
+import {useSearchParams} from "react-router-dom";
 
 export default function ViewSnapshotPage({ client, onOpen }) {
 
@@ -14,17 +15,27 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     let [snapshotDataPage, setSnapshotDataPage] = useState(null);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
 
-    // let [searchParams, setSearchParams] = useSearchParams();
+    let [searchParams, setSearchParams] = useSearchParams();
 
-    // get url search params
-    // let snapshotId = searchParams.get("id");
-    // let firstSeconds = searchParams.get("first");
-    // let lastSeconds = searchParams.get("last");
+    let handledParams = false;
 
     useEffect(() => {
         console.log("ViewSnapshotPage.useEffect()");
         getSnapshotDetails();
-    }, []);
+        if (handledParams) return;
+        handledParams = true;
+        console.log("handling URL parameters");
+        applyUrlParams();
+    }, [searchParams]);
+
+    function applyUrlParams() {
+        console.log("ViewSnapshotPage.applyUrlParams()");
+        filter.initFromUrlParams(searchParams);
+        setFilterCriteria(filter.criteriaList);
+        if (filter.criteriaList.length > 0) {
+            getSnapshotData();
+        }
+    }
 
     function getSnapshotDetails() {
         console.log("ViewSnapshotPage.getSnapshotDetails()");
@@ -49,9 +60,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     function handleSubmit() {
         console.log("ViewSnapshotPage.handleSubmit()");
-        setSnapshotDataPage(null);
-        setQueryErrorMsg(null);
-        getSnapshotData();
+        setSearchParams(filter.urlParams);
     }
 
     function handleReset() {
