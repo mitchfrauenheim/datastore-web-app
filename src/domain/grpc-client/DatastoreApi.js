@@ -9,6 +9,7 @@ const {
 } = require("./grpc-proto/query_pb");
 const Snapshot = require("../models/Snapshot");
 const SnapshotDataPageModel = require("../models/SnapshotDataPageModel");
+const Pv = require("../models/Pv");
 
 class DatastoreApi {
 
@@ -260,6 +261,91 @@ class DatastoreApi {
                     return noResultHandler(errorMsg);
                 }
                 return resultHandler(new SnapshotDataPageModel(response));
+            }
+        });
+    }
+
+    queryListPvsUsingFilter(filter, resultHandler, noResultHandler, errorHandler) {
+
+        // execute grpc pv metadata query
+        console.log("DatastoreApi.queryListPvsUsingFilter()");
+
+        // filter must attribute or pv criteria
+        let valid = false;
+
+        // // process attribute filter
+        // if (filter.attributeCriteriaList.length > 0) {
+        //     for (let attributeCriteria of filter.attributeCriteriaList) {
+        //         const attributeName = attributeCriteria.name;
+        //         const attributeValue = attributeCriteria.value;
+        //
+        //         if (attributeName === null || attributeName === "") {
+        //             const errorMsg =
+        //                 "error: no attribute name specified in attribute filter criteria";
+        //             console.log(errorMsg);
+        //             return errorHandler(errorMsg);
+        //         }
+        //
+        //         if (attributeValue === null || attributeValue === "") {
+        //             const errorMsg =
+        //                 "error: no attribute value specified in attribute filter criteria";
+        //             console.log(errorMsg);
+        //             return errorHandler(errorMsg);
+        //         }
+        //
+        //         const queryAttribute = new Attribute();
+        //         queryAttribute.setName(attributeName);
+        //         queryAttribute.setValue(attributeValue);
+        //         snapshotQuery.addAttributeclauses(queryAttribute);
+        //         console.log(
+        //             "adding attribute clause name: " +
+        //             attributeName +
+        //             " value: " +
+        //             attributeValue);
+        //         valid = true;
+        //     }
+        // }
+
+        let selectClause = "`*.*`";
+        if (filter.pvCriteria !== null) {
+            // const selectClause = "`mpexPv01`";
+            selectClause = "'" + filter.pvCriteria.pattern + "'";
+            valid = true;
+        }
+
+        // check if query is valid, e.g., at least one filter applied
+        if (!valid) {
+            const errorMsg = "error: no filter criteria specified";
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
+        }
+
+        const queryString = "SELECT " + selectClause;
+        console.log(queryString);
+
+        let query = new Query();
+//        query.setQuery(queryString);
+        // execute query
+        this.client.listPVs(query, {}, (err, response) => {
+
+            if (err) {
+                return this.handleApiError(err, errorHandler);
+
+            } else {
+                let resultList = response?.getPvsList() || [];
+                console.log(
+                    "PV metadata query success, result length: " +
+                    resultList.length);
+                if (resultList.length === 0) {
+                    const errorMsg = "query result is empty";
+                    console.log(errorMsg);
+                    return noResultHandler(errorMsg);
+                }
+                resultList = resultList
+                    .map((pv) => {
+                        return new Pv(pv);
+                    });
+                return resultHandler(resultList);
             }
         });
     }

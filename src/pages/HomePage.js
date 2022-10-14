@@ -10,6 +10,7 @@ const HomePage = () => {
                     Welcome to the EPICS Data Explorer.
                 </p>
                 <Link className="App-link" to="/snapshotList">explore snapshots</Link>
+                <Link className="App-link" to="/pvList">explore PVs</Link>
             </header>
         </div>
     );

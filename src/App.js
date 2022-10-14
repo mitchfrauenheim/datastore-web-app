@@ -10,6 +10,7 @@ import './App.css';
 
 import React, { useEffect, useState } from "react";
 import DatastoreApi from "./domain/grpc-client/DatastoreApi";
+import PvListPage from "./pages/PvListPage/PvListPage";
 
 const datastoreApi = new DatastoreApi();
 datastoreApi.connect();
@@ -22,6 +23,7 @@ export default function App() {
                     <Route index element={<HomePage />} />
                     <Route path="snapshotList" element={<SnapshotListPage client={datastoreApi}/>} />
                     <Route path="snapshot" element={<SnapshotPage client={datastoreApi}/>} />
+                    <Route path="pvList" element={<PvListPage client={datastoreApi}/>} />
                     <Route path="*" element={<NoPage />} />
                 </Route>
             </Routes>
