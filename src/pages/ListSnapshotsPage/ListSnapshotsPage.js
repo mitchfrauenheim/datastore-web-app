@@ -4,7 +4,7 @@ import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import {createSearchParams, useSearchParams} from "react-router-dom";
-import FilterConstants from "../../domain/filter/FilterConstants";
+import FilterConstants from "../../domain/Constants";
 
 export default function ListSnapshotsPage({client}) {
 
@@ -54,11 +54,11 @@ export default function ListSnapshotsPage({client}) {
 
     function handleReset() {
         console.log("ListSnapshotsPage.handleReset()");
-        setFilter(new QueryFilter());
+        filter.reset();
+        setSearchParams({});
         setFilterCriteria([]);
         setSnapshotList([]);
         setQueryErrorMsg(null);
-        setSearchParams({});
     }
 
     function handleListSnapshotsQueryResult(resultList) {

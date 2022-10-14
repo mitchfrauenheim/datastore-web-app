@@ -1,7 +1,7 @@
 const TimeRangeFilterCriteria = require("./TimeRangeFilterCriteria");
 const AttributeFilterCriteria = require("./AttributeFilterCriteria");
 const PvFilterCriteria = require("./PvFilterCriteria");
-const FilterConstants = require("./FilterConstants");
+const FilterConstants = require("../Constants");
 
 class QueryFilter {
 
@@ -54,11 +54,9 @@ class QueryFilter {
         return result;
     }
 
-    get urlParams() {
+    addUrlParams(params) {
 
-        console.log("QueryFilter.urlParams()");
-
-        let params = {};
+        console.log("QueryFilter.addUrlParams()");
 
         if (this.timeRangeCriteria !== null) {
             const firstTime = this.timeRangeCriteria.firstTime;
@@ -87,6 +85,12 @@ class QueryFilter {
             }
         }
 
+    }
+
+    get urlParams() {
+        console.log("QueryFilter.urlParams()");
+        let params = {};
+        this.addUrlParams(params);
         return params;
     }
 

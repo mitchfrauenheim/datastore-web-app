@@ -5,7 +5,8 @@ import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
 import SnapshotDetails from "../../domain/models/SnapshotDetails";
 import QueryFilter from "../../domain/filter/QueryFilter";
-import {useSearchParams} from "react-router-dom";
+import {useLocation, useSearchParams} from "react-router-dom";
+import Constants from "../../domain/Constants";
 
 export default function ViewSnapshotPage({ client, onOpen }) {
 
@@ -14,8 +15,10 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     let [filterCriteria, setFilterCriteria] = useState([]);
     let [snapshotDataPage, setSnapshotDataPage] = useState(null);
     let [queryErrorMsg, setQueryErrorMsg] = useState(null);
+    let [snapshotId, setSnapshotId] = useState(null);
 
     let [searchParams, setSearchParams] = useSearchParams();
+    let location = useLocation();
 
     let handledParams = false;
 
@@ -29,12 +32,35 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     }, [searchParams]);
 
     function applyUrlParams() {
+
         console.log("ViewSnapshotPage.applyUrlParams()");
+
+        // extract id parameter
+        setSnapshotId(searchParams.get(Constants.ID));
+
+        // extract filter parameters and initialize filter
         filter.initFromUrlParams(searchParams);
         setFilterCriteria(filter.criteriaList);
+
+        // execute query if filter is specified
         if (filter.criteriaList.length > 0) {
             getSnapshotData();
         }
+    }
+
+    function setUrlParams() {
+
+        console.log("ViewSnapshotPage.setUrlParams()");
+        let params = {};
+
+        // set id parameter
+        params[Constants.ID] = snapshotId;
+
+        // add parameters for filter criteria
+        filter.addUrlParams(params);
+
+        // tell router to update browser URL search params
+        setSearchParams(params);
     }
 
     function getSnapshotDetails() {
@@ -60,12 +86,13 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     function handleSubmit() {
         console.log("ViewSnapshotPage.handleSubmit()");
-        setSearchParams(filter.urlParams);
+        setUrlParams();
     }
 
     function handleReset() {
         console.log("ViewSnapshotPage.handleReset()");
-        setFilter(new QueryFilter());
+        filter.reset();
+        setUrlParams();
         setFilterCriteria([]);
         setSnapshotDataPage(null);
         setQueryErrorMsg(null);
@@ -122,7 +149,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     return (
         <div>
-            {snapshotDetails ? renderSnapshotPage() : renderNoSnapshotPage()}
+            {snapshotId ? renderSnapshotPage() : renderNoSnapshotPage()}
         </div>
     );
 }
