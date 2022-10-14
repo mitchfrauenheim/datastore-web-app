@@ -8,7 +8,7 @@ import QueryFilter from "../../domain/filter/QueryFilter";
 import {useLocation, useSearchParams} from "react-router-dom";
 import Constants from "../../domain/Constants";
 
-export default function ViewSnapshotPage({ client, onOpen }) {
+export default function SnapshotPage({ client, onOpen }) {
 
     let [snapshotDetails, setSnapshotDetails] = useState(null);
     let [filter, setFilter] = useState(new QueryFilter());
@@ -23,7 +23,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     let handledParams = false;
 
     useEffect(() => {
-        console.log("ViewSnapshotPage.useEffect()");
+        console.log("SnapshotPage.useEffect()");
         getSnapshotDetails();
         if (handledParams) return;
         handledParams = true;
@@ -33,7 +33,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     function applyUrlParams() {
 
-        console.log("ViewSnapshotPage.applyUrlParams()");
+        console.log("SnapshotPage.applyUrlParams()");
 
         // extract id parameter
         setSnapshotId(searchParams.get(Constants.ID));
@@ -50,7 +50,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
 
     function setUrlParams() {
 
-        console.log("ViewSnapshotPage.setUrlParams()");
+        console.log("SnapshotPage.setUrlParams()");
         let params = {};
 
         // set id parameter
@@ -64,7 +64,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     }
 
     function getSnapshotDetails() {
-        console.log("ViewSnapshotPage.getSnapshotDetails()");
+        console.log("SnapshotPage.getSnapshotDetails()");
         // retrieve selected snapshot item from storage (saved if navigating from snapshot list)
         const savedSnapshotString = window.localStorage.getItem("snapshot");
         const savedSnapshotParsed = JSON.parse(savedSnapshotString);
@@ -74,23 +74,23 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     }
 
     function updateCriteria () {
-        console.log("ViewSnapshotPage.updateCriteria()");
+        console.log("SnapshotPage.updateCriteria()");
         setFilterCriteria(filter.criteriaList);
     }
 
     function handleDeleteCriteria(criteria) {
-        console.log("ViewSnapshotPage.handleDeleteCriteria(): " + criteria.displayString);
+        console.log("SnapshotPage.handleDeleteCriteria(): " + criteria.displayString);
         filter.deleteCriteria(criteria);
         updateCriteria();
     }
 
     function handleSubmit() {
-        console.log("ViewSnapshotPage.handleSubmit()");
+        console.log("SnapshotPage.handleSubmit()");
         setUrlParams();
     }
 
     function handleReset() {
-        console.log("ViewSnapshotPage.handleReset()");
+        console.log("SnapshotPage.handleReset()");
         filter.reset();
         setUrlParams();
         setFilterCriteria([]);
@@ -99,22 +99,22 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     }
 
     function handleSnapshotDataQueryResult(snapshotDataPage) {
-        console.log("ViewSnapshotPage.handleSnapshotDataQueryResult()");
+        console.log("SnapshotPage.handleSnapshotDataQueryResult()");
         setSnapshotDataPage(snapshotDataPage);
     }
 
     function handleSnapshotDataQueryNoResult(errorMsg) {
-        console.log("ViewSnapshotPage.handleSnapshotDataQueryNoResult()");
+        console.log("SnapshotPage.handleSnapshotDataQueryNoResult()");
         setQueryErrorMsg(errorMsg);
     }
 
     function handleSnapshotDataQueryError(errorMsg) {
-        console.log("ViewSnapshotPage.handleSnapshotDataQueryError()");
+        console.log("SnapshotPage.handleSnapshotDataQueryError()");
         setQueryErrorMsg(errorMsg);
     }
 
     function getSnapshotData() {
-        console.log("ViewSnapshotPage.getSnapshot()");
+        console.log("SnapshotPage.getSnapshot()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
         client.queryListSnapshotDataUsingFilter(
@@ -125,7 +125,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     }
 
     function renderSnapshotPage() {
-        console.log("ViewSnapshotPage.renderSnapshotPage()");
+        console.log("SnapshotPage.renderSnapshotPage()");
         return (
             <div>
                 <SnapshotDetailsPanel snapshotDetails={snapshotDetails} />
@@ -143,7 +143,7 @@ export default function ViewSnapshotPage({ client, onOpen }) {
     }
 
     function renderNoSnapshotPage() {
-        console.log("ViewSnapshotPage.renderSnapshotPage()");
+        console.log("SnapshotPage.renderSnapshotPage()");
         return <h1>No Snapshot ID Specified</h1>;
     }
 

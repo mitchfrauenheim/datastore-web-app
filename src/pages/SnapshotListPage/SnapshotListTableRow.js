@@ -5,7 +5,7 @@ export default function SnapshotListTableRow({ snapshot }) {
 
     function handleClickSnapshotLink(snapshot) {
         console.log("SnapshotListTableRow.handleClickSnapshotLink()");
-        // save selected snapshot to window storage for access in ViewSnapshotPage
+        // save selected snapshot to window storage for access in SnapshotPage
         window.localStorage.setItem("snapshot", JSON.stringify(new SnapshotDetails(snapshot.id, snapshot.snapshotTimestampLocaleString, snapshot.firstTimestampLocaleString, snapshot.lastTimestampLocaleString, snapshot.pvNamesString, snapshot.descriptionString)));
     }
 

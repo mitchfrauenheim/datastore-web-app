@@ -9,7 +9,7 @@ const HomePage = () => {
                 <p>
                     Welcome to the EPICS Data Explorer.
                 </p>
-                <Link className="App-link" to="/explore">Explore!</Link>
+                <Link className="App-link" to="/snapshotList">explore snapshots</Link>
             </header>
         </div>
     );

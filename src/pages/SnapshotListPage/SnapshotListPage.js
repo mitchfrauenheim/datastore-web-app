@@ -6,7 +6,7 @@ import QueryFilter from "../../domain/filter/QueryFilter";
 import {createSearchParams, useSearchParams} from "react-router-dom";
 import FilterConstants from "../../domain/Constants";
 
-export default function ListSnapshotsPage({client}) {
+export default function SnapshotListPage({client}) {
 
     let [filter, setFilter] = useState(new QueryFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
@@ -18,7 +18,7 @@ export default function ListSnapshotsPage({client}) {
     let handledParams = false;
 
     useEffect(() => {
-        console.log("ListSnapshotsPage.useEffect()");
+        console.log("SnapshotListPage.useEffect()");
         // const currentSearchParams = Object.fromEntries([...searchParams]);
         // console.log(currentSearchParams);
         if (handledParams) return;
@@ -28,7 +28,7 @@ export default function ListSnapshotsPage({client}) {
     }, [searchParams]);
 
     function applyUrlParams() {
-        console.log("ListSnapshotsPage.applyUrlParams()");
+        console.log("SnapshotListPage.applyUrlParams()");
         filter.initFromUrlParams(searchParams);
         setFilterCriteria(filter.criteriaList);
         if (filter.criteriaList.length > 0) {
@@ -37,23 +37,23 @@ export default function ListSnapshotsPage({client}) {
      }
 
     function updateCriteria () {
-        console.log("ListSnapshotsPage.updateCriteria()");
+        console.log("SnapshotListPage.updateCriteria()");
         setFilterCriteria(filter.criteriaList);
     }
 
     function handleDeleteCriteria(criteria) {
-        console.log("ListSnapshotsPage.handleDeleteCriteria(): " + criteria.displayString);
+        console.log("SnapshotListPage.handleDeleteCriteria(): " + criteria.displayString);
         filter.deleteCriteria(criteria);
         updateCriteria();
     }
 
     function handleSubmit() {
-        console.log("ListSnapshotsPage.handleSubmit()");
+        console.log("SnapshotListPage.handleSubmit()");
         setSearchParams(filter.urlParams);
     }
 
     function handleReset() {
-        console.log("ListSnapshotsPage.handleReset()");
+        console.log("SnapshotListPage.handleReset()");
         filter.reset();
         setSearchParams({});
         setFilterCriteria([]);
@@ -62,22 +62,22 @@ export default function ListSnapshotsPage({client}) {
     }
 
     function handleListSnapshotsQueryResult(resultList) {
-        console.log("ListSnapshotsPage.handleListSnapshotsQueryResult()");
+        console.log("SnapshotListPage.handleListSnapshotsQueryResult()");
         setSnapshotList(resultList);
     }
 
     function handleListSnapshotsQueryNoResult(errorMsg) {
-        console.log("ListSnapshotsPage.handleListSnapshotsQueryNoResult()");
+        console.log("SnapshotListPage.handleListSnapshotsQueryNoResult()");
         setQueryErrorMsg(errorMsg);
     }
 
     function handleListSnapshotsQueryError(errorMsg) {
-        console.log("ListSnapshotsPage.handleListSnapshotsQueryError()");
+        console.log("SnapshotListPage.handleListSnapshotsQueryError()");
         setQueryErrorMsg(errorMsg);
     }
 
     function getSnapshotList() {
-        console.log("ListSnapshotsPage.getSnapshotList()");
+        console.log("SnapshotListPage.getSnapshotList()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
         client.queryListSnapshotsUsingFilter(
