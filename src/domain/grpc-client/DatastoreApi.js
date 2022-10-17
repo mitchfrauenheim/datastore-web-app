@@ -306,10 +306,9 @@ class DatastoreApi {
         //     }
         // }
 
-        let selectClause = "`*.*`";
+        let pvPattern = "";
         if (filter.pvCriteria !== null) {
-            // const selectClause = "`mpexPv01`";
-            selectClause = "'" + filter.pvCriteria.pattern + "'";
+            pvPattern = filter.pvCriteria.pattern;
             valid = true;
         }
 
@@ -320,11 +319,10 @@ class DatastoreApi {
             return errorHandler(errorMsg);
         }
 
-        const queryString = "SELECT " + selectClause;
-        console.log(queryString);
+        console.log("pvPattern: " + pvPattern);
 
         let query = new Query();
-//        query.setQuery(queryString);
+        query.setQuery(pvPattern);
         // execute query
         this.client.listPVs(query, {}, (err, response) => {
 
