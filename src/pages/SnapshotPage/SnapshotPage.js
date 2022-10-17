@@ -143,7 +143,7 @@ export default function SnapshotPage({ client, onOpen }) {
     }
 
     function renderNoSnapshotPage() {
-        console.log("SnapshotPage.renderSnapshotPage()");
+        console.log("SnapshotPage.renderNoSnapshotPage()");
         return <h1>No Snapshot ID Specified</h1>;
     }
 

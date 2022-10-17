@@ -5,7 +5,8 @@ Constants.FIRSTTIME = "firstTime"
 Constants.LASTTIME = "lastTime"
 Constants.ATTRIBUTENAME = "attName"
 Constants.ARRRIBUTEVALUE = "attValue"
-Constants.PV = "pvPattern"
+Constants.PVPATTERN = "pvPattern"
+Constants.PVNAME = "name"
 
 Object.freeze(Constants); // make constants immutable
 

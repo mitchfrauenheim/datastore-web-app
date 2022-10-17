@@ -81,7 +81,7 @@ class QueryFilter {
         if (this.pvCriteria !== null) {
             const pvPattern = this.pvCriteria.pattern;
             if (pvPattern !== null) {
-                params[FilterConstants.PV] = pvPattern;
+                params[FilterConstants.PVPATTERN] = pvPattern;
             }
         }
 
@@ -123,7 +123,7 @@ class QueryFilter {
         }
 
         // handle pv param
-        const pvPattern = searchParams.get(FilterConstants.PV);
+        const pvPattern = searchParams.get(FilterConstants.PVPATTERN);
         if (pvPattern !== null) {
             this.addPvCriteria(pvPattern);
         }
