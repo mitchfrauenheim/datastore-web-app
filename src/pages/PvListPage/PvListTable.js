@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 export default function PvListTable({ pvs = [] }) {
 
@@ -13,7 +14,10 @@ export default function PvListTable({ pvs = [] }) {
                 return (
                     <tr key={i}>
                         <td>
-                            {pv.name}
+                            <Link
+                                to={`/pv?name=${pv.name}`}>
+                                {pv.name}
+                            </Link>
                         </td>
                         <td/>
                     </tr>);
