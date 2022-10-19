@@ -1,6 +1,8 @@
 import {Link} from "react-router-dom";
 import SnapshotDetails from "../../domain/models/SnapshotDetails";
 import React from "react";
+import AttributePairsTable from "../common/AttributePairsTable";
+import PvNamesWithLinksTable from "../common/PvNamesWithLinksTable";
 
 export default function SnapshotListTable({ snapshots = [] }) {
 
@@ -50,37 +52,10 @@ export default function SnapshotListTable({ snapshots = [] }) {
                         <td>{snapshot?.firstTimestampLocaleString || ""}</td>
                         <td>{snapshot?.lastTimestampLocaleString || ""}</td>
                         <td>
-                            <table className="table-without-border">
-                                <tbody>
-                                {snapshot.pvNames?.map((pvName, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <td>
-                                                <Link
-                                                    to={`/pv?name=${pvName}`}>
-                                                    {pvName}
-                                                </Link>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                                </tbody>
-                            </table>
+                            <PvNamesWithLinksTable objectWithPvs={snapshot}/>
                         </td>
                         <td>
-                            <table className="table-without-border">
-                                <tbody>
-                                {snapshot.attributePairStrings?.map((pairString, i) => {
-                                    return (
-                                        <tr key={i}>
-                                            <td>
-                                                {pairString}
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                                </tbody>
-                            </table>
+                            <AttributePairsTable objectWithAttributes={snapshot}/>
                         </td>
                     </tr>
                 );
