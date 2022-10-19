@@ -54,41 +54,16 @@ class Snapshot {
         return this.apiSnapshot.getPvsList().join(', ');
     }
 
-    get descAttributes() {
-        return this.apiSnapshot.getAttributesList();
-    }
-
-    get descriptionString() {
-        let description = "";
-        let first = true;
+    get attributePairStrings() {
+        let pairStrings = [];
         for (const attribute of this.apiSnapshot.getAttributesList()) {
             let attyName = attribute.getName();
             let attyVal = attribute.getValue();
-            if (!first) {
-                description = description + "\n";
-            } else {
-                first = false;
-            }
-            description = description + attyName + " => " + attyVal;
+            pairStrings.push(attyName + " => " + attyVal);
         }
-        return description;
+        return pairStrings;
     }
 
-    get descriptionStringWithBreaks() {
-        let description = "";
-        let first = true;
-        for (const attribute of this.apiSnapshot.getAttributesList()) {
-            let attyName = attribute.getName();
-            let attyVal = attribute.getValue();
-            if (!first) {
-                description = description + "<br>";
-            } else {
-                first = false;
-            }
-            description = description + attyName + " => " + attyVal;
-        }
-        return description;
-    }
 }
 
 module.exports = Snapshot

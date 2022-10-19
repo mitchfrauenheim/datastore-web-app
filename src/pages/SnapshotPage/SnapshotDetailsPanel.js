@@ -13,7 +13,7 @@ export default function SnapshotDetailsPanel({ snapshotDetails }) {
             <b>Last Sample Time: </b><p>{snapshotDetails.lastTime}</p>
             <b>PV Names: </b>
             <p>
-                <table style={{border: 'none'}}>
+                <table className="table-without-border">
                 <tbody>
                 {snapshotDetails.pvNames?.map((pvName, i) => {
                     return (
@@ -30,7 +30,22 @@ export default function SnapshotDetailsPanel({ snapshotDetails }) {
                 </tbody>
                 </table>
             </p>
-            <b>Attributes: </b><p>{snapshotDetails.attributesString}</p>
+            <b>Attributes: </b>
+            <p>
+                <table className="table-without-border">
+                    <tbody>
+                    {snapshotDetails.attributePairStrings?.map((pairString, i) => {
+                        return (
+                            <tr>
+                                <td>
+                                    {pairString}
+                                </td>
+                            </tr>
+                        );
+                    })}
+                    </tbody>
+                </table>
+           </p>
         </div>
     );
 

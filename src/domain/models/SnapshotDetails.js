@@ -1,14 +1,13 @@
 class SnapshotDetails {
 
-    constructor(id, timestamp, firstTime, lastTime, pvNames, pvNamesString, descAttributes, attributesString) {
+    constructor(id, timestamp, firstTime, lastTime, pvNames, pvNamesString, attributePairStrings) {
         this.id = id;
         this.timestamp = timestamp;
         this.firstTime = firstTime;
         this.lastTime = lastTime;
         this.pvNames = pvNames;
         this.pvNamesString = pvNamesString;
-        this.descAttributes = descAttributes;
-        this.attributesString = attributesString;
+        this.attributePairStrings = attributePairStrings;
     }
 
     get id() {
@@ -59,20 +58,12 @@ class SnapshotDetails {
         this._pvNamesString = pvNamesString;
     }
 
-    get descAttributes() {
-        return this._descAttributes;
+    get attributePairStrings() {
+        return this._attributePairStrings;
     }
 
-    set descAttributes(descAttributes) {
-        this._descAttributes = descAttributes;
-    }
-
-    get attributesString() {
-        return this._attributesString;
-    }
-
-    set attributesString(attributesString) {
-        this._attributesString = attributesString;
+    set attributePairStrings(attributePairStrings) {
+        this._attributePairStrings = attributePairStrings;
     }
 
 }

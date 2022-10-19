@@ -16,12 +16,11 @@ export default function SnapshotListTable({ snapshots = [] }) {
                     snapshot.lastTimestampLocaleString,
                     snapshot.pvNames,
                     snapshot.pvNamesString,
-                    snapshot.descAttributes,
-                    snapshot.descriptionStringWithBreaks)));
+                    snapshot.attributePairStrings)));
     }
 
     return (
-        <table className="result-list-table">
+        <table className="table-with-border">
             <tbody>
             <tr>
                 <th>Snapshot ID</th>
@@ -33,7 +32,7 @@ export default function SnapshotListTable({ snapshots = [] }) {
             </tr>
             {snapshots?.map((snapshot, i) => {
                 return (
-                    <tr>
+                    <tr key={i}>
                         <td>
                             <Link
                                 onClick={() => handleClickSnapshotLink(snapshot)}
@@ -51,12 +50,12 @@ export default function SnapshotListTable({ snapshots = [] }) {
                         <td>{snapshot?.firstTimestampLocaleString || ""}</td>
                         <td>{snapshot?.lastTimestampLocaleString || ""}</td>
                         <td>
-                            <table style={{border: 'none'}}>
+                            <table className="table-without-border">
                                 <tbody>
                                 {snapshot.pvNames?.map((pvName, i) => {
                                     return (
-                                        <tr>
-                                            <td style={{border: 'none'}}>
+                                        <tr key={i}>
+                                            <td>
                                                 <Link
                                                     to={`/pv?name=${pvName}`}>
                                                     {pvName}
@@ -68,7 +67,21 @@ export default function SnapshotListTable({ snapshots = [] }) {
                                 </tbody>
                             </table>
                         </td>
-                        <td style={{ whiteSpace: 'pre-line' }}>{snapshot?.descriptionString || ""}</td>
+                        <td>
+                            <table className="table-without-border">
+                                <tbody>
+                                {snapshot.attributePairStrings?.map((pairString, i) => {
+                                    return (
+                                        <tr key={i}>
+                                            <td>
+                                                {pairString}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 );
             })}

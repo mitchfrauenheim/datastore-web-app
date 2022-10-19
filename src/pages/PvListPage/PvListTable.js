@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 export default function PvListTable({ pvs = [] }) {
 
     return (
-        <table className="result-list-table">
+        <table className="table-with-border">
             <tbody>
                 <tr>
                     <th>PV Name</th>

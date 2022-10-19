@@ -37,9 +37,15 @@
   }
 }
 
-.result-list-table,
-.result-list-table th,
-.result-list-table td {
+.table-with-border,
+.table-with-border th,
+.table-with-border td {
   border: 1px solid black;
   border-collapse: collapse;
+}
+
+.table-without-border,
+.table-without-border th,
+.table-without-border td {
+  border: none;
 }
