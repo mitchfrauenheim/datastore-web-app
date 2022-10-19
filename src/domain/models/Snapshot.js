@@ -1,4 +1,4 @@
-const {epochSecondsToLocaleString} = require("../utils/timestamp");
+const {epochSecondsToLocaleString} = require("../utils/timestamp-utils");
 
 class Snapshot {
 
@@ -46,8 +46,16 @@ class Snapshot {
         return epochSecondsToLocaleString(this.lastTimestampSeconds);
     }
 
+    get pvNames() {
+        return this.apiSnapshot.getPvsList();
+    }
+
     get pvNamesString() {
         return this.apiSnapshot.getPvsList().join(', ');
+    }
+
+    get descAttributes() {
+        return this.apiSnapshot.getAttributesList();
     }
 
     get descriptionString() {
@@ -58,6 +66,22 @@ class Snapshot {
             let attyVal = attribute.getValue();
             if (!first) {
                 description = description + "\n";
+            } else {
+                first = false;
+            }
+            description = description + attyName + " => " + attyVal;
+        }
+        return description;
+    }
+
+    get descriptionStringWithBreaks() {
+        let description = "";
+        let first = true;
+        for (const attribute of this.apiSnapshot.getAttributesList()) {
+            let attyName = attribute.getName();
+            let attyVal = attribute.getValue();
+            if (!first) {
+                description = description + "<br>";
             } else {
                 first = false;
             }

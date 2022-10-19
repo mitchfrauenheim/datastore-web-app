@@ -1,5 +1,6 @@
-import {epochSecondsToLocaleString} from "../../domain/utils/timestamp";
+import {epochSecondsToLocaleString} from "../../domain/utils/timestamp-utils";
 import React from "react";
+import {Link} from "react-router-dom";
 
 export default function SnapshotDetailsPanel({ snapshotDetails }) {
 
@@ -10,7 +11,25 @@ export default function SnapshotDetailsPanel({ snapshotDetails }) {
             <b>Trigger Timestamp: </b><p>{snapshotDetails.timestamp}</p>
             <b>First Sample Time: </b><p>{snapshotDetails.firstTime}</p>
             <b>Last Sample Time: </b><p>{snapshotDetails.lastTime}</p>
-            <b>PV Names: </b><p>{snapshotDetails.pvNamesString}</p>
+            <b>PV Names: </b>
+            <p>
+                <table style={{border: 'none'}}>
+                <tbody>
+                {snapshotDetails.pvNames?.map((pvName, i) => {
+                    return (
+                        <tr>
+                            <td>
+                                <Link
+                                    to={`/pv?name=${pvName}`}>
+                                    {pvName}
+                                </Link>
+                            </td>
+                        </tr>
+                    );
+                })}
+                </tbody>
+                </table>
+            </p>
             <b>Attributes: </b><p>{snapshotDetails.attributesString}</p>
         </div>
     );
