@@ -38,10 +38,10 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                     time range filter
                     <input type="text" ref={firstTimeRef}
                            placeholder="2022-09-21T03:03:19.000Z"
-                           defaultValue="2022-09-21T03:03:19.000Z"/>
+                           defaultValue="2022-10-24T18:43:46.000Z"/>
                     <input type="text" ref={lastTimeRef}
                            placeholder="2022-09-21T03:03:19.999Z"
-                           defaultValue="2022-09-21T03:03:19.999Z"/>
+                           defaultValue="2022-10-24T18:43:46.999Z"/>
                     <button onClick={handleAddTimeRangeFilter}>
                         {filter.timeRangeCriteriaButtonLabel}
                     </button>
@@ -51,9 +51,11 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                 <label>
                     attribute filter
                     <input type="text" ref={attributeNameRef}
-                           placeholder="attribute name ('classification')"/>
+                           placeholder="attribute name ('classification')"
+                           defaultValue="classification"/>
                     <input type="text" ref={attributeValueRef}
-                           placeholder="attribute value ('test')"/>
+                           placeholder="attribute value ('test')"
+                           defaultValue="dev"/>
                     <button onClick={handleAddAttributeFilter}>Add</button>
                 </label>
             </div>
