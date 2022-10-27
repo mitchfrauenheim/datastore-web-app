@@ -5,7 +5,8 @@ const {
     SnapshotTimestampClauseSelector,
     SnapshotTimestampClausePredicate,
     SnapshotQuery,
-    Query
+    Query,
+    IdQuery
 } = require("./grpc-proto/query_pb");
 const Snapshot = require("../models/Snapshot");
 const SnapshotDataPageModel = require("../models/SnapshotDataPageModel");
@@ -76,6 +77,49 @@ class DatastoreApi {
         }
 
         return [firstTime, lastTime, errorMsg, firstTimeMillis, lastTimeMillis];
+    }
+
+    queryGetSnapshotById(snapshotId, resultHandler, noResultHandler, errorHandler) {
+
+        // Calls GRPC api function getSnapshotById().
+        // Calls resultHandler() with snapshot having specified id on success,
+        // noResultHandler() if no such object is found,
+        // or errorHandler() if there is an api error.
+
+        console.log("DatastoreApi.queryGetSnapshotById()");
+
+        if (snapshotId === null) {
+            const errorMsg = "error: snapshotId must be specified";
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
+        }
+
+        const snapshotIdNum = Number(snapshotId);
+        if (isNaN(snapshotIdNum)) {
+            const errorMsg ="error: invalid snapshot id: " + snapshotId;
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
+        }
+
+        // build and execute query
+        let query = new IdQuery();
+        query.setId(snapshotIdNum);
+        this.client.getSnapshotById(query, {}, (err, response) => {
+
+            if (err) {
+                return this.handleApiError(err, errorHandler);
+
+            } else {
+                if (response === null) {
+                    const errorMsg = "no snapshot found for specified id: " + snapshotId;
+                    console.log(errorMsg);
+                    return noResultHandler(errorMsg);
+                }
+                const snapshot = new Snapshot(response);
+                console.log("Snapshot metadata query success");
+                return resultHandler(snapshot);
+            }
+        });
     }
 
     queryListSnapshotsUsingFilter(filter, resultHandler, noResultHandler, errorHandler) {

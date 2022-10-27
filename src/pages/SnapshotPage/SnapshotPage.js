@@ -3,7 +3,6 @@ import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
-import SnapshotDetails from "../../domain/models/SnapshotDetails";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import {useLocation, useSearchParams} from "react-router-dom";
 import Constants from "../../domain/Constants";
@@ -11,10 +10,11 @@ import Constants from "../../domain/Constants";
 export default function SnapshotPage({ client, onOpen }) {
 
     let [snapshotDetails, setSnapshotDetails] = useState(null);
+    let [detailsQueryErrorMsg, setDetailsQueryErrorMsg] = useState(null);
     let [filter, setFilter] = useState(new QueryFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
     let [snapshotDataPage, setSnapshotDataPage] = useState(null);
-    let [queryErrorMsg, setQueryErrorMsg] = useState(null);
+    let [dataQueryErrorMsg, setDataQueryErrorMsg] = useState(null);
     let [snapshotId, setSnapshotId] = useState(null);
 
     let [searchParams, setSearchParams] = useSearchParams();
@@ -24,7 +24,6 @@ export default function SnapshotPage({ client, onOpen }) {
 
     useEffect(() => {
         console.log("SnapshotPage.useEffect()");
-        getSnapshotDetails();
         if (handledParams) return;
         handledParams = true;
         console.log("handling URL parameters");
@@ -36,7 +35,11 @@ export default function SnapshotPage({ client, onOpen }) {
         console.log("SnapshotPage.applyUrlParams()");
 
         // extract id parameter
-        setSnapshotId(searchParams.get(Constants.ID));
+        const snapshotIdValue = searchParams.get(Constants.ID);
+        setSnapshotId(snapshotIdValue);
+
+        // retrieve metadata details for specified snapshot id
+        getSnapshotDetails(snapshotIdValue);
 
         // extract filter parameters and initialize filter
         filter.initFromUrlParams(searchParams);
@@ -63,14 +66,28 @@ export default function SnapshotPage({ client, onOpen }) {
         setSearchParams(params);
     }
 
-    function getSnapshotDetails() {
+    function getSnapshotDetails(snapshotIdValue) {
         console.log("SnapshotPage.getSnapshotDetails()");
-        // retrieve selected snapshot item from storage (saved if navigating from snapshot list)
-        const savedSnapshotString = window.localStorage.getItem("snapshot");
-        const savedSnapshotParsed = JSON.parse(savedSnapshotString);
-        const savedSnapshotObject = Object.assign(
-            new SnapshotDetails(), savedSnapshotParsed);
-        setSnapshotDetails(savedSnapshotObject);
+        client.queryGetSnapshotById(
+            snapshotIdValue,
+            handleSnapshotDetailsQueryResult,
+            handleSnapshotDetailsQueryNoResult,
+            handleSnapshotDetailsQueryError);
+    }
+
+    function handleSnapshotDetailsQueryResult(snapshot) {
+        console.log("SnapshotPage.handleSnapshotDetailsQueryResult()");
+        setSnapshotDetails(snapshot);
+    }
+
+    function handleSnapshotDetailsQueryNoResult(errorMsg) {
+        console.log("SnapshotPage.handleSnapshotDetailsQueryNoResult()");
+        setDetailsQueryErrorMsg(errorMsg);
+    }
+
+    function handleSnapshotDetailsQueryError(errorMsg) {
+        console.log("SnapshotPage.handleSnapshotDetailsQueryError()");
+        setDetailsQueryErrorMsg(errorMsg);
     }
 
     function updateCriteria () {
@@ -95,22 +112,7 @@ export default function SnapshotPage({ client, onOpen }) {
         setUrlParams();
         setFilterCriteria([]);
         setSnapshotDataPage(null);
-        setQueryErrorMsg(null);
-    }
-
-    function handleSnapshotDataQueryResult(snapshotDataPage) {
-        console.log("SnapshotPage.handleSnapshotDataQueryResult()");
-        setSnapshotDataPage(snapshotDataPage);
-    }
-
-    function handleSnapshotDataQueryNoResult(errorMsg) {
-        console.log("SnapshotPage.handleSnapshotDataQueryNoResult()");
-        setQueryErrorMsg(errorMsg);
-    }
-
-    function handleSnapshotDataQueryError(errorMsg) {
-        console.log("SnapshotPage.handleSnapshotDataQueryError()");
-        setQueryErrorMsg(errorMsg);
+        setDataQueryErrorMsg(null);
     }
 
     function getSnapshotData() {
@@ -124,11 +126,26 @@ export default function SnapshotPage({ client, onOpen }) {
             handleSnapshotDataQueryError);
     }
 
+    function handleSnapshotDataQueryResult(snapshotDataPage) {
+        console.log("SnapshotPage.handleSnapshotDataQueryResult()");
+        setSnapshotDataPage(snapshotDataPage);
+    }
+
+    function handleSnapshotDataQueryNoResult(errorMsg) {
+        console.log("SnapshotPage.handleSnapshotDataQueryNoResult()");
+        setDataQueryErrorMsg(errorMsg);
+    }
+
+    function handleSnapshotDataQueryError(errorMsg) {
+        console.log("SnapshotPage.handleSnapshotDataQueryError()");
+        setDataQueryErrorMsg(errorMsg);
+    }
+
     function renderSnapshotPage() {
         console.log("SnapshotPage.renderSnapshotPage()");
         return (
             <div>
-                <SnapshotDetailsPanel snapshotDetails={snapshotDetails} />
+                <SnapshotDetailsPanel snapshotDetails={snapshotDetails} errorMsg={detailsQueryErrorMsg}/>
                 <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
                 <FilterCriteriaPanel
                     criteriaList={filterCriteria}
@@ -137,7 +154,7 @@ export default function SnapshotPage({ client, onOpen }) {
                     handleDeleteCriteriaFunction={handleDeleteCriteria}
                     heading="Snapshot Data Filter Criteria"
                     beginPrompt="To begin, add criteria to snapshot data filter." />
-                <SnapshotDataPanel snapshotDataPage={snapshotDataPage} errorMsg={queryErrorMsg}/>
+                <SnapshotDataPanel snapshotDataPage={snapshotDataPage} errorMsg={dataQueryErrorMsg}/>
             </div>
         );
     }

@@ -18,7 +18,7 @@ export default function SnapshotDataPanel({ snapshotDataPage, errorMsg }) {
     function renderQueryErrorPanel() {
         return (
             <div>
-                <h1>{errorMsg}</h1>;
+                <h1>{errorMsg}</h1>
             </div>
         );
     }
