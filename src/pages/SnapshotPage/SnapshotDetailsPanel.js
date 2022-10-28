@@ -1,10 +1,6 @@
-import {epochSecondsToLocaleString} from "../../domain/utils/timestamp-utils";
 import React from "react";
-import {Link} from "react-router-dom";
-import FilterEditPanel from "../PvListPage/FilterEditPanel";
 import AttributePairsTable from "../common/AttributePairsTable";
 import PvNamesWithLinksTable from "../common/PvNamesWithLinksTable";
-import SnapshotDataTable from "./SnapshotDataTable";
 
 export default function SnapshotDetailsPanel({snapshotDetails, errorMsg}) {
 

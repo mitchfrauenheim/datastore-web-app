@@ -36,7 +36,8 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                 <label>
                     PV filter
                     <input type="text" ref={pvPatternRef}
-                           placeholder="PV name (e.g., 'mpexPv09' or 'mpexPv0*')"/>
+                           placeholder="PV name (e.g., 'mpexPv09' or 'mpexPv0*')"
+                           defaultValue="mpex*"/>
                     <button onClick={handleAddPVFilter}>Add</button>
                 </label>
             </div>
