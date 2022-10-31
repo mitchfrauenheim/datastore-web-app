@@ -29,10 +29,10 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                     time range filter
                     <input type="text" ref={firstTimeRef}
                            placeholder="2022-09-21T03:03:19.000Z"
-                           defaultValue="2022-10-24T18:44:00.100Z"/>
+                           defaultValue="2022-10-28T15:43:07.900Z"/>
                     <input type="text" ref={lastTimeRef}
                            placeholder="2022-09-21T03:03:19.999Z"
-                           defaultValue="2022-10-24T18:44:00.110Z"/>
+                           defaultValue="2022-10-28T15:43:07.999Z"/>
                     <button onClick={handleAddTimeRangeFilter}>
                         {filter.timeRangeCriteriaButtonLabel}
                     </button>

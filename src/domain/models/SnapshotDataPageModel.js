@@ -28,6 +28,10 @@ class SnapshotDataPageModel {
                     let columnDatumCase = columnDatum.getValueOneofCase();
                     let columnDatumValue = null;
                     switch (columnDatumCase) {
+                        case 0:
+                            // no value for this timestamp
+                            columnDatumValue = 'no data value';
+                            break;
                         case 1:
                             columnDatumValue = columnDatum.getStringvalue();
                             break;

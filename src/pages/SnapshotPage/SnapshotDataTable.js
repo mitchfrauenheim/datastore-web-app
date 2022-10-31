@@ -1,5 +1,3 @@
-import SnapshotDataTableRow from "./SnapshotDataTableRow";
-
 export default function SnapshotDataTable({ snapshotDataPage }) {
 
     return (
@@ -11,7 +9,15 @@ export default function SnapshotDataTable({ snapshotDataPage }) {
                 })}
             </tr>
             {snapshotDataPage?.snapshotDataRowList.map((snapshotDataRow, i) => {
-                return <SnapshotDataTableRow snapshotDataRow={snapshotDataRow} key={i} />;
+                return (
+                    <tr key={i}>
+                        <td>{snapshotDataRow?.timestampLocaleString || ""} {snapshotDataRow?.timestampNanos}</td>
+                        {snapshotDataRow?.columnValueList.map((columnValue, j) => {
+                            return <td key={j}>{columnValue}</td>;
+                        })}
+
+                    </tr>
+                );
             })}
             </tbody>
         </table>

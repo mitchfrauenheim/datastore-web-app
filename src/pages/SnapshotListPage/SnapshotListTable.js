@@ -14,6 +14,7 @@ export default function SnapshotListTable({ snapshots = [] }) {
             <tbody>
             <tr>
                 <th>Snapshot ID</th>
+                <th>Size</th>
                 <th>Trigger Time</th>
                 <th>First Sample Time</th>
                 <th>Last Sample Time</th>
@@ -29,6 +30,9 @@ export default function SnapshotListTable({ snapshots = [] }) {
                                 to={`/snapshot?id=${snapshot.id}`}>
                                 {snapshot.id || "No id"}
                             </Link>
+                        </td>
+                        <td>
+                            {snapshot.size}
                         </td>
                         <td>
                             <Link

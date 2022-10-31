@@ -10,6 +10,10 @@ class Snapshot {
         return this.apiSnapshot.getId();
     }
 
+    get size() {
+        return this.apiSnapshot.getSize();
+    }
+
     get snapshotTimestampSeconds() {
         return this.apiSnapshot.getSnapshottimestamp().getEpochseconds();
     }
