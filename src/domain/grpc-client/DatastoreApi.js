@@ -132,7 +132,7 @@ class DatastoreApi {
         let snapshotQuery = new SnapshotQuery();
         let timestampClause = null;
 
-        // process time range from filter
+        // process time range filter criteria
         if (filter.timeRangeCriteria !== null) {
 
             const timeRangeResult = this.extractAndValidateTimeRange(filter);
@@ -176,7 +176,7 @@ class DatastoreApi {
             valid = true;
         }
 
-        // process attribute filter
+        // process attribute filter criteria
         if (filter.attributeCriteriaList.length > 0) {
             for (let attributeCriteria of filter.attributeCriteriaList) {
                 const attributeName = attributeCriteria.name;
@@ -207,6 +207,22 @@ class DatastoreApi {
                     attributeValue);
                 valid = true;
             }
+        }
+
+        // process PV filter criteria
+        if (filter.pvCriteria !== null) {
+            const pvPattern = filter.pvCriteria.pattern;
+            if (pvPattern === null || pvPattern === "") {
+                const errorMsg =
+                    "error: no pattern specified in PV filter criteria";
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+            }
+            const pvAttribute = new Attribute();
+            pvAttribute.setValue(pvPattern);
+            snapshotQuery.addPvnameclause(pvAttribute);
+            console.log("adding pv clause with pattern: " + pvPattern);
+            valid = true;
         }
 
         // check if query is valid, e.g., at least one filter applied
