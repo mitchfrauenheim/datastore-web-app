@@ -1435,8 +1435,7 @@ proto.SnapshotQuery.toObject = function(includeInstance, msg) {
   var f, obj = {
     timestampclausesList: jspb.Message.toObjectList(msg.getTimestampclausesList(),
     proto.TimestampClause.toObject, includeInstance),
-    pvnameclauseList: jspb.Message.toObjectList(msg.getPvnameclauseList(),
-    common_pb.Attribute.toObject, includeInstance),
+    pvnameclauseList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
     idclauseList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
     attributeclausesList: jspb.Message.toObjectList(msg.getAttributeclausesList(),
     common_pb.Attribute.toObject, includeInstance)
@@ -1482,8 +1481,7 @@ proto.SnapshotQuery.deserializeBinaryFromReader = function(msg, reader) {
       msg.addTimestampclauses(value);
       break;
     case 2:
-      var value = new common_pb.Attribute;
-      reader.readMessage(value,common_pb.Attribute.deserializeBinaryFromReader);
+      var value = /** @type {string} */ (reader.readString());
       msg.addPvnameclause(value);
       break;
     case 3:
@@ -1536,10 +1534,9 @@ proto.SnapshotQuery.serializeBinaryToWriter = function(message, writer) {
   }
   f = message.getPvnameclauseList();
   if (f.length > 0) {
-    writer.writeRepeatedMessage(
+    writer.writeRepeatedString(
       2,
-      f,
-      common_pb.Attribute.serializeBinaryToWriter
+      f
     );
   }
   f = message.getIdclauseList();
@@ -1599,31 +1596,30 @@ proto.SnapshotQuery.prototype.clearTimestampclausesList = function() {
 
 
 /**
- * repeated Attribute pvNameClause = 2;
- * @return {!Array<!proto.Attribute>}
+ * repeated string pvNameClause = 2;
+ * @return {!Array<string>}
  */
 proto.SnapshotQuery.prototype.getPvnameclauseList = function() {
-  return /** @type{!Array<!proto.Attribute>} */ (
-    jspb.Message.getRepeatedWrapperField(this, common_pb.Attribute, 2));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
 /**
- * @param {!Array<!proto.Attribute>} value
+ * @param {!Array<string>} value
  * @return {!proto.SnapshotQuery} returns this
-*/
+ */
 proto.SnapshotQuery.prototype.setPvnameclauseList = function(value) {
-  return jspb.Message.setRepeatedWrapperField(this, 2, value);
+  return jspb.Message.setField(this, 2, value || []);
 };
 
 
 /**
- * @param {!proto.Attribute=} opt_value
+ * @param {string} value
  * @param {number=} opt_index
- * @return {!proto.Attribute}
+ * @return {!proto.SnapshotQuery} returns this
  */
-proto.SnapshotQuery.prototype.addPvnameclause = function(opt_value, opt_index) {
-  return jspb.Message.addToRepeatedWrapperField(this, 2, opt_value, proto.Attribute, opt_index);
+proto.SnapshotQuery.prototype.addPvnameclause = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
 
 

@@ -218,9 +218,7 @@ class DatastoreApi {
                 console.log(errorMsg);
                 return errorHandler(errorMsg);
             }
-            const pvAttribute = new Attribute();
-            pvAttribute.setValue(pvPattern);
-            snapshotQuery.addPvnameclause(pvAttribute);
+            snapshotQuery.addPvnameclause(pvPattern);
             console.log("adding pv clause with pattern: " + pvPattern);
             valid = true;
         }
