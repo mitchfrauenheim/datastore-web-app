@@ -12,7 +12,7 @@ class QueryFilter {
     reset() {
         this.timeRangeCriteria = null;
         this.attributeCriteriaList = [];
-        this.pvCriteria = null;
+        this.pvCriteriaList = [];
     }
 
     addTimeRangeCriteria(firstTime, lastTime) {
@@ -36,7 +36,7 @@ class QueryFilter {
 
     addPvCriteria(pvPattern) {
         console.log("QueryFilter.addPvCriteria()");
-        this.pvCriteria = new PvFilterCriteria(pvPattern);
+        this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));
     }
 
     get criteriaList() {
@@ -48,8 +48,8 @@ class QueryFilter {
         for (const attributeCriteria of this.attributeCriteriaList) {
             result.push(attributeCriteria);
         }
-        if (this.pvCriteria !== null) {
-            result.push(this.pvCriteria);
+        for (const pvCriteria of this.pvCriteriaList) {
+            result.push(pvCriteria);
         }
         return result;
     }
@@ -78,10 +78,13 @@ class QueryFilter {
             attributeCount = attributeCount + 1;
         }
 
-        if (this.pvCriteria !== null) {
-            const pvPattern = this.pvCriteria.pattern;
+        let pvCount = 1;
+        for (const pvCriteria of this.pvCriteriaList) {
+            const pvPattern = pvCriteria.pattern;
             if (pvPattern !== null) {
-                params[FilterConstants.PVPATTERN] = pvPattern;
+                const pvCriteriaName = FilterConstants.PVPATTERN + pvCount;
+                params[pvCriteriaName] = pvPattern;
+                pvCount = pvCount + 1;
             }
         }
 
@@ -123,9 +126,18 @@ class QueryFilter {
         }
 
         // handle pv param
-        const pvPattern = searchParams.get(FilterConstants.PVPATTERN);
-        if (pvPattern !== null) {
-            this.addPvCriteria(pvPattern);
+        let pvCount = 1;
+        let foundPvCriteria = true;
+        while (foundPvCriteria) {
+            const pvCriteriaName = FilterConstants.PVPATTERN + pvCount;
+            const pvPattern = searchParams.get(pvCriteriaName);
+            if (pvPattern !== null) {
+                this.addPvCriteria(pvPattern);
+                foundPvCriteria = true;
+                pvCount = pvCount + 1;
+            } else {
+                foundPvCriteria = false;
+            }
         }
 
     }
@@ -135,14 +147,17 @@ class QueryFilter {
         if (this.timeRangeCriteria === criteria) {
             console.log("deleting time range criteria: " + criteria.displayString);
             this.timeRangeCriteria = null;
-        } else if (this.pvCriteria === criteria) {
-            console.log("deleting pv criteria: " + criteria.displayString);
-            this.pvCriteria = null;
         } else {
-            let index = this.attributeCriteriaList.indexOf(criteria);
+            let index = this.pvCriteriaList.indexOf(criteria);
             if (index !== -1) {
-                console.log("deleting attribute criteria: " + criteria.displayString);
-                this.attributeCriteriaList.splice(index, 1);
+                console.log("deleting pv criteria: " + criteria.displayString);
+                this.pvCriteriaList.splice(index, 1);
+            } else {
+                let index = this.attributeCriteriaList.indexOf(criteria);
+                if (index !== -1) {
+                    console.log("deleting attribute criteria: " + criteria.displayString);
+                    this.attributeCriteriaList.splice(index, 1);
+                }
             }
         }
     }

@@ -210,18 +210,19 @@ class DatastoreApi {
         }
 
         // process PV filter criteria
-        if (filter.pvCriteria !== null) {
-            const pvPattern = filter.pvCriteria.pattern;
-            if (pvPattern === null || pvPattern === "") {
-                const errorMsg =
-                    "error: no pattern specified in PV filter criteria";
-                console.log(errorMsg);
-                return errorHandler(errorMsg);
+        if (filter.pvCriteriaList.length  > 0) {
+            for (let pvCriteria of filter.pvCriteriaList) {
+                const pvPattern = pvCriteria.pattern;
+                if (pvPattern === null || pvPattern === "") {
+                    const errorMsg = "error: no pattern specified in PV filter criteria";
+                    console.log(errorMsg);
+                    return errorHandler(errorMsg);
+                }
+                snapshotQuery.addPvnameclause(pvPattern);
+                console.log("adding pv clause with pattern: " + pvPattern);
+                valid = true;
             }
-            snapshotQuery.addPvnameclause(pvPattern);
-            console.log("adding pv clause with pattern: " + pvPattern);
-            valid = true;
-        }
+         }
 
         // check if query is valid, e.g., at least one filter applied
         if (!valid) {
@@ -296,10 +297,25 @@ class DatastoreApi {
             return errorHandler(errorMsg);
         }
 
-        let selectClause = "`*.*`";
-        if (filter.pvCriteria !== null) {
-            // const selectClause = "`mpexPv01`";
-            selectClause = "'" + filter.pvCriteria.pattern + "'";
+        let selectClause = "";
+        if (filter.pvCriteriaList.length > 0) {
+            let first = true;
+            for (let pvCriteria of filter.pvCriteriaList) {
+                const pvPattern = pvCriteria.pattern;
+                if (pvPattern === null || pvPattern === "") {
+                    const errorMsg = "error: no pattern specified in PV filter criteria";
+                    console.log(errorMsg);
+                    return errorHandler(errorMsg);
+                }
+                if (!first) {
+                    selectClause = selectClause + ", ";
+                } else {
+                    first = false;
+                }
+                selectClause = selectClause + "'" + pvPattern + "'";
+            }
+        } else {
+            selectClause = "`*.*`";
         }
 
         const queryString = "SELECT " + selectClause + " WHERE " + timeRangeWhereClause;
