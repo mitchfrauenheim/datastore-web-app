@@ -7,12 +7,21 @@ class QueryFilter {
 
     constructor() {
         this.reset();
+        this._snapshotId = null;
     }
 
     reset() {
         this.timeRangeCriteria = null;
         this.attributeCriteriaList = [];
         this.pvCriteriaList = [];
+    }
+
+    get snapshotId() {
+        return this._snapshotId;
+    }
+
+    set snapshotId(snapshotId) {
+        this._snapshotId = snapshotId;
     }
 
     addTimeRangeCriteria(firstTime, lastTime) {

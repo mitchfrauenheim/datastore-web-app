@@ -42,6 +42,7 @@ export default function SnapshotPage({ client, onOpen }) {
         getSnapshotDetails(snapshotIdValue);
 
         // extract filter parameters and initialize filter
+        filter.snapshotId = snapshotIdValue;
         filter.initFromUrlParams(searchParams);
         setFilterCriteria(filter.criteriaList);
 

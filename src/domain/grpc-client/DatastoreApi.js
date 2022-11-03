@@ -318,7 +318,8 @@ class DatastoreApi {
             selectClause = "`*.*`";
         }
 
-        const queryString = "SELECT " + selectClause + " WHERE " + timeRangeWhereClause;
+        const queryString = "SELECT " + selectClause
+            + " WHERE " + timeRangeWhereClause;
         console.log(queryString);
 
         let snapshotQuery = new Query();
@@ -329,6 +330,7 @@ class DatastoreApi {
 
             } else {
                 console.log("snapshot data query success");
+                console.log(response);
                 if (response.getTotalrows() === 0) {
                     const errorMsg = "query result is empty";
                     console.log(errorMsg);
