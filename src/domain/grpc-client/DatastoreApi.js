@@ -64,10 +64,26 @@ class DatastoreApi {
             errorMsg = "error: invalid ISO date format for first time: " + firstTime;
         }
 
+        // check for min first time
+        if (filter.minFirstTime !== null) {
+            const minFirstTimeMills = Date.parse(filter.minFirstTime);
+            if (firstTimeMillis < minFirstTimeMills) {
+                errorMsg = "error: first time before min first time: " + filter.minFirstTime;
+            }
+        }
+
         // handle last timestamp
         let lastTimeMillis = Date.parse(lastTime);
         if (isNaN(lastTimeMillis)) {
             errorMsg = "error: invalid ISO date format for last time: " + lastTime;
+        }
+
+        // check for max last time
+        if (filter.maxLastTime !== null) {
+            const maxLastTimeMills = Date.parse(filter.maxLastTime);
+            if (lastTimeMillis > maxLastTimeMills) {
+                errorMsg = "error: last time after max last time: " + filter.maxLastTime;
+            }
         }
 
         // check that firstTime <= lastTime
@@ -266,6 +282,8 @@ class DatastoreApi {
 //        let firstTimeString = "2022-09-21T03:03:19.504Z";
 //        let lastTimeString = "2022-09-21T03:03:19.514Z";
 
+        // require
+
         let timeRangeWhereClause = "";
         if (filter.timeRangeCriteria !== null) {
             const timeRangeResult = this.extractAndValidateTimeRange(filter);
@@ -282,6 +300,10 @@ class DatastoreApi {
             }
             const firstTimeString = timeRangeResult[0];
             const lastTimeString = timeRangeResult[1];
+
+            // check that first/last times are within specified min/max
+
+
             timeRangeWhereClause =
                 "time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
         } else {

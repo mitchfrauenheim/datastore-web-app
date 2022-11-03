@@ -1,4 +1,4 @@
-const {epochSecondsToLocaleString} = require("../utils/timestamp-utils");
+const {epochSecondsToLocaleString, epochSecondsToIsoString} = require("../utils/timestamp-utils");
 
 class Snapshot {
 
@@ -26,6 +26,10 @@ class Snapshot {
         return epochSecondsToLocaleString(this.snapshotTimestampSeconds);
     }
 
+    get snapshotTimestampIsoString() {
+        return epochSecondsToIsoString(this.snapshotTimestampSeconds);
+    }
+
     get firstTimestampSeconds() {
         return this.apiSnapshot.getFirst().getEpochseconds();
     }
@@ -38,6 +42,10 @@ class Snapshot {
         return epochSecondsToLocaleString(this.firstTimestampSeconds);
     }
 
+    get firstTimestampIsoString() {
+        return epochSecondsToIsoString(this.firstTimestampSeconds);
+    }
+
     get lastTimestampSeconds() {
         return this.apiSnapshot.getLast().getEpochseconds();
     }
@@ -48,6 +56,10 @@ class Snapshot {
 
     get lastTimestampLocaleString() {
         return epochSecondsToLocaleString(this.lastTimestampSeconds);
+    }
+
+    get lastTimestampIsoString() {
+        return epochSecondsToIsoString(this.lastTimestampSeconds);
     }
 
     get pvNames() {

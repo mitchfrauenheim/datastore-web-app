@@ -79,6 +79,8 @@ export default function SnapshotPage({ client, onOpen }) {
     function handleSnapshotDetailsQueryResult(snapshot) {
         console.log("SnapshotPage.handleSnapshotDetailsQueryResult()");
         setSnapshotDetails(snapshot);
+        filter.minFirstTime = snapshot.firstTimestampIsoString;
+        filter.maxLastTime = snapshot.lastTimestampIsoString;
     }
 
     function handleSnapshotDetailsQueryNoResult(errorMsg) {

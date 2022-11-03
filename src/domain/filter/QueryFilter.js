@@ -8,6 +8,8 @@ class QueryFilter {
     constructor() {
         this.reset();
         this._snapshotId = null;
+        this._minFirstTime = null;
+        this._maxLastTime = null;
     }
 
     reset() {
@@ -22,6 +24,22 @@ class QueryFilter {
 
     set snapshotId(snapshotId) {
         this._snapshotId = snapshotId;
+    }
+
+    get minFirstTime() {
+        return this._minFirstTime;
+    }
+
+    set minFirstTime(minFirstTimeString) {
+        this._minFirstTime = minFirstTimeString;
+    }
+
+    get maxLastTime() {
+        return this._maxLastTime;
+    }
+
+    set maxLastTime(maxLastTimeString) {
+        this._maxLastTime = maxLastTimeString;
     }
 
     addTimeRangeCriteria(firstTime, lastTime) {
