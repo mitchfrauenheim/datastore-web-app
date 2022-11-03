@@ -10,6 +10,7 @@ class QueryFilter {
         this._snapshotId = null;
         this._minFirstTime = null;
         this._maxLastTime = null;
+        this._availablePvsList = [];
     }
 
     reset() {
@@ -40,6 +41,14 @@ class QueryFilter {
 
     set maxLastTime(maxLastTimeString) {
         this._maxLastTime = maxLastTimeString;
+    }
+
+    get availablePvsList() {
+        return this._availablePvsList;
+    }
+
+    set availablePvsList(availablePvsList) {
+        this._availablePvsList = availablePvsList;
     }
 
     addTimeRangeCriteria(firstTime, lastTime) {

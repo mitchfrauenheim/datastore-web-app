@@ -46,10 +46,6 @@ export default function SnapshotPage({ client, onOpen }) {
         filter.initFromUrlParams(searchParams);
         setFilterCriteria(filter.criteriaList);
 
-        // execute query if filter is specified
-        if (filter.criteriaList.length > 0) {
-            getSnapshotData();
-        }
     }
 
     function setUrlParams() {
@@ -81,6 +77,11 @@ export default function SnapshotPage({ client, onOpen }) {
         setSnapshotDetails(snapshot);
         filter.minFirstTime = snapshot.firstTimestampIsoString;
         filter.maxLastTime = snapshot.lastTimestampIsoString;
+        filter.availablePvsList = snapshot.pvNames;
+        // execute query if filter is specified
+        if (filter.criteriaList.length > 0) {
+            getSnapshotData();
+        }
     }
 
     function handleSnapshotDetailsQueryNoResult(errorMsg) {

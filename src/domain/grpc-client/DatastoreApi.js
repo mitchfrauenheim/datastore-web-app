@@ -337,7 +337,20 @@ class DatastoreApi {
                 selectClause = selectClause + "'" + pvPattern + "'";
             }
         } else {
-            selectClause = "`*.*`";
+            // selectClause = "`*.*`";
+            // List the PVs from the snapshot object explicitly in the SELECT clause,
+            // as a workaround to being able to specify a snapshotId in the query.
+            // At least we can limit the query to the PVs in the snapshot.
+            selectClause = "";
+            let first = true;
+            for (let pvNameString of filter.availablePvsList) {
+                if (!first) {
+                    selectClause = selectClause + ", ";
+                } else {
+                    first = false;
+                }
+                selectClause = selectClause + "'" + pvNameString + "'";
+            }
         }
 
         const queryString = "SELECT " + selectClause
