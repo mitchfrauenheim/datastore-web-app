@@ -418,8 +418,15 @@ class DatastoreApi {
         // }
 
         let pvPattern = "";
-        if (filter.pvCriteria !== null) {
-            pvPattern = filter.pvCriteria.pattern;
+        if (filter.pvCriteriaList.length > 0) {
+            if (filter.pvCriteriaList.length > 1) {
+                // we only expect one PV criteria in this case
+                const errorMsg = "error: PV criteria list unexpectedly contains more than one element";
+                console.log(errorMsg);
+                return errorHandler(errorMsg);
+            }
+            const pvCriteria = filter.pvCriteriaList[0];
+            pvPattern = pvCriteria.pattern;
             valid = true;
         }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import AttributePairsTable from "../common/AttributePairsTable";
-import PvNamesWithLinksTable from "../common/PvNamesWithLinksTable";
+import PvNamesWithLinksParagraph from "../common/PvNamesWithLinksParagraph";
 
 export default function SnapshotDetailsPanel({snapshotDetails, errorMsg}) {
 
@@ -15,7 +15,7 @@ export default function SnapshotDetailsPanel({snapshotDetails, errorMsg}) {
                 <b>Last Sample Time: </b><p>{snapshotDetails.lastTimestampLocaleString}</p>
                 <b>PV Names: </b>
                 <p/>
-                <PvNamesWithLinksTable objectWithPvs={snapshotDetails}/>
+                <PvNamesWithLinksParagraph objectWithPvs={snapshotDetails}/>
                 <p/>
                 <b>Attributes: </b>
                 <p/>

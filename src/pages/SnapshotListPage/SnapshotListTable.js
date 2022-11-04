@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 import React from "react";
 import AttributePairsTable from "../common/AttributePairsTable";
-import PvNamesWithLinksTable from "../common/PvNamesWithLinksTable";
+import PvNamesWithLinksParagraph from "../common/PvNamesWithLinksParagraph";
 
 export default function SnapshotListTable({ snapshots = [] }) {
 
@@ -44,7 +44,7 @@ export default function SnapshotListTable({ snapshots = [] }) {
                         <td>{snapshot?.firstTimestampLocaleString || ""}</td>
                         <td>{snapshot?.lastTimestampLocaleString || ""}</td>
                         <td>
-                            <PvNamesWithLinksTable objectWithPvs={snapshot}/>
+                            <PvNamesWithLinksParagraph objectWithPvs={snapshot}/>
                         </td>
                         <td>
                             <AttributePairsTable objectWithAttributes={snapshot}/>
