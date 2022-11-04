@@ -371,7 +371,7 @@ class DatastoreApi {
                     console.log(errorMsg);
                     return noResultHandler(errorMsg);
                 }
-                return resultHandler(new SnapshotDataPageModel(response));
+                return resultHandler(new SnapshotDataPageModel(response, filter.availablePvsList));
             }
         });
     }

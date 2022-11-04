@@ -2,9 +2,12 @@ const SnapshotDataRow = require("./SnapshotDataRowModel");
 
 class SnapshotDataPageModel {
 
-    constructor(apiPaginatedResponse) {
+    constructor(apiPaginatedResponse, snapshotPvList) {
         this.apiPaginatedResponse = apiPaginatedResponse;
-        this.snapshotDataRowList = null;
+        this.snapshotPvList = snapshotPvList;
+        this._labelsList = null;
+        this._columnPvsList = null;
+        this._snapshotDataRowList = null;
     }
 
     get timestampsList() {
@@ -12,7 +15,25 @@ class SnapshotDataPageModel {
     }
 
     get labelsList() {
-        return this.apiPaginatedResponse.getLabelsList();
+        if (this._labelsList === null) {
+            this._labelsList = []
+            this._labelsList.push("timestamp");
+            Array.prototype.push.apply(this._labelsList, this.columnPvsList);
+        }
+        return this._labelsList;
+    }
+
+    get columnPvsList() {
+        if (this._columnPvsList === null) {
+            // remove PVs that are not part of the snapshot.
+            this._columnPvsList = []
+            for (const label of this.apiPaginatedResponse.getLabelsList()) {
+                if (this.snapshotPvList.includes(label)) {
+                    this._columnPvsList.push(label);
+                }
+            }
+        }
+        return this._columnPvsList;
     }
 
     get snapshotDataRowList() {
@@ -22,7 +43,9 @@ class SnapshotDataPageModel {
             let rowIndex = 0;
             for (const timestamp of this.timestampsList) {
                 let rowDataList = [];
-                for (const column of columnList) {
+                for (const label of this.columnPvsList) {
+                    // find column with label and add to output
+                    const column = columnList.find(c => c.getName() === label);
                     let columnDataList = column.getDataList();
                     let columnDatum = columnDataList[rowIndex];
                     let columnDatumCase = columnDatum.getValueOneofCase();
