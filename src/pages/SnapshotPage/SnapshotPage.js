@@ -107,6 +107,7 @@ export default function SnapshotPage({ client, onOpen }) {
 
     function handleSubmit() {
         console.log("SnapshotPage.handleSubmit()");
+        setDataQueryErrorMsg(null);
         setUrlParams();
     }
 

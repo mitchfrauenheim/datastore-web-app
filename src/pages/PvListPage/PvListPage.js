@@ -48,6 +48,7 @@ export default function PvListPage({client}) {
 
     function handleSubmit() {
         console.log("PvListPage.handleSubmit()");
+        setQueryErrorMsg(null);
         setSearchParams(filter.urlParams);
     }
 

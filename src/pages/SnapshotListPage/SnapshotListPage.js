@@ -49,6 +49,7 @@ export default function SnapshotListPage({client}) {
 
     function handleSubmit() {
         console.log("SnapshotListPage.handleSubmit()");
+        setQueryErrorMsg(null);
         setSearchParams(filter.urlParams);
     }
 
@@ -63,6 +64,7 @@ export default function SnapshotListPage({client}) {
 
     function handleListSnapshotsQueryResult(resultList) {
         console.log("SnapshotListPage.handleListSnapshotsQueryResult()");
+        console.log(resultList);
         setSnapshotList(resultList);
     }
 
