@@ -33,6 +33,8 @@ export default function SnapshotListPage({client}) {
         setFilterCriteria(filter.criteriaList);
         if (filter.criteriaList.length > 0) {
             getSnapshotList();
+        } else {
+            setSnapshotList([]);
         }
      }
 

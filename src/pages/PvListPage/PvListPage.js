@@ -32,6 +32,8 @@ export default function PvListPage({client}) {
         setFilterCriteria(filter.criteriaList);
         if (filter.criteriaList.length > 0) {
             getPvList();
+        } else {
+            setPvList([]);
         }
     }
 
@@ -48,8 +50,13 @@ export default function PvListPage({client}) {
 
     function handleSubmit() {
         console.log("PvListPage.handleSubmit()");
-        setQueryErrorMsg(null);
-        setSearchParams(filter.urlParams);
+        if (filter.pvCriteriaList.length > 1) {
+            const errorMsg = "error: only a single PV filter criteria is allowed";
+            setQueryErrorMsg(errorMsg);
+        } else {
+            setQueryErrorMsg(null);
+            setSearchParams(filter.urlParams);
+        }
     }
 
     function handleReset() {

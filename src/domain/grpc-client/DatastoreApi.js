@@ -420,7 +420,7 @@ class DatastoreApi {
         let pvPattern = "";
         if (filter.pvCriteriaList.length > 0) {
             if (filter.pvCriteriaList.length > 1) {
-                // we only expect one PV criteria in this case
+                // the API only allows a single PV query pattern
                 const errorMsg = "error: PV criteria list unexpectedly contains more than one element";
                 console.log(errorMsg);
                 return errorHandler(errorMsg);
