@@ -75,6 +75,25 @@ class QueryFilter {
         this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));
     }
 
+    addOrUpdatePvCriteria(pvPattern) {
+        // convenience method that allows only a single PV filter criteria
+        console.log("QueryFilter.addOrUpdatePvCriteria()");
+        if (this.pvCriteriaList.length === 1) {
+            this.pvCriteriaList.splice(0, 1);
+        }
+        this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));
+    }
+
+    get singlePvCriteriaButtonLabel() {
+        // dynamically generate button label for view that allows only a single PV filter criteria
+        console.log("QueryFilter.singlePvCriteriaButtonLabel()");
+        if (this.pvCriteriaList.length === 0) {
+            return "Add";
+        } else {
+            return "Update";
+        }
+    }
+
     get criteriaList() {
         console.log("QueryFilter.criteriaList()");
         let result = []
