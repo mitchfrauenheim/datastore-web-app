@@ -4,6 +4,8 @@ class Snapshot {
 
     constructor(apiSnapshot) {
         this.apiSnapshot = apiSnapshot;
+        this._durationMillis = null;
+        this._millisPerTimestamp = null;
     }
 
     get id() {
@@ -12,6 +14,20 @@ class Snapshot {
 
     get size() {
         return this.apiSnapshot.getSize();
+    }
+
+    get durationMillis() {
+        if (this._durationMillis === null) {
+            this._durationMillis = this.lastTimestampAsMillis - this.firstTimestampAsMillis;
+        }
+        return this._durationMillis;
+    }
+
+    get millisPerTimestamp() {
+        if (this._millisPerTimestamp === null) {
+            this._millisPerTimestamp = ( this.durationMillis / this.size);
+        }
+        return this._millisPerTimestamp;
     }
 
     get snapshotTimestampSeconds() {
@@ -38,6 +54,12 @@ class Snapshot {
         return this.apiSnapshot.getFirst().getNanoseconds();
     }
 
+    get firstTimestampAsMillis() {
+        // combine seconds and nanos, and return as millis for use in the API
+        return (this.firstTimestampSeconds * 1000)
+            + (Math.round(this.firstTimestampNanos/1000000));
+    }
+
     get firstTimestampLocaleString() {
         return epochSecondsToLocaleString(this.firstTimestampSeconds);
     }
@@ -52,6 +74,12 @@ class Snapshot {
 
     get lastTimestampNanos() {
         return this.apiSnapshot.getLast().getNanoseconds();
+    }
+
+    get lastTimestampAsMillis() {
+        // combine seconds and nanos, and return as millis for use in the API
+        return (this.lastTimestampSeconds * 1000)
+            + (Math.round(this.lastTimestampNanos/1000000));
     }
 
     get lastTimestampLocaleString() {

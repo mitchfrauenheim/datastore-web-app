@@ -78,9 +78,16 @@ export default function SnapshotPage({ client, onOpen }) {
         filter.minFirstTime = snapshot.firstTimestampIsoString;
         filter.maxLastTime = snapshot.lastTimestampIsoString;
         filter.availablePvsList = snapshot.pvNames;
+        if (snapshot.size <= 0 ) {
+            handleSnapshotDetailsQueryError("error: snapshot size returned by API is zero")
+        }
+        const durationSeconds = snapshot.lastTimestampSeconds - snapshot.firstTimestampSeconds;
+        if (durationSeconds <= 0) {
+            handleSnapshotDetailsQueryError("error: snapshot time range returned by API is invalid");
+        }
         // execute query if filter is specified
         if (filter.criteriaList.length > 0) {
-            getSnapshotData();
+            getSnapshotData(snapshot);
         }
     }
 
@@ -120,15 +127,24 @@ export default function SnapshotPage({ client, onOpen }) {
         setDataQueryErrorMsg(null);
     }
 
-    function getSnapshotData() {
+    function getSnapshotData(snapshot) {
         console.log("SnapshotPage.getSnapshot()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
         client.queryListSnapshotDataUsingFilter(
             filter,
+            snapshot,
             handleSnapshotDataQueryResult,
             handleSnapshotDataQueryNoResult,
             handleSnapshotDataQueryError);
+    }
+
+    function handlePreviousDataPage() {
+        console.log("SnapshotPage.handlePreviousDataPage()");
+    }
+
+    function handleNextDataPage() {
+        console.log("SnapshotPage.handleNextDataPage()");
     }
 
     function handleSnapshotDataQueryResult(snapshotDataPage) {
@@ -159,7 +175,11 @@ export default function SnapshotPage({ client, onOpen }) {
                     handleDeleteCriteriaFunction={handleDeleteCriteria}
                     heading="Snapshot Data Filter Criteria"
                     beginPrompt="To begin, add criteria to snapshot data filter." />
-                <SnapshotDataPanel snapshotDataPage={snapshotDataPage} errorMsg={dataQueryErrorMsg}/>
+                <SnapshotDataPanel
+                    snapshotDataPage={snapshotDataPage}
+                    errorMsg={dataQueryErrorMsg}
+                    handlePreviousPageFunction={handlePreviousDataPage}
+                    handleNextPageFunction={handleNextDataPage}/>
             </div>
         );
     }

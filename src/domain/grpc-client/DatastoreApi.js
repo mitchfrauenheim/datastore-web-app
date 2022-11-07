@@ -11,6 +11,7 @@ const {
 const Snapshot = require("../models/Snapshot");
 const SnapshotDataPageModel = require("../models/SnapshotDataPageModel");
 const Pv = require("../models/Pv");
+const Constants = require("../Constants");
 
 class DatastoreApi {
 
@@ -33,7 +34,7 @@ class DatastoreApi {
         const apiErrorMsg = error.message;
 
         const serviceNotRunningMsg = "Http response at 400 or 500 level";
-        if (apiErrorMsg == serviceNotRunningMsg) {
+        if (apiErrorMsg === serviceNotRunningMsg) {
             userErrorMsg =
                 "Error connecting to envoy proxy or datastore query services (" +
                 serviceNotRunningMsg +
@@ -271,21 +272,19 @@ class DatastoreApi {
             }
         });
     }
-
-    queryListSnapshotDataUsingFilter(filter, resultHandler, noResultHandler, errorHandler) {
+    
+    queryListSnapshotDataUsingFilter(
+        filter, snapshot, resultHandler, noResultHandler, errorHandler) {
 
         // execute grpc query to retrieve snapshot data
         console.log("DatastoreApi.queryListSnapshotDataUsingFilter()");
 
-//        let firstTimeString = new Date(firstSeconds*1000).toISOString();
-//        let lastTimeString = new Date(lastSeconds*1000).toISOString();
-//        let firstTimeString = "2022-09-21T03:03:19.504Z";
-//        let lastTimeString = "2022-09-21T03:03:19.514Z";
+        // determine min/max limits for snapshot data query time range based on snapshot and filter
+        let minFirstTime = snapshot.firstTimestampAsMillis;
+        let maxLastTime = snapshot.lastTimestampAsMillis;
 
-        // require
-
-        let timeRangeWhereClause = "";
         if (filter.timeRangeCriteria !== null) {
+            // validate timeRangeCriteria
             const timeRangeResult = this.extractAndValidateTimeRange(filter);
             if (timeRangeResult.length !== 5) {
                 const errorMsg =
@@ -298,21 +297,28 @@ class DatastoreApi {
                 console.log(validationErrorMsg);
                 return errorHandler(validationErrorMsg);
             }
-            const firstTimeString = timeRangeResult[0];
-            const lastTimeString = timeRangeResult[1];
-
-            // check that first/last times are within specified min/max
-
-
-            timeRangeWhereClause =
-                "time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
-        } else {
-            const errorMsg =
-                "error: time range filter must be specified for snapshot data query to limit result size";
-            console.log(errorMsg);
-            return errorHandler(errorMsg);
+            
+            // use filter time range as bounds on paging snapshot data query
+            minFirstTime = timeRangeResult[3];
+            maxLastTime = timeRangeResult[4];
         }
-
+        
+        // set up time range for query based on snapshot properties
+        const firstTimeMillis = minFirstTime
+        const millisPerTimeStamp = snapshot.millisPerTimestamp;
+        const pageSize = Constants.SNAPSHOTDATAPAGESIZE;
+        const pageRangeMillis = Math.round(pageSize * millisPerTimeStamp);
+        const lastTimeMillis = firstTimeMillis + pageRangeMillis;
+        console.log("millisPerTimeStamp: " + millisPerTimeStamp);
+        console.log("pageSize: " + pageSize);
+        console.log("firstTimeMillis: " + firstTimeMillis);
+        console.log("pageRangeMillis: " + pageRangeMillis);
+        console.log("lastTimeMillis: " + lastTimeMillis);
+        const firstTimeString = new Date(firstTimeMillis).toISOString();
+        const lastTimeString = new Date(lastTimeMillis).toISOString();
+        const timeRangeWhereClause =
+            "time >= '" + firstTimeString + "' AND time <= '" + lastTimeString + "'";
+        
         if (timeRangeWhereClause === "") {
             const errorMsg = "error: missing time range where clause building query";
             console.log(errorMsg);

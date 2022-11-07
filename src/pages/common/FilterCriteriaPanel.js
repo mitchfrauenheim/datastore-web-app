@@ -1,8 +1,13 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-export default function FilterCriteriaPanel({criteriaList, handleSubmitFunction, handleResetFunction,
-                                                handleDeleteCriteriaFunction, heading, beginPrompt}) {
+export default function FilterCriteriaPanel({
+                                                criteriaList,
+                                                handleSubmitFunction,
+                                                handleResetFunction,
+                                                handleDeleteCriteriaFunction,
+                                                heading,
+                                                beginPrompt}) {
 
     function renderFilterCriteriaPanel() {
         return (
