@@ -2,11 +2,14 @@ const SnapshotDataRow = require("./SnapshotDataRowModel");
 
 class SnapshotDataPageModel {
 
-    constructor(apiPaginatedResponse, snapshotPvList, firstTimeMillis, lastTimeMillis) {
+    constructor(apiPaginatedResponse, snapshotPvList, firstTimeMillis, lastTimeMillis, minFirstTime, maxLastTime) {
+
         this.apiPaginatedResponse = apiPaginatedResponse;
         this.snapshotPvList = snapshotPvList;
         this.firstTimeMillis = firstTimeMillis;
         this.lastTimeMillis = lastTimeMillis;
+        this.minFirstTime = minFirstTime;
+        this.maxLastTime = maxLastTime;
         this._labelsList = null;
         this._columnPvsList = null;
         this._snapshotDataRowList = null;

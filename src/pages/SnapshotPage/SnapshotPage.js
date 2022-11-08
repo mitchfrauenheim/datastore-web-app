@@ -131,7 +131,7 @@ export default function SnapshotPage({ client, onOpen }) {
         console.log("SnapshotPage.getSnapshot()");
         // build and execute listSnapshots query
         console.log("requesting snapshot metadata query using filter");
-        client.queryListSnapshotDataUsingFilter(
+        client.getFirstSnapshotDataPage(
             filter,
             snapshot,
             handleSnapshotDataQueryResult,
@@ -139,12 +139,26 @@ export default function SnapshotPage({ client, onOpen }) {
             handleSnapshotDataQueryError);
     }
 
-    function handlePreviousDataPage() {
-        console.log("SnapshotPage.handlePreviousDataPage()");
-    }
-
     function handleNextDataPage() {
         console.log("SnapshotPage.handleNextDataPage()");
+        client.getNextSnapshotDataPage(
+            filter,
+            snapshotDetails,
+            snapshotDataPage,
+            handleSnapshotDataQueryResult,
+            handleSnapshotDataQueryNoResult,
+            handleSnapshotDataQueryError);
+    }
+
+    function handlePreviousDataPage() {
+        console.log("SnapshotPage.handlePreviousDataPage()");
+        client.getPreviousSnapshotDataPage(
+            filter,
+            snapshotDetails,
+            snapshotDataPage,
+            handleSnapshotDataQueryResult,
+            handleSnapshotDataQueryNoResult,
+            handleSnapshotDataQueryError);
     }
 
     function handleSnapshotDataQueryResult(snapshotDataPage) {
