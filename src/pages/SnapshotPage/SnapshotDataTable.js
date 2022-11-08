@@ -1,7 +1,7 @@
 export default function SnapshotDataTable({ snapshotDataPage }) {
 
     return (
-        <table>
+        <table className="table-with-border">
             <tbody>
             <tr>
                 {snapshotDataPage?.labelsList.map((label, i) => {
