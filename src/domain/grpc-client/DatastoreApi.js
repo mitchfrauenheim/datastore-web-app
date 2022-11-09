@@ -12,6 +12,7 @@ const Snapshot = require("../models/Snapshot");
 const SnapshotDataPageModel = require("../models/SnapshotDataPageModel");
 const Pv = require("../models/Pv");
 const Constants = require("../Constants");
+const SnapshotDataPageQueryParams = require("../models/SnapshotDataPageQueryParams");
 
 class DatastoreApi {
 
@@ -273,23 +274,14 @@ class DatastoreApi {
         });
     }
 
-    calculateLastTime(firstTimeMillis, snapshot, maxLastTime) {
+    calculateLastTime(firstTimeMillis, pageQueryParams) {
 
-        const millisPerTimeStamp = snapshot.millisPerTimestamp;
-        const pageSize = Constants.SNAPSHOTDATAPAGESIZE;
-        const pageRangeMillis = Math.round(pageSize * millisPerTimeStamp);
-        let lastTimeMillis = firstTimeMillis + pageRangeMillis;
-
-        console.log("millisPerTimeStamp: " + millisPerTimeStamp);
-        console.log("pageSize: " + pageSize);
-        console.log("firstTimeMillis: " + firstTimeMillis);
-        console.log("pageRangeMillis: " + pageRangeMillis);
-        console.log("lastTimeMillis: " + lastTimeMillis);
+        let lastTimeMillis = firstTimeMillis + pageQueryParams.pageRangeMillis;
 
         // Check max time limit.
-        if (lastTimeMillis > maxLastTime) {
+        if (lastTimeMillis > pageQueryParams.maxLastTime) {
             // Add one milli to maximum since the query range is not inclusive of the end value.
-            lastTimeMillis = maxLastTime + 1;
+            lastTimeMillis = pageQueryParams.maxLastTime + 1;
         }
         return lastTimeMillis;
     }
@@ -323,121 +315,6 @@ class DatastoreApi {
             // use filter time range as bounds on paging snapshot data query
             minFirstTime = timeRangeResult[3];
             maxLastTime = timeRangeResult[4];
-        }
-
-        // Determine time range for first page query.
-        const firstTimeMillis = minFirstTime
-        const lastTimeMillis = this.calculateLastTime(firstTimeMillis, snapshot, maxLastTime);
-
-        this.queryListSnapshotDataUsingFilter(
-            filter,
-            firstTimeMillis,
-            lastTimeMillis,
-            minFirstTime,
-            maxLastTime,
-            resultHandler,
-            noResultHandler,
-            errorHandler);
-
-    }
-
-    getNextSnapshotDataPage(
-        filter, snapshot, snapshotDataPageModel, resultHandler, noResultHandler, errorHandler) {
-
-        // Retrieves the next page of snapshot data, using time range and limits from previous page to calculate
-        // new time range.
-
-        console.log("DatastoreApi.getNextSnapshotDataPage()");
-
-        if (snapshotDataPageModel.lastTimeMillis >= snapshotDataPageModel.maxLastTime) {
-            // Already at max time limit, nothing to do.
-            console.log("last data page already displayed");
-            return;
-        }
-
-        const minFirstTime = snapshotDataPageModel.minFirstTime;
-        const maxLastTime = snapshotDataPageModel.maxLastTime;
-
-        const newFirstTimeMillis = snapshotDataPageModel.lastTimeMillis;
-        const newLastTimeMillis = this.calculateLastTime(newFirstTimeMillis, snapshot, maxLastTime);
-
-        this.queryListSnapshotDataUsingFilter(
-            filter,
-            newFirstTimeMillis,
-            newLastTimeMillis,
-            minFirstTime,
-            maxLastTime,
-            resultHandler,
-            noResultHandler,
-            errorHandler);
-    }
-
-    calculateFirstTime(lastTimeMillis, snapshot, minFirstTime) {
-
-        const millisPerTimeStamp = snapshot.millisPerTimestamp;
-        const pageSize = Constants.SNAPSHOTDATAPAGESIZE;
-        const pageRangeMillis = Math.round(pageSize * millisPerTimeStamp);
-        let firstTimeMillis = lastTimeMillis - pageRangeMillis;
-
-        console.log("millisPerTimeStamp: " + millisPerTimeStamp);
-        console.log("pageSize: " + pageSize);
-        console.log("firstTimeMillis: " + firstTimeMillis);
-        console.log("pageRangeMillis: " + pageRangeMillis);
-        console.log("lastTimeMillis: " + lastTimeMillis);
-
-        // Check max time limit.
-        if (firstTimeMillis < minFirstTime) {
-            firstTimeMillis = minFirstTime;
-        }
-        return firstTimeMillis;
-    }
-
-    getPreviousSnapshotDataPage(
-        filter, snapshot, snapshotDataPageModel, resultHandler, noResultHandler, errorHandler) {
-
-        // Retrieves the previous page of snapshot data, using time range and limits from previous page to calculate
-        // new time range.
-
-        console.log("DatastoreApi.getPreviousSnapshotDataPage()");
-
-        if (snapshotDataPageModel.firstTimeMillis <= snapshotDataPageModel.minFirstTime) {
-            // Already at max time limit, nothing to do.
-            console.log("first data page already displayed");
-            return;
-        }
-
-        const minFirstTime = snapshotDataPageModel.minFirstTime;
-        const maxLastTime = snapshotDataPageModel.maxLastTime;
-
-        const newLastTimeMillis = snapshotDataPageModel.firstTimeMillis ;
-        const newFirstTimeMillis = this.calculateFirstTime(newLastTimeMillis, snapshot, minFirstTime);
-
-        this.queryListSnapshotDataUsingFilter(
-            filter,
-            newFirstTimeMillis,
-            newLastTimeMillis,
-            minFirstTime,
-            maxLastTime,
-            resultHandler,
-            noResultHandler,
-            errorHandler);
-    }
-
-    queryListSnapshotDataUsingFilter(
-        filter, firstTimeMillis, lastTimeMillis, minFirstTime, maxLastTime, resultHandler, noResultHandler, errorHandler) {
-
-        // execute grpc query to retrieve snapshot data
-        console.log("DatastoreApi.queryListSnapshotDataUsingFilter()");
-
-        const firstTimeString = new Date(firstTimeMillis).toISOString();
-        const lastTimeString = new Date(lastTimeMillis).toISOString();
-        const timeRangeWhereClause =
-            "time >= '" + firstTimeString + "' AND time < '" + lastTimeString + "'";
-        
-        if (timeRangeWhereClause === "") {
-            const errorMsg = "error: missing time range where clause building query";
-            console.log(errorMsg);
-            return errorHandler(errorMsg);
         }
 
         let selectClause = "";
@@ -474,7 +351,119 @@ class DatastoreApi {
             }
         }
 
-        const queryString = "SELECT " + selectClause
+        // Determine number of milliseconds per page for use in generating page queries.
+        const millisPerTimestamp = snapshot.millisPerTimestamp;
+        const timestampsPerPage = Constants.SNAPSHOTDATAPAGESIZE;
+        const pageRangeMillis = Math.round(timestampsPerPage * millisPerTimestamp);
+
+        const pageQueryParams = new SnapshotDataPageQueryParams(
+            minFirstTime,
+            maxLastTime,
+            selectClause,
+            filter.availablePvsList,
+            timestampsPerPage,
+            millisPerTimestamp,
+            pageRangeMillis);
+
+        // Determine time range for first page query.
+        const firstTimeMillis = minFirstTime
+        const lastTimeMillis = this.calculateLastTime(firstTimeMillis, pageQueryParams);
+
+        this.queryListSnapshotData(
+            firstTimeMillis,
+            lastTimeMillis,
+            pageQueryParams,
+            resultHandler,
+            noResultHandler,
+            errorHandler);
+
+    }
+
+    getNextSnapshotDataPage(snapshotDataPageModel, resultHandler, noResultHandler, errorHandler) {
+
+        // Retrieves the next page of snapshot data, using time range and limits from previous page to calculate
+        // new time range.
+
+        console.log("DatastoreApi.getNextSnapshotDataPage()");
+
+        const pageQueryParams = snapshotDataPageModel.pageQueryParams;
+        console.log(snapshotDataPageModel);
+        console.log(pageQueryParams);
+
+        if (snapshotDataPageModel.lastTimeMillis >= pageQueryParams.maxLastTime) {
+            // Already at max time limit, nothing to do.
+            console.log("last data page already displayed");
+            return;
+        }
+
+        const newFirstTimeMillis = snapshotDataPageModel.lastTimeMillis;
+        const newLastTimeMillis = this.calculateLastTime(newFirstTimeMillis, pageQueryParams);
+
+        this.queryListSnapshotData(
+            newFirstTimeMillis,
+            newLastTimeMillis,
+            pageQueryParams,
+            resultHandler,
+            noResultHandler,
+            errorHandler);
+    }
+
+    calculateFirstTime(lastTimeMillis, pageQueryParams) {
+
+        let firstTimeMillis = lastTimeMillis - pageQueryParams.pageRangeMillis;
+
+        // Check max time limit.
+        if (firstTimeMillis < pageQueryParams.minFirstTime) {
+            firstTimeMillis = pageQueryParams.minFirstTime;
+        }
+        return firstTimeMillis;
+    }
+
+    getPreviousSnapshotDataPage(snapshotDataPageModel, resultHandler, noResultHandler, errorHandler) {
+
+        // Retrieves the previous page of snapshot data, using time range and limits from previous page to calculate
+        // new time range.
+
+        console.log("DatastoreApi.getPreviousSnapshotDataPage()");
+
+        const pageQueryParams = snapshotDataPageModel.pageQueryParams;
+
+        if (snapshotDataPageModel.firstTimeMillis <= pageQueryParams.minFirstTime) {
+            // Already at max time limit, nothing to do.
+            console.log("first data page already displayed");
+            return;
+        }
+
+        const newLastTimeMillis = snapshotDataPageModel.firstTimeMillis ;
+        const newFirstTimeMillis = this.calculateFirstTime(newLastTimeMillis, pageQueryParams);
+
+        this.queryListSnapshotData(
+            newFirstTimeMillis,
+            newLastTimeMillis,
+            pageQueryParams,
+            resultHandler,
+            noResultHandler,
+            errorHandler);
+    }
+
+    queryListSnapshotData(
+        firstTimeMillis, lastTimeMillis, pageQueryParams, resultHandler, noResultHandler, errorHandler) {
+
+        // execute grpc query to retrieve snapshot data
+        console.log("DatastoreApi.queryListSnapshotDataUsingFilter()");
+
+        const firstTimeString = new Date(firstTimeMillis).toISOString();
+        const lastTimeString = new Date(lastTimeMillis).toISOString();
+        const timeRangeWhereClause =
+            "time >= '" + firstTimeString + "' AND time < '" + lastTimeString + "'";
+        
+        if (timeRangeWhereClause === "") {
+            const errorMsg = "error: missing time range where clause building query";
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
+        }
+
+        const queryString = "SELECT " + pageQueryParams.selectClause
             + " WHERE " + timeRangeWhereClause;
         console.log(queryString);
 
@@ -493,7 +482,7 @@ class DatastoreApi {
                     return noResultHandler(errorMsg);
                 }
                 return resultHandler(new SnapshotDataPageModel(
-                    response, filter.availablePvsList, firstTimeMillis, lastTimeMillis, minFirstTime, maxLastTime));
+                    response, pageQueryParams.availablePvsList, firstTimeMillis, lastTimeMillis, pageQueryParams));
             }
         });
     }

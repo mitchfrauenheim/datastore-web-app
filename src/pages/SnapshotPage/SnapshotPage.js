@@ -141,9 +141,9 @@ export default function SnapshotPage({ client, onOpen }) {
 
     function handleNextDataPage() {
         console.log("SnapshotPage.handleNextDataPage()");
+        console.log(snapshotDataPage);
+        console.log(snapshotDataPage.pageQueryParams);
         client.getNextSnapshotDataPage(
-            filter,
-            snapshotDetails,
             snapshotDataPage,
             handleSnapshotDataQueryResult,
             handleSnapshotDataQueryNoResult,
@@ -153,8 +153,6 @@ export default function SnapshotPage({ client, onOpen }) {
     function handlePreviousDataPage() {
         console.log("SnapshotPage.handlePreviousDataPage()");
         client.getPreviousSnapshotDataPage(
-            filter,
-            snapshotDetails,
             snapshotDataPage,
             handleSnapshotDataQueryResult,
             handleSnapshotDataQueryNoResult,
