@@ -289,7 +289,8 @@ class DatastoreApi {
     getFirstSnapshotDataPage(
         filter, snapshot, resultHandler, noResultHandler, errorHandler) {
 
-        // Retrieves the first page of snapshot data.
+        // Retrieves the first page of snapshot data.  Sets up SnapshotDataPageQueryParams for subsequent queries
+        // to retrieve pages of data for the snapshot data table's next/previous navigation.
 
         console.log("DatastoreApi.getFirstSnapshotDataPage()");
 
@@ -317,6 +318,7 @@ class DatastoreApi {
             maxLastTime = timeRangeResult[4];
         }
 
+        // Generate select clause with all the snapshot's PV names by default, or PV names specified in filter.
         let selectClause = "";
         if (filter.pvCriteriaList.length > 0) {
             let first = true;
@@ -337,8 +339,11 @@ class DatastoreApi {
         } else {
             // selectClause = "`*.*`";
             // List the PVs from the snapshot object explicitly in the SELECT clause,
-            // as a workaround to being able to specify a snapshotId in the query.
-            // At least we can limit the query to the PVs in the snapshot.
+            // This was originally a workaround to not being able to specify the snapshot id in the query.
+            // I'm leaving the explicit PV names in place even though we are now specifying snapshot id in the query.
+            // This could be changed back to the *.* notation commented out above, presumably.
+            // That might be necessary if there is a limit on how many PV names can be specified explicitly, or if
+            // there are performance issues related to this.
             selectClause = "";
             let first = true;
             for (let pvNameString of filter.availablePvsList) {
@@ -351,15 +356,20 @@ class DatastoreApi {
             }
         }
 
+        // Generate criteria for snapshot id in query's where clause.
+        const idClause = "'snapshot-id' = " + snapshot.id;
+
         // Determine number of milliseconds per page for use in generating page queries.
         const millisPerTimestamp = snapshot.millisPerTimestamp;
         const timestampsPerPage = Constants.SNAPSHOTDATAPAGESIZE;
         const pageRangeMillis = Math.round(timestampsPerPage * millisPerTimestamp);
 
         const pageQueryParams = new SnapshotDataPageQueryParams(
+            snapshot,
             minFirstTime,
             maxLastTime,
             selectClause,
+            idClause,
             filter.availablePvsList,
             timestampsPerPage,
             millisPerTimestamp,
@@ -450,7 +460,7 @@ class DatastoreApi {
         firstTimeMillis, lastTimeMillis, pageQueryParams, resultHandler, noResultHandler, errorHandler) {
 
         // execute grpc query to retrieve snapshot data
-        console.log("DatastoreApi.queryListSnapshotDataUsingFilter()");
+        console.log("DatastoreApi.queryListSnapshotData()");
 
         const firstTimeString = new Date(firstTimeMillis).toISOString();
         const lastTimeString = new Date(lastTimeMillis).toISOString();
@@ -464,7 +474,7 @@ class DatastoreApi {
         }
 
         const queryString = "SELECT " + pageQueryParams.selectClause
-            + " WHERE " + timeRangeWhereClause;
+            + " WHERE " + pageQueryParams.idClause + " AND " + timeRangeWhereClause;
         console.log(queryString);
 
         let snapshotQuery = new Query();
@@ -475,7 +485,6 @@ class DatastoreApi {
 
             } else {
                 console.log("snapshot data query success");
-                console.log(response);
                 if (response.getTotalrows() === 0) {
                     const errorMsg = "query result is empty";
                     console.log(errorMsg);

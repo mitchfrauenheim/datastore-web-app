@@ -52,7 +52,6 @@ class SnapshotDataPageModel {
                     const column = columnList.find(c => c.getName() === label);
                     let columnDataList = column.getDataList();
                     let columnDatum = columnDataList[rowIndex];
-                    console.log(columnDatum.toObject());
                     let columnDatumCase = columnDatum.getValueOneofCase();
                     let columnDatumValue = null;
                     switch (columnDatumCase) {

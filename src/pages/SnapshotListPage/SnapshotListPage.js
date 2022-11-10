@@ -66,7 +66,6 @@ export default function SnapshotListPage({client}) {
 
     function handleListSnapshotsQueryResult(resultList) {
         console.log("SnapshotListPage.handleListSnapshotsQueryResult()");
-        console.log(resultList);
         setSnapshotList(resultList);
     }
 
