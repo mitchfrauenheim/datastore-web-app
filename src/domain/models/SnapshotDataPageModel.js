@@ -52,6 +52,7 @@ class SnapshotDataPageModel {
                     const column = columnList.find(c => c.getName() === label);
                     let columnDataList = column.getDataList();
                     let columnDatum = columnDataList[rowIndex];
+                    console.log(columnDatum.toObject());
                     let columnDatumCase = columnDatum.getValueOneofCase();
                     let columnDatumValue = null;
                     switch (columnDatumCase) {
@@ -62,25 +63,22 @@ class SnapshotDataPageModel {
                         case 1:
                             columnDatumValue = columnDatum.getStringvalue();
                             break;
-                        case 3:
+                        case 2:
                             columnDatumValue = columnDatum.getFloatvalue();
                             break;
-                        case 4:
+                        case 3:
                             columnDatumValue = columnDatum.getIntvalue();
                             break;
-                        case 5:
+                        case 4:
                             // columnDatumValue = columnDatum.getBytearrayvalue();
                             columnDatumValue = "byte array";
                             break;
-                        case 6:
+                        case 5:
                             columnDatumValue = columnDatum.getBooleanvalue();
                             break;
-                        case 7:
+                        case 6:
                             // columnDatumValue = columnDatum.getBytearrayvalue();
                             columnDatumValue = "image";
-                            break;
-                        case 8:
-                            columnDatumValue = "status";
                             break;
                         case 10:
                             columnDatumValue = "structure";

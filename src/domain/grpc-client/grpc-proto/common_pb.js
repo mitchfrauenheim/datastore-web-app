@@ -1483,7 +1483,7 @@ proto.TimestampData.prototype.clearTimestampsList = function() {
  * @private {!Array<!Array<number>>}
  * @const
  */
-proto.Datum.oneofGroups_ = [[1,3,4,5,6,7,8,10,11]];
+proto.Datum.oneofGroups_ = [[1,2,3,4,5,6,10,11]];
 
 /**
  * @enum {number}
@@ -1491,12 +1491,11 @@ proto.Datum.oneofGroups_ = [[1,3,4,5,6,7,8,10,11]];
 proto.Datum.ValueOneofCase = {
   VALUE_ONEOF_NOT_SET: 0,
   STRINGVALUE: 1,
-  FLOATVALUE: 3,
-  INTVALUE: 4,
-  BYTEARRAYVALUE: 5,
-  BOOLEANVALUE: 6,
-  IMAGE: 7,
-  STATUS: 8,
+  FLOATVALUE: 2,
+  INTVALUE: 3,
+  BYTEARRAYVALUE: 4,
+  BOOLEANVALUE: 5,
+  IMAGE: 6,
   STRUCTUREVALUE: 10,
   ARRAYVALUE: 11
 };
@@ -1540,14 +1539,14 @@ proto.Datum.prototype.toObject = function(opt_includeInstance) {
 proto.Datum.toObject = function(includeInstance, msg) {
   var f, obj = {
     stringvalue: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    floatvalue: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0),
-    intvalue: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    floatvalue: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
+    intvalue: jspb.Message.getFieldWithDefault(msg, 3, 0),
     bytearrayvalue: msg.getBytearrayvalue_asB64(),
-    booleanvalue: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
+    booleanvalue: jspb.Message.getBooleanFieldWithDefault(msg, 5, false),
     image: (f = msg.getImage()) && proto.Image.toObject(includeInstance, f),
-    status: (f = msg.getStatus()) && proto.OperationStatus.toObject(includeInstance, f),
     structurevalue: (f = msg.getStructurevalue()) && proto.Structure.toObject(includeInstance, f),
-    arrayvalue: (f = msg.getArrayvalue()) && proto.Array.toObject(includeInstance, f)
+    arrayvalue: (f = msg.getArrayvalue()) && proto.Array.toObject(includeInstance, f),
+    status: (f = msg.getStatus()) && proto.OperationStatus.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1588,31 +1587,26 @@ proto.Datum.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setStringvalue(value);
       break;
-    case 3:
+    case 2:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setFloatvalue(value);
       break;
-    case 4:
+    case 3:
       var value = /** @type {number} */ (reader.readUint64());
       msg.setIntvalue(value);
       break;
-    case 5:
+    case 4:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
       msg.setBytearrayvalue(value);
       break;
-    case 6:
+    case 5:
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setBooleanvalue(value);
       break;
-    case 7:
+    case 6:
       var value = new proto.Image;
       reader.readMessage(value,proto.Image.deserializeBinaryFromReader);
       msg.setImage(value);
-      break;
-    case 8:
-      var value = new proto.OperationStatus;
-      reader.readMessage(value,proto.OperationStatus.deserializeBinaryFromReader);
-      msg.setStatus(value);
       break;
     case 10:
       var value = new proto.Structure;
@@ -1623,6 +1617,11 @@ proto.Datum.deserializeBinaryFromReader = function(msg, reader) {
       var value = new proto.Array;
       reader.readMessage(value,proto.Array.deserializeBinaryFromReader);
       msg.setArrayvalue(value);
+      break;
+    case 20:
+      var value = new proto.OperationStatus;
+      reader.readMessage(value,proto.OperationStatus.deserializeBinaryFromReader);
+      msg.setStatus(value);
       break;
     default:
       reader.skipField();
@@ -1660,48 +1659,40 @@ proto.Datum.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = /** @type {number} */ (jspb.Message.getField(message, 3));
+  f = /** @type {number} */ (jspb.Message.getField(message, 2));
   if (f != null) {
     writer.writeDouble(
+      2,
+      f
+    );
+  }
+  f = /** @type {number} */ (jspb.Message.getField(message, 3));
+  if (f != null) {
+    writer.writeUint64(
       3,
       f
     );
   }
-  f = /** @type {number} */ (jspb.Message.getField(message, 4));
+  f = /** @type {!(string|Uint8Array)} */ (jspb.Message.getField(message, 4));
   if (f != null) {
-    writer.writeUint64(
+    writer.writeBytes(
       4,
       f
     );
   }
-  f = /** @type {!(string|Uint8Array)} */ (jspb.Message.getField(message, 5));
-  if (f != null) {
-    writer.writeBytes(
-      5,
-      f
-    );
-  }
-  f = /** @type {boolean} */ (jspb.Message.getField(message, 6));
+  f = /** @type {boolean} */ (jspb.Message.getField(message, 5));
   if (f != null) {
     writer.writeBool(
-      6,
+      5,
       f
     );
   }
   f = message.getImage();
   if (f != null) {
     writer.writeMessage(
-      7,
+      6,
       f,
       proto.Image.serializeBinaryToWriter
-    );
-  }
-  f = message.getStatus();
-  if (f != null) {
-    writer.writeMessage(
-      8,
-      f,
-      proto.OperationStatus.serializeBinaryToWriter
     );
   }
   f = message.getStructurevalue();
@@ -1718,6 +1709,14 @@ proto.Datum.serializeBinaryToWriter = function(message, writer) {
       11,
       f,
       proto.Array.serializeBinaryToWriter
+    );
+  }
+  f = message.getStatus();
+  if (f != null) {
+    writer.writeMessage(
+      20,
+      f,
+      proto.OperationStatus.serializeBinaryToWriter
     );
   }
 };
@@ -1760,11 +1759,11 @@ proto.Datum.prototype.hasStringvalue = function() {
 
 
 /**
- * optional double floatValue = 3;
+ * optional double floatValue = 2;
  * @return {number}
  */
 proto.Datum.prototype.getFloatvalue = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 3, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
 };
 
 
@@ -1773,7 +1772,7 @@ proto.Datum.prototype.getFloatvalue = function() {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.setFloatvalue = function(value) {
-  return jspb.Message.setOneofField(this, 3, proto.Datum.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 2, proto.Datum.oneofGroups_[0], value);
 };
 
 
@@ -1782,7 +1781,7 @@ proto.Datum.prototype.setFloatvalue = function(value) {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.clearFloatvalue = function() {
-  return jspb.Message.setOneofField(this, 3, proto.Datum.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 2, proto.Datum.oneofGroups_[0], undefined);
 };
 
 
@@ -1791,16 +1790,16 @@ proto.Datum.prototype.clearFloatvalue = function() {
  * @return {boolean}
  */
 proto.Datum.prototype.hasFloatvalue = function() {
-  return jspb.Message.getField(this, 3) != null;
+  return jspb.Message.getField(this, 2) != null;
 };
 
 
 /**
- * optional uint64 intValue = 4;
+ * optional uint64 intValue = 3;
  * @return {number}
  */
 proto.Datum.prototype.getIntvalue = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
@@ -1809,7 +1808,7 @@ proto.Datum.prototype.getIntvalue = function() {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.setIntvalue = function(value) {
-  return jspb.Message.setOneofField(this, 4, proto.Datum.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 3, proto.Datum.oneofGroups_[0], value);
 };
 
 
@@ -1818,7 +1817,7 @@ proto.Datum.prototype.setIntvalue = function(value) {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.clearIntvalue = function() {
-  return jspb.Message.setOneofField(this, 4, proto.Datum.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 3, proto.Datum.oneofGroups_[0], undefined);
 };
 
 
@@ -1827,21 +1826,21 @@ proto.Datum.prototype.clearIntvalue = function() {
  * @return {boolean}
  */
 proto.Datum.prototype.hasIntvalue = function() {
-  return jspb.Message.getField(this, 4) != null;
+  return jspb.Message.getField(this, 3) != null;
 };
 
 
 /**
- * optional bytes byteArrayValue = 5;
+ * optional bytes byteArrayValue = 4;
  * @return {!(string|Uint8Array)}
  */
 proto.Datum.prototype.getBytearrayvalue = function() {
-  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
 /**
- * optional bytes byteArrayValue = 5;
+ * optional bytes byteArrayValue = 4;
  * This is a type-conversion wrapper around `getBytearrayvalue()`
  * @return {string}
  */
@@ -1852,7 +1851,7 @@ proto.Datum.prototype.getBytearrayvalue_asB64 = function() {
 
 
 /**
- * optional bytes byteArrayValue = 5;
+ * optional bytes byteArrayValue = 4;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
  * This is a type-conversion wrapper around `getBytearrayvalue()`
@@ -1869,7 +1868,7 @@ proto.Datum.prototype.getBytearrayvalue_asU8 = function() {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.setBytearrayvalue = function(value) {
-  return jspb.Message.setOneofField(this, 5, proto.Datum.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 4, proto.Datum.oneofGroups_[0], value);
 };
 
 
@@ -1878,7 +1877,7 @@ proto.Datum.prototype.setBytearrayvalue = function(value) {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.clearBytearrayvalue = function() {
-  return jspb.Message.setOneofField(this, 5, proto.Datum.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 4, proto.Datum.oneofGroups_[0], undefined);
 };
 
 
@@ -1887,16 +1886,16 @@ proto.Datum.prototype.clearBytearrayvalue = function() {
  * @return {boolean}
  */
 proto.Datum.prototype.hasBytearrayvalue = function() {
-  return jspb.Message.getField(this, 5) != null;
+  return jspb.Message.getField(this, 4) != null;
 };
 
 
 /**
- * optional bool booleanValue = 6;
+ * optional bool booleanValue = 5;
  * @return {boolean}
  */
 proto.Datum.prototype.getBooleanvalue = function() {
-  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 6, false));
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
 };
 
 
@@ -1905,7 +1904,7 @@ proto.Datum.prototype.getBooleanvalue = function() {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.setBooleanvalue = function(value) {
-  return jspb.Message.setOneofField(this, 6, proto.Datum.oneofGroups_[0], value);
+  return jspb.Message.setOneofField(this, 5, proto.Datum.oneofGroups_[0], value);
 };
 
 
@@ -1914,7 +1913,7 @@ proto.Datum.prototype.setBooleanvalue = function(value) {
  * @return {!proto.Datum} returns this
  */
 proto.Datum.prototype.clearBooleanvalue = function() {
-  return jspb.Message.setOneofField(this, 6, proto.Datum.oneofGroups_[0], undefined);
+  return jspb.Message.setOneofField(this, 5, proto.Datum.oneofGroups_[0], undefined);
 };
 
 
@@ -1923,17 +1922,17 @@ proto.Datum.prototype.clearBooleanvalue = function() {
  * @return {boolean}
  */
 proto.Datum.prototype.hasBooleanvalue = function() {
-  return jspb.Message.getField(this, 6) != null;
+  return jspb.Message.getField(this, 5) != null;
 };
 
 
 /**
- * optional Image image = 7;
+ * optional Image image = 6;
  * @return {?proto.Image}
  */
 proto.Datum.prototype.getImage = function() {
   return /** @type{?proto.Image} */ (
-    jspb.Message.getWrapperField(this, proto.Image, 7));
+    jspb.Message.getWrapperField(this, proto.Image, 6));
 };
 
 
@@ -1942,7 +1941,7 @@ proto.Datum.prototype.getImage = function() {
  * @return {!proto.Datum} returns this
 */
 proto.Datum.prototype.setImage = function(value) {
-  return jspb.Message.setOneofWrapperField(this, 7, proto.Datum.oneofGroups_[0], value);
+  return jspb.Message.setOneofWrapperField(this, 6, proto.Datum.oneofGroups_[0], value);
 };
 
 
@@ -1960,44 +1959,7 @@ proto.Datum.prototype.clearImage = function() {
  * @return {boolean}
  */
 proto.Datum.prototype.hasImage = function() {
-  return jspb.Message.getField(this, 7) != null;
-};
-
-
-/**
- * optional OperationStatus status = 8;
- * @return {?proto.OperationStatus}
- */
-proto.Datum.prototype.getStatus = function() {
-  return /** @type{?proto.OperationStatus} */ (
-    jspb.Message.getWrapperField(this, proto.OperationStatus, 8));
-};
-
-
-/**
- * @param {?proto.OperationStatus|undefined} value
- * @return {!proto.Datum} returns this
-*/
-proto.Datum.prototype.setStatus = function(value) {
-  return jspb.Message.setOneofWrapperField(this, 8, proto.Datum.oneofGroups_[0], value);
-};
-
-
-/**
- * Clears the message field making it undefined.
- * @return {!proto.Datum} returns this
- */
-proto.Datum.prototype.clearStatus = function() {
-  return this.setStatus(undefined);
-};
-
-
-/**
- * Returns whether this field is set.
- * @return {boolean}
- */
-proto.Datum.prototype.hasStatus = function() {
-  return jspb.Message.getField(this, 8) != null;
+  return jspb.Message.getField(this, 6) != null;
 };
 
 
@@ -2072,6 +2034,43 @@ proto.Datum.prototype.clearArrayvalue = function() {
  */
 proto.Datum.prototype.hasArrayvalue = function() {
   return jspb.Message.getField(this, 11) != null;
+};
+
+
+/**
+ * optional OperationStatus status = 20;
+ * @return {?proto.OperationStatus}
+ */
+proto.Datum.prototype.getStatus = function() {
+  return /** @type{?proto.OperationStatus} */ (
+    jspb.Message.getWrapperField(this, proto.OperationStatus, 20));
+};
+
+
+/**
+ * @param {?proto.OperationStatus|undefined} value
+ * @return {!proto.Datum} returns this
+*/
+proto.Datum.prototype.setStatus = function(value) {
+  return jspb.Message.setWrapperField(this, 20, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.Datum} returns this
+ */
+proto.Datum.prototype.clearStatus = function() {
+  return this.setStatus(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.Datum.prototype.hasStatus = function() {
+  return jspb.Message.getField(this, 20) != null;
 };
 
 
