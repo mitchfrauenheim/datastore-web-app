@@ -2,6 +2,7 @@ const TimeRangeFilterCriteria = require("./TimeRangeFilterCriteria");
 const AttributeFilterCriteria = require("./AttributeFilterCriteria");
 const PvFilterCriteria = require("./PvFilterCriteria");
 const FilterConstants = require("../Constants");
+const AnnotationFilterCriteria = require("./AnnotationFilterCriteria");
 
 class QueryFilter {
 
@@ -17,6 +18,7 @@ class QueryFilter {
         this.timeRangeCriteria = null;
         this.attributeCriteriaList = [];
         this.pvCriteriaList = [];
+        this.annotationCriteria = null;
     }
 
     get snapshotId() {
@@ -94,6 +96,20 @@ class QueryFilter {
         }
     }
 
+    addAnnotationCriteria(annotationNamePattern) {
+        console.log("QueryFilter.addAnnotationCriteria()");
+        this.annotationCriteria = new AnnotationFilterCriteria(annotationNamePattern);
+    }
+
+    get annotationCriteriaButtonLabel() {
+        console.log("QueryFilter.annotationCriteriaButtonLabel()");
+        if (this.annotationCriteria === null) {
+            return "Add";
+        } else {
+            return "Update";
+        }
+    }
+
     get criteriaList() {
         console.log("QueryFilter.criteriaList()");
         let result = []
@@ -105,6 +121,9 @@ class QueryFilter {
         }
         for (const pvCriteria of this.pvCriteriaList) {
             result.push(pvCriteria);
+        }
+        if (this.annotationCriteria !== null) {
+            result.push(this.annotationCriteria);
         }
         return result;
     }
@@ -141,6 +160,10 @@ class QueryFilter {
                 params[pvCriteriaName] = pvPattern;
                 pvCount = pvCount + 1;
             }
+        }
+
+        if (this.annotationCriteria !== null) {
+            params[FilterConstants.ANNOTATIONPATTERN] = this.annotationCriteria.annotationNamePattern;
         }
 
     }
@@ -195,6 +218,12 @@ class QueryFilter {
             }
         }
 
+        // handle annotation param
+        const annotationNamePattern = searchParams.get(FilterConstants.ANNOTATIONPATTERN);
+        if (annotationNamePattern != null) {
+            this.addAnnotationCriteria(annotationNamePattern);
+        }
+
     }
 
     deleteCriteria(criteria) {
@@ -202,6 +231,9 @@ class QueryFilter {
         if (this.timeRangeCriteria === criteria) {
             console.log("deleting time range criteria: " + criteria.displayString);
             this.timeRangeCriteria = null;
+        } else if (this.annotationCriteria === criteria) {
+            console.log("deleting annotation criteria: " + criteria.displayString);
+            this.annotationCriteria = null;
         } else {
             let index = this.pvCriteriaList.indexOf(criteria);
             if (index !== -1) {

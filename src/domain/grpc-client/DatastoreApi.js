@@ -13,6 +13,7 @@ const SnapshotDataPageModel = require("../models/SnapshotDataPageModel");
 const Pv = require("../models/Pv");
 const Constants = require("../Constants");
 const SnapshotDataPageQueryParams = require("../models/SnapshotDataPageQueryParams");
+const Annotation = require("../models/Annotation");
 
 class DatastoreApi {
 
@@ -580,6 +581,57 @@ class DatastoreApi {
                 resultList = resultList
                     .map((pv) => {
                         return new Pv(pv);
+                    });
+                return resultHandler(resultList);
+            }
+        });
+    }
+
+    queryListAnnotationsUsingFilter(filter, resultHandler, noResultHandler, errorHandler) {
+        
+        // Executes GRPC listAnnotations query API.
+        
+        console.log("DatastoreApi.queryListAnnotationsUsingFilter()");
+
+        // filter must attribute or pv criteria
+        let valid = false;
+
+        let annotationPattern = "";
+        if (filter.annotationCriteria !== null) {
+            annotationPattern = filter.annotationCriteria.annotationNamePattern;
+            valid = true;
+        }
+
+        // check if query is valid, e.g., at least one filter applied
+        if (!valid) {
+            const errorMsg = "error: no filter criteria specified";
+            console.log(errorMsg);
+            return errorHandler(errorMsg);
+        }
+
+        console.log("annotationPattern: " + annotationPattern);
+
+        let query = new Query();
+        query.setQuery(annotationPattern);
+        // execute query
+        this.client.listAnnotations(query, {}, (err, response) => {
+
+            if (err) {
+                return this.handleApiError(err, errorHandler);
+
+            } else {
+                let resultList = response?.getAnnotationsList() || [];
+                console.log(
+                    "listAnnotations query success, result length: " +
+                    resultList.length);
+                if (resultList.length === 0) {
+                    const errorMsg = "query result is empty";
+                    console.log(errorMsg);
+                    return noResultHandler(errorMsg);
+                }
+                resultList = resultList
+                    .map((annotation) => {
+                        return new Annotation(annotation);
                     });
                 return resultHandler(resultList);
             }

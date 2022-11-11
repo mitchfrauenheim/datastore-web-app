@@ -14,6 +14,9 @@ const Layout = () => {
                     <li>
                         <Link to="/pvList">Explore PVs</Link>
                     </li>
+                    <li>
+                        <Link to="/annotationList">Explore Annotations</Link>
+                    </li>
                 </ul>
             </nav>
 

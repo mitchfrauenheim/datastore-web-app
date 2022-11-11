@@ -11,6 +11,7 @@ const HomePage = () => {
                 </p>
                 <Link className="App-link" to="/snapshotList">explore snapshots</Link>
                 <Link className="App-link" to="/pvList">explore PVs</Link>
+                <Link className="App-link" to="/annotationList">explore annotations</Link>
             </header>
         </div>
     );

@@ -1,0 +1,99 @@
+import React, {useEffect, useState} from "react";
+import QueryFilter from "../../domain/filter/QueryFilter";
+import {useSearchParams} from "react-router-dom";
+import FilterEditPanel from "./FilterEditPanel";
+import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
+import QueryResultsPanel from "./QueryResultsPanel";
+
+export default function AnnotationListPage({client}) {
+
+    let [filter, setFilter] = useState(new QueryFilter());
+    let [filterCriteria, setFilterCriteria] = useState([]);
+    let [annotationList, setAnnotationList] = useState([]);
+    let [queryErrorMsg, setQueryErrorMsg] = useState(null);
+
+    let [searchParams, setSearchParams] = useSearchParams();
+
+    let handledParams = false;
+
+    useEffect(() => {
+        console.log("AnnotationListPage.useEffect()");
+        if (handledParams) return;
+        handledParams = true;
+        console.log("handling URL parameters");
+        applyUrlParams();
+    }, [searchParams]);
+
+    function applyUrlParams() {
+        console.log("AnnotationListPage.applyUrlParams()");
+        filter.initFromUrlParams(searchParams);
+        setFilterCriteria(filter.criteriaList);
+        if (filter.criteriaList.length > 0) {
+            getAnnotationList();
+        } else {
+            setAnnotationList([]);
+        }
+    }
+
+    function updateCriteria() {
+        console.log("AnnotationListPage.updateCriteria()");
+        setFilterCriteria(filter.criteriaList);
+    }
+
+    function handleDeleteCriteria(criteria) {
+        console.log("AnnotationListPage.handleDeleteCriteria(): " + criteria.displayString);
+        filter.deleteCriteria(criteria);
+        updateCriteria();
+    }
+
+    function handleSubmit() {
+        console.log("AnnotationListPage.handleSubmit()");
+        setQueryErrorMsg(null);
+        setSearchParams(filter.urlParams);
+    }
+
+    function handleReset() {
+        console.log("AnnotationListPage.handleReset()");
+        filter.reset();
+        setSearchParams({});
+        setFilterCriteria([]);
+        setAnnotationList([]);
+        setQueryErrorMsg(null);
+    }
+
+    function handleQueryResult(resultList) {
+        console.log("AnnotationListPage.handleQueryResult()");
+        setAnnotationList(resultList);
+    }
+
+    function handleQueryNoResult(errorMsg) {
+        console.log("AnnotationListPage.handleQueryNoResult()");
+        setQueryErrorMsg(errorMsg);
+    }
+
+    function handleQueryError(errorMsg) {
+        console.log("AnnotationListPage.handleQueryError()");
+        setQueryErrorMsg(errorMsg);
+    }
+
+    function getAnnotationList() {
+        console.log("AnnotationListPage.getAnnotationList()");
+        client.queryListAnnotationsUsingFilter(
+            filter, handleQueryResult, handleQueryNoResult, handleQueryError);
+    }
+
+    return (
+        <div>
+            <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
+            <FilterCriteriaPanel
+                criteriaList={filterCriteria}
+                handleSubmitFunction={handleSubmit}
+                handleResetFunction={handleReset}
+                handleDeleteCriteriaFunction={handleDeleteCriteria}
+                heading="Annotation List Filter Criteria"
+                beginPrompt="To begin, add criteria to Annotation list filter." />
+            <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg}/>
+        </div>
+    );
+
+}
