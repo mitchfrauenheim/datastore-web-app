@@ -13,6 +13,7 @@ import DatastoreApi from "./domain/grpc-client/DatastoreApi";
 import PvListPage from "./pages/PvListPage/PvListPage";
 import PvPage from "./pages/PvPage/PvPage";
 import AnnotationListPage from "./pages/AnnotationListPage/AnnotationListPage";
+import AnnotationPage from "./pages/AnnotationPage/AnnotationPage";
 
 const datastoreApi = new DatastoreApi();
 datastoreApi.connect();
@@ -28,6 +29,7 @@ export default function App() {
                     <Route path="pvList" element={<PvListPage client={datastoreApi}/>} />
                     <Route path="pv" element={<PvPage client={datastoreApi}/>} />
                     <Route path="annotationList" element={<AnnotationListPage client={datastoreApi}/>} />
+                    <Route path="annotation" element={<AnnotationPage client={datastoreApi}/>} />
                     <Route path="*" element={<NoPage />} />
                 </Route>
             </Routes>
