@@ -1,6 +1,6 @@
-const FilterCriteriaBase = require("./FilterCriteriaBase");
+import FilterCriteriaBase from "./FilterCriteriaBase";
 
-class AnnotationFilterCriteria extends FilterCriteriaBase {
+export default class AnnotationFilterCriteria extends FilterCriteriaBase {
 
     constructor(annotationNamePattern) {
         super();
@@ -20,5 +20,3 @@ class AnnotationFilterCriteria extends FilterCriteriaBase {
     }
 
 }
-
-module.exports = AnnotationFilterCriteria

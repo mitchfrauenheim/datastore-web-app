@@ -1,6 +1,6 @@
-const {epochSecondsToLocaleString} = require("../utils/timestamp-utils");
+import { epochSecondsToLocaleString } from "../utils/timestamp-utils";
 
-class Pv {
+export default class Pv {
 
     constructor(apiPv) {
         this.apiPv = apiPv;
@@ -85,5 +85,3 @@ class Pv {
     }
 
 }
-
-module.exports = Pv

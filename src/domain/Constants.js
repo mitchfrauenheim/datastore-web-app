@@ -1,4 +1,4 @@
-class Constants {}
+export default class Constants {}
 
 Constants.ID = "id";
 Constants.FIRSTTIME = "firstTime"
@@ -13,4 +13,3 @@ Constants.SNAPSHOTDATAPAGESIZE = 100
 
 Object.freeze(Constants); // make constants immutable
 
-module.exports = Constants

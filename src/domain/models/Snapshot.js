@@ -1,6 +1,6 @@
-const {epochSecondsToLocaleString, epochSecondsToIsoString} = require("../utils/timestamp-utils");
+import {epochSecondsToLocaleString, epochSecondsToIsoString} from "../utils/timestamp-utils";
 
-class Snapshot {
+export default class Snapshot {
 
     constructor(apiSnapshot) {
         this.apiSnapshot = apiSnapshot;
@@ -109,5 +109,3 @@ class Snapshot {
     }
 
 }
-
-module.exports = Snapshot

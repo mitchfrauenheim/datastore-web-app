@@ -1,6 +1,6 @@
-const FilterCriteriaBase = require("./FilterCriteriaBase");
+import FilterCriteriaBase from "./FilterCriteriaBase";
 
-class TimeRangeFilterCriteria extends FilterCriteriaBase {
+export default class TimeRangeFilterCriteria extends FilterCriteriaBase {
 
     constructor(firstTime, lastTime) {
         super();
@@ -29,5 +29,3 @@ class TimeRangeFilterCriteria extends FilterCriteriaBase {
     }
 
 }
-
-module.exports = TimeRangeFilterCriteria

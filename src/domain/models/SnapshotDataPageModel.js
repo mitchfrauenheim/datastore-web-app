@@ -1,6 +1,6 @@
-const SnapshotDataRow = require("./SnapshotDataRowModel");
+import SnapshotDataRow from "./SnapshotDataRowModel";
 
-class SnapshotDataPageModel {
+export default class SnapshotDataPageModel {
 
     constructor(apiPaginatedResponse, snapshotPvList, firstTimeMillis, lastTimeMillis, pageQueryParams) {
 
@@ -103,5 +103,3 @@ class SnapshotDataPageModel {
         this._snapshotDataRowList = snapshotDataRowList;
     }
 }
-
-module.exports = SnapshotDataPageModel

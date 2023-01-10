@@ -1,6 +1,6 @@
-const {epochSecondsToLocaleString} = require("../utils/timestamp-utils");
+import { epochSecondsToLocaleString } from "../utils/timestamp-utils";
 
-class SnapshotDataRowModel {
+export default class SnapshotDataRowModel {
 
     constructor(timestamp, columnValueList) {
         this.timestamp = timestamp;
@@ -28,5 +28,3 @@ class SnapshotDataRowModel {
     }
 
 }
-
-module.exports = SnapshotDataRowModel

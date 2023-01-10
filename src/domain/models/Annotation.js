@@ -1,4 +1,4 @@
-class Annotation {
+export default class Annotation {
 
     constructor(apiAnnotation) {
         this.apiAnnotation = apiAnnotation;
@@ -14,4 +14,3 @@ class Annotation {
 
 }
 
-module.exports = Annotation

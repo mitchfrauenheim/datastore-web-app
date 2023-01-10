@@ -1,21 +1,21 @@
-const {QueryServiceClient} = require("./grpc-proto/query_grpc_web_pb");
-const {Timestamp, Attribute} = require("./grpc-proto/common_pb");
-const {
+import {QueryServiceClient} from "./grpc-proto/query_grpc_web_pb";
+import {Timestamp, Attribute} from "./grpc-proto/common_pb";
+import {
     TimestampClause,
     SnapshotTimestampClauseSelector,
     SnapshotTimestampClausePredicate,
     SnapshotQuery,
     Query,
     IdQuery
-} = require("./grpc-proto/query_pb");
-const Snapshot = require("../models/Snapshot");
-const SnapshotDataPageModel = require("../models/SnapshotDataPageModel");
-const Pv = require("../models/Pv");
-const Constants = require("../Constants");
-const SnapshotDataPageQueryParams = require("../models/SnapshotDataPageQueryParams");
-const Annotation = require("../models/Annotation");
+} from "./grpc-proto/query_pb";
+import Snapshot from "../models/Snapshot";
+import SnapshotDataPageModel from "../models/SnapshotDataPageModel";
+import Pv from "../models/Pv";
+import Constants from "../Constants";
+import SnapshotDataPageQueryParams from "../models/SnapshotDataPageQueryParams";
+import Annotation from "../models/Annotation";
 
-class DatastoreApi {
+export default class DatastoreApi {
 
     constructor() {
         this.client = null;
@@ -640,4 +640,3 @@ class DatastoreApi {
 
 }
 
-module.exports = DatastoreApi

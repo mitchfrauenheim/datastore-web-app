@@ -1,4 +1,4 @@
-class SnapshotDataPageQueryParams {
+export default class SnapshotDataPageQueryParams {
 
     constructor(
         snapshot,
@@ -23,5 +23,3 @@ class SnapshotDataPageQueryParams {
     }
 
 }
-
-module.exports = SnapshotDataPageQueryParams

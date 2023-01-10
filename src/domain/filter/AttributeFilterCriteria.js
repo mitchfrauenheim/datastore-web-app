@@ -1,6 +1,6 @@
-const FilterCriteriaBase = require("./FilterCriteriaBase");
+import FilterCriteriaBase from "./FilterCriteriaBase";
 
-class AttributeFilterCriteria extends FilterCriteriaBase {
+export default class AttributeFilterCriteria extends FilterCriteriaBase {
 
     constructor(name, value) {
         super();
@@ -29,5 +29,3 @@ class AttributeFilterCriteria extends FilterCriteriaBase {
     }
 
 }
-
-module.exports = AttributeFilterCriteria

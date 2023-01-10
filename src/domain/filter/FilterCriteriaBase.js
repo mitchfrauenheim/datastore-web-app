@@ -1,4 +1,4 @@
-class FilterCriteriaBase {
+export default class FilterCriteriaBase {
 
     constructor() {
         if (this.constructor == FilterCriteriaBase) {
@@ -11,5 +11,3 @@ class FilterCriteriaBase {
     }
 
 }
-
-module.exports = FilterCriteriaBase

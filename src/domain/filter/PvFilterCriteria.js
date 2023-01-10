@@ -1,6 +1,6 @@
-const FilterCriteriaBase = require("./FilterCriteriaBase");
+import FilterCriteriaBase from "./FilterCriteriaBase";
 
-class PvFilterCriteria extends FilterCriteriaBase {
+export default class PvFilterCriteria extends FilterCriteriaBase {
 
     constructor(pvPattern) {
         super();
@@ -20,5 +20,3 @@ class PvFilterCriteria extends FilterCriteriaBase {
     }
 
 }
-
-module.exports = PvFilterCriteria

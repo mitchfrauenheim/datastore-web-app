@@ -1,10 +1,10 @@
-const TimeRangeFilterCriteria = require("./TimeRangeFilterCriteria");
-const AttributeFilterCriteria = require("./AttributeFilterCriteria");
-const PvFilterCriteria = require("./PvFilterCriteria");
-const FilterConstants = require("../Constants");
-const AnnotationFilterCriteria = require("./AnnotationFilterCriteria");
+import TimeRangeFilterCriteria from "./TimeRangeFilterCriteria";
+import AttributeFilterCriteria from "./AttributeFilterCriteria";
+import PvFilterCriteria from "./PvFilterCriteria";
+import FilterConstants from "../Constants";
+import AnnotationFilterCriteria from "./AnnotationFilterCriteria";
 
-class QueryFilter {
+export default class QueryFilter {
 
     constructor() {
         this.reset();
@@ -251,4 +251,3 @@ class QueryFilter {
 
 }
 
-module.exports = QueryFilter
