@@ -15,10 +15,32 @@ import PvPage from "./pages/PvPage/PvPage";
 import AnnotationListPage from "./pages/AnnotationListPage/AnnotationListPage";
 import AnnotationPage from "./pages/AnnotationPage/AnnotationPage";
 
+import { getClientConfig } from "./domain/node-api/config";
+
 const datastoreApi = new DatastoreApi();
-datastoreApi.connect();
 
 export default function App() {
+
+    useEffect(() => {
+
+        const connectDatastoreClient = async () => {
+            // get GRPC configuration from server api
+            const clientConfig = await getClientConfig();
+            if (!clientConfig) {
+                console.log("no client config api result");
+            }
+            const { hostname } = clientConfig;
+            if (!hostname) {
+                console.log("no hostname specified in client config")
+            }
+            console.log("connecting hostname: " + hostname);
+            datastoreApi.connect(hostname);
+        }
+
+        connectDatastoreClient().catch(console.error);
+
+    }, []);
+
     return (
         <BrowserRouter>
             <Routes>

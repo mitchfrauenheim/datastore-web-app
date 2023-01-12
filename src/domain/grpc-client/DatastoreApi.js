@@ -21,9 +21,10 @@ export default class DatastoreApi {
         this.client = null;
     }
 
-    connect() {
+    connect(hostname) {
         console.log("DatastoreApi.connect()");
-        this.client = new QueryServiceClient("http://localhost:8080", null, null);
+        console.log("connecting to: " + hostname);
+        this.client = new QueryServiceClient(hostname, null, null);
     }
 
     handleApiError(error, errorHandler) {
