@@ -17,14 +17,9 @@ import Annotation from "../models/Annotation";
 
 export default class DatastoreApi {
 
-    constructor() {
-        this.client = null;
-    }
-
-    connect(hostname) {
-        console.log("DatastoreApi.connect()");
-        console.log("connecting to: " + hostname);
-        this.client = new QueryServiceClient(hostname, null, null);
+    constructor(hostname) {
+        console.log("DatastoreApi(): hostname: " + hostname);
+        this.client = new QueryServiceClient(hostname, null, null);;
     }
 
     handleApiError(error, errorHandler) {

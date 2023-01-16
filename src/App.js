@@ -19,8 +19,6 @@ import Constants from "./domain/Constants";
 
 import { getClientConfig } from "./domain/node-api/config";
 
-const datastoreApi = new DatastoreApi();
-
 export default function App() {
 
     /*
@@ -34,7 +32,7 @@ export default function App() {
      */
 
     let [datastoreConfig, setDatastoreConfig] = useState("");
-    let [isConnected, setIsConnected] = useState(false);
+    let [datastoreApi, setDatastoreApi] = useState(null);
     let isConnecting = false;
 
     useEffect(() => {
@@ -59,9 +57,9 @@ export default function App() {
                 hostname = Constants.DEFAULTHOSTNAME;
                 console.log("using default hostname: " + hostname);
             }
-            datastoreApi.connect(hostname);
+            const apiObj = new DatastoreApi(hostname);
             setDatastoreConfig(hostname);
-            setIsConnected(true);
+            setDatastoreApi(apiObj);
         }
 
         console.log("App.useEffect()");
@@ -92,14 +90,14 @@ export default function App() {
     function renderConnectingPanel() {
         return (
             <div>
-                <p>Connecting to Datastore...</p>;
+                <p>Initializing Datastore client...</p>;
             </div>
         );
     }
 
     return (
         <div>
-            {(isConnected) ? renderRouter() : renderConnectingPanel()}
+            {(datastoreApi !== null) ? renderRouter() : renderConnectingPanel()}
         </div>
     );
 
