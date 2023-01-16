@@ -41,24 +41,24 @@ export default function App() {
             console.log("App.useEffect.connectDatastoreClient()");
             // get GRPC configuration from server api
             const clientConfig = await getClientConfig();
-            let hostname = "";
+            let configHostname = "";
             if (!clientConfig) {
                 console.log("no client config api result");
             } else {
-                const {configHostname} = clientConfig;
-                if (!configHostname) {
+                const {hostname} = clientConfig;
+                if (!hostname) {
                     console.log("no hostname specified in client config")
                 } else {
-                    hostname = configHostname;
+                    configHostname = hostname;
                 }
             }
             // default to localhost if nothing specified in config
-            if ( !hostname || hostname === "") {
-                hostname = Constants.DEFAULTHOSTNAME;
-                console.log("using default hostname: " + hostname);
+            if ( !configHostname || configHostname === "") {
+                configHostname = Constants.DEFAULTHOSTNAME;
+                console.log("using default hostname: " + configHostname);
             }
-            const apiObj = new DatastoreApi(hostname);
-            setDatastoreConfig(hostname);
+            const apiObj = new DatastoreApi(configHostname);
+            setDatastoreConfig(configHostname);
             setDatastoreApi(apiObj);
         }
 
