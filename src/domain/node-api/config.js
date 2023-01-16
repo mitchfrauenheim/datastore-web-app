@@ -1,4 +1,5 @@
 export async function getClientConfig() {
+    console.log("config.getClientConfig()")
     return await fetch(`/api/config/getClientConfig`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -12,6 +13,6 @@ export async function getClientConfig() {
             return response.json();
         })
         .catch((err) => {
-            console.log(err);
+            console.log("exception calling fetch: " + err);
         });
 }

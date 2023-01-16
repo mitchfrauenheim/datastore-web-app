@@ -1,12 +1,12 @@
 import { Outlet, Link } from "react-router-dom";
 
-const Layout = () => {
+const Layout = ({datastoreConfig}) => {
     return (
         <>
             <nav style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
                 <ul>
                     <li>
-                        <Link to="/">Home</Link>
+                        <Link to="/">Data Explorer Home</Link>
                     </li>
                     <li>
                         <Link to="/snapshotList">Explore Snapshots</Link>
@@ -18,6 +18,7 @@ const Layout = () => {
                         <Link to="/annotationList">Explore Annotations</Link>
                     </li>
                 </ul>
+                <p><i>Datastore configuration: {datastoreConfig}</i></p>
             </nav>
 
             <Outlet />
