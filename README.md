@@ -44,6 +44,8 @@ It was created using [create-react-app](https://create-react-app.dev/) (CRA) so 
 * npm test - Launches the test runner in interactive watch mode.  I need to add test coverage so there isn't much going on here, yet.
 * npm run build - This initiates a "production" build of the application, bundled and optimized for the best performance.  This can be deployed by a simple static file server like [npm serve](https://www.npmjs.com/package/serve), or by a Node.js server.  The latter option is discussed in more detail below.
 
+The package.json file includes a development proxy configuration, ("proxy": "http://localhost:9000").  This is needed when the web app is running under the dev server (on port 3000) to avoid "Cross-Origin Resource Sharing" (CORS) issues because the server is running on a different network port.  This configuration tells the development server to proxy any unknown requests to the API server, avoiding the need to set up an explicit redirect for use during development.
+
 #### Node.js server deployment
 
 The production build of the application can be deployed via a Node.js server, such as the simple server in the [datastore-server-app](https://github.com/craigmcchesney/datastore-server-app) repo.  I'm using this approach so that the web app can be deployed without a static Apache web server (and IT help), and so that we can augment the datastore Java server APIs with additional functionality.  Currently the server only provides a config API for retrieving the gRPC host/port connection details and a placeholder authentication API.
