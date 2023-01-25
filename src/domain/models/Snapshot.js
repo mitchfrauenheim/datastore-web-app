@@ -1,4 +1,4 @@
-import {epochSecondsToLocaleString, epochSecondsToIsoString} from "../utils/timestamp-utils";
+import {epochSecondsToLocaleString, epochSecondsToIsoString, epochMillisToIsoString} from "../utils/timestamp-utils";
 
 export default class Snapshot {
 
@@ -38,12 +38,18 @@ export default class Snapshot {
         return this.apiSnapshot.getSnapshottimestamp().getNanoseconds();
     }
 
+    get snapshotTimestampAsMillis() {
+        // combine seconds and nanos, and return as millis
+        return (this.snapshotTimestampSeconds * 1000)
+            + (Math.round(this.snapshotTimestampNanos/1000000));
+    }
+
     get snapshotTimestampLocaleString() {
         return epochSecondsToLocaleString(this.snapshotTimestampSeconds);
     }
 
     get snapshotTimestampIsoString() {
-        return epochSecondsToIsoString(this.snapshotTimestampSeconds);
+        return epochMillisToIsoString(this.snapshotTimestampAsMillis);
     }
 
     get firstTimestampSeconds() {
@@ -65,7 +71,7 @@ export default class Snapshot {
     }
 
     get firstTimestampIsoString() {
-        return epochSecondsToIsoString(this.firstTimestampSeconds);
+        return epochMillisToIsoString(this.firstTimestampAsMillis);
     }
 
     get lastTimestampSeconds() {
@@ -87,7 +93,7 @@ export default class Snapshot {
     }
 
     get lastTimestampIsoString() {
-        return epochSecondsToIsoString(this.lastTimestampSeconds);
+        return epochMillisToIsoString(this.lastTimestampAsMillis);
     }
 
     get pvNames() {

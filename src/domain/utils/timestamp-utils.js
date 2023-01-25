@@ -5,3 +5,7 @@ export const epochSecondsToLocaleString = (epochSeconds) => {
 export const epochSecondsToIsoString = (epochSeconds) => {
     return new Date(epochSeconds*1000).toISOString();
 }
+
+export const epochMillisToIsoString = (epochMillis) => {
+    return new Date(epochMillis).toISOString();
+}

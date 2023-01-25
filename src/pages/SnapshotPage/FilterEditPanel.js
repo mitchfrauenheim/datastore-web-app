@@ -26,10 +26,8 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
                 <label>
                     time range filter
                     <input type="text" ref={firstTimeRef}
-                           placeholder="2022-09-21T03:03:19.000Z"
                            defaultValue={filter.minFirstTime}/>
                     <input type="text" ref={lastTimeRef}
-                           placeholder="2022-09-21T03:03:19.999Z"
                            defaultValue={filter.maxLastTime}/>
                     <button onClick={handleAddTimeRangeFilter}>
                         {filter.timeRangeCriteriaButtonLabel}
