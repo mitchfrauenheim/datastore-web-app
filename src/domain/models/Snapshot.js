@@ -52,6 +52,10 @@ export default class Snapshot {
         return epochMillisToIsoString(this.snapshotTimestampAsMillis);
     }
 
+    get snapshotTimestampDisplayString() {
+        return this.snapshotTimestampIsoString;
+    }
+
     get firstTimestampSeconds() {
         return this.apiSnapshot.getFirst().getEpochseconds();
     }
@@ -74,6 +78,10 @@ export default class Snapshot {
         return epochMillisToIsoString(this.firstTimestampAsMillis);
     }
 
+    get firstTimestampDisplayString() {
+        return this.firstTimestampIsoString;
+    }
+
     get lastTimestampSeconds() {
         return this.apiSnapshot.getLast().getEpochseconds();
     }
@@ -94,6 +102,10 @@ export default class Snapshot {
 
     get lastTimestampIsoString() {
         return epochMillisToIsoString(this.lastTimestampAsMillis);
+    }
+
+    get lastTimestampDisplayString() {
+        return this.lastTimestampIsoString;
     }
 
     get pvNames() {

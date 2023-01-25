@@ -15,8 +15,8 @@ export default function PvDetailsPanel({pv}) {
                                     (view snapshots)
                             </Link>
                     </p>
-                    <b>First Time: </b><p>{pv.firstTimestampLocaleString}</p>
-                    <b>Last Time: </b><p>{pv.lastTimestampLocaleString}</p>
+                    <b>First Time: </b><p>{pv.firstTimestampDisplayString}</p>
+                    <b>Last Time: </b><p>{pv.lastTimestampDisplayString}</p>
                     <b>Provider ID: </b><p>{pv.providerId}</p>
                     <div></div>
                     <b>Field Names and Types:</b>

@@ -38,11 +38,11 @@ export default function SnapshotListTable({ snapshots = [] }) {
                             <Link
                                 onClick={() => handleClickSnapshotLink(snapshot)}
                                 to={`/snapshot?id=${snapshot.id}`}>
-                                {snapshot.snapshotTimestampLocaleString || ""}
+                                {snapshot.snapshotTimestampDisplayString || ""}
                             </Link>
                         </td>
-                        <td>{snapshot?.firstTimestampLocaleString || ""}</td>
-                        <td>{snapshot?.lastTimestampLocaleString || ""}</td>
+                        <td>{snapshot?.firstTimestampDisplayString || ""}</td>
+                        <td>{snapshot?.lastTimestampDisplayString || ""}</td>
                         <td>
                             <PvNamesWithLinksParagraph objectWithPvs={snapshot}/>
                         </td>

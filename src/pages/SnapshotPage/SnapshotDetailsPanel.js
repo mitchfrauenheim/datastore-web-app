@@ -10,9 +10,9 @@ export default function SnapshotDetailsPanel({snapshotDetails, errorMsg}) {
                 <h1>Snapshot Details</h1>
                 <b>ID: </b><p>{snapshotDetails.id}</p>
                 <b>Size: </b><p>{snapshotDetails.size}</p>
-                <b>Trigger Timestamp: </b><p>{snapshotDetails.snapshotTimestampLocaleString}</p>
-                <b>First Sample Time: </b><p>{snapshotDetails.firstTimestampLocaleString}</p>
-                <b>Last Sample Time: </b><p>{snapshotDetails.lastTimestampLocaleString}</p>
+                <b>Trigger Timestamp: </b><p>{snapshotDetails.snapshotTimestampDisplayString}</p>
+                <b>First Sample Time: </b><p>{snapshotDetails.firstTimestampDisplayString}</p>
+                <b>Last Sample Time: </b><p>{snapshotDetails.lastTimestampDisplayString}</p>
                 <b>PV Names: </b>
                 <p/>
                 <PvNamesWithLinksParagraph objectWithPvs={snapshotDetails}/>

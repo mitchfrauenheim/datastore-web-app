@@ -25,8 +25,8 @@ export default function PvListTable({ pvs = [] }) {
                                     {pv.name}
                                 </Link>
                             </td>
-                            <td> { pv.firstTimestampLocaleString }</td>
-                            <td> { pv.lastTimestampLocaleString }</td>
+                            <td> { pv.firstTimestampDisplayString }</td>
+                            <td> { pv.lastTimestampDisplayString }</td>
                             <td> { pv.providerId }</td>
                             <td>
                                 <FieldNameTypeTable objectWithFields={pv}/>

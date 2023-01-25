@@ -1,4 +1,4 @@
-import { epochSecondsToLocaleString } from "../utils/timestamp-utils";
+import {epochMillisToIsoString, epochSecondsToLocaleString} from "../utils/timestamp-utils";
 
 export default class Pv {
 
@@ -60,8 +60,22 @@ export default class Pv {
         return this.apiPv.getFirst().getNanoseconds();
     }
 
+    get firstTimestampAsMillis() {
+        // combine seconds and nanos, and return as millis
+        return (this.firstTimestampSeconds * 1000)
+            + (Math.round(this.firstTimestampNanos/1000000));
+    }
+
     get firstTimestampLocaleString() {
         return epochSecondsToLocaleString(this.firstTimestampSeconds);
+    }
+
+    get firstTimestampIsoString() {
+        return epochMillisToIsoString(this.firstTimestampAsMillis);
+    }
+
+    get firstTimestampDisplayString() {
+        return this.firstTimestampIsoString;
     }
 
     get lastTimestampSeconds() {
@@ -72,8 +86,22 @@ export default class Pv {
         return this.apiPv.getLast().getNanoseconds();
     }
 
+    get lastTimestampAsMillis() {
+        // combine seconds and nanos, and return as millis
+        return (this.lastTimestampSeconds * 1000)
+            + (Math.round(this.lastTimestampNanos/1000000));
+    }
+
     get lastTimestampLocaleString() {
         return epochSecondsToLocaleString(this.lastTimestampSeconds);
+    }
+
+    get lastTimestampIsoString() {
+        return epochMillisToIsoString(this.lastTimestampAsMillis);
+    }
+
+    get lastTimestampDisplayString() {
+        return this.lastTimestampIsoString;
     }
 
     get providerId() {
