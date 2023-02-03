@@ -7,8 +7,14 @@ import SnapshotPage from "./pages/SnapshotPage/SnapshotPage";
 import NoPage from "./pages/NoPage";
 
 import './App.css';
-
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import CssBaseline from '@mui/material/CssBaseline'
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet"
+
 import DatastoreApi from "./domain/grpc-client/DatastoreApi";
 import PvListPage from "./pages/PvListPage/PvListPage";
 import PvPage from "./pages/PvPage/PvPage";
@@ -18,6 +24,7 @@ import AnnotationPage from "./pages/AnnotationPage/AnnotationPage";
 import Constants from "./domain/Constants";
 
 import { getClientConfig } from "./domain/node-api/config";
+
 
 export default function App() {
 
@@ -97,6 +104,12 @@ export default function App() {
 
     return (
         <div>
+            {/* Helmet operates like a <head> element in traditional HTML. This meta tag is necessary for MUI's responsiveness on different size devices */}
+            <Helmet>
+                <meta name="viewport" content="initial-scale=1, width=device-width" />
+            </Helmet>
+            {/* CSS Baseline corrects inconsistencies across browsers so MUI components appear the same universally */}
+            <CssBaseline />
             {(datastoreApi !== null) ? renderRouter() : renderConnectingPanel()}
         </div>
     );
