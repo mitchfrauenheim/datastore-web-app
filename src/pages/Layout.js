@@ -8,7 +8,10 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import CameraIcon from '@mui/icons-material/Camera';
+import HomeIcon from '@mui/icons-material/Home';
+import ModeIcon from '@mui/icons-material/Mode'
+import StickyNote2Icon from '@mui/icons-material/StickyNote2';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -18,23 +21,28 @@ import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { Camera } from "@mui/icons-material";
 
 const navLinks = [
     {
         name: "Data Explorer Home",
-        path: "/"
+        path: "/",
+        icon: <HomeIcon />
     },
     {
         name: "Explore Snapshots",
-        path: "/snapshotList"
+        path: "/snapshotList",
+        icon: <CameraIcon />
     },
     {
         name: "Explore PVs",
-        path: "/pvList"
+        path: "/pvList",
+        icon: <StickyNote2Icon />
     },
     {
         name: "Explore Annotations",
-        path: "/annotationList"
+        path: "/annotationList",
+        icon: <ModeIcon />
     }
 ]
 
@@ -58,9 +66,9 @@ function Layout(props) {
                     <ListItem key={link.name} component={Link} to={link.path} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                <InboxIcon />
+                                {link.icon}
                             </ListItemIcon>
-                            <ListItemText primary={link.name} />
+                            <ListItemText sx={{ color: 'grey.700' }} primary={link.name} />
                         </ListItemButton>
                     </ListItem>
                 ))}
