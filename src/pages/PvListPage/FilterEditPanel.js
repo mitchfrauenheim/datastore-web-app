@@ -1,4 +1,5 @@
 import React, {useRef} from "react";
+import NavBar from "../../components/NavBar";
 
 export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
@@ -14,7 +15,7 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            <h1>PV List Filter</h1>
+            <NavBar pageName={"PV List Filter"} />
             <div>
                 <label>
                     PV filter

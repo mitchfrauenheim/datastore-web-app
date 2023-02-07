@@ -1,4 +1,5 @@
 import React, {useRef} from "react";
+import NavBar from '../../components/NavBar'
 
 export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
@@ -32,7 +33,7 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     // remove and just use placeholder instead
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            <h1>Snapshot List Filter</h1>
+            <NavBar pageName={"Snapshot List Filter"} />
             <div>
                 <label>
                     time range filter

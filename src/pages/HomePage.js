@@ -1,9 +1,11 @@
 import logo from "../logo.svg";
 import {Link} from "react-router-dom";
+import NavBar from "../components/NavBar"
 
 const HomePage = ({datastoreConfig}) => {
     return (
         <div className="App">
+            <NavBar pageName={"Home"} />
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>
