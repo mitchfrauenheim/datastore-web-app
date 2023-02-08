@@ -6,7 +6,8 @@ module.exports = {
   theme: {
     fontFamily: {
       'open-sans': ['"Open Sans"', 'sans-serif'],
-      'glegoo': ['Glegoo', 'serif']
+      'glegoo': ['Glegoo', 'serif'],
+      'inter': ['Inter', 'sans-serif']
     },
     extend: {},
   },

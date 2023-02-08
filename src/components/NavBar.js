@@ -1,11 +1,11 @@
 export default function NavBar(props) {
     return (
-        <div id="main-header" className="flex items-end h-24 border-b-2 border-black border-opacity-5">
-        <div id="main-header-content" className="flex ml-6 mb-6 w-11/12">
-            <div id="page-title" className="text-2xl font-semibold">
-                {props.pageName}
+        <div id="main-header" className="flex items-center h-24">
+            <div id="main-header-content" className="flex w-11/12">
+                <div id="page-title" className="text-xl text-slate-800 font-bold">
+                    {props.pageName}
+                </div>
             </div>
         </div>
-    </div>
     );
 }

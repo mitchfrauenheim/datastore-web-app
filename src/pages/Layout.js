@@ -4,15 +4,15 @@ import PageLink from "../components/PageLink"
 const Layout = ({datastoreConfig}) => {
     return (
         <>
-            <div id="page-wrapper" className="flex flex-row w-screen h-screen overflow-hidden font-open-sans">
-                <div id="left-wrapper" className="flex flex-col w-80 bg-slate-200 bg-opacity-40 border-r-2 border-black border-opacity-5 shadow-lg">
-                    <div id="left-header" className="flex items-end h-24 border-b">
-                        <div id="osprey" className="ml-6 mb-6 font-glegoo text-xl font-bold">
+            <div id="page-wrapper" className="flex flex-row w-screen h-screen overflow-hidden font-inter">
+                <div id="left-wrapper" className="flex flex-col w-80 bg-zinc-100 border-r-2 border-black border-opacity-5 shadow-lg">
+                    <div id="left-header" className="flex items-center h-20">
+                        <div id="osprey" className="ml-6 font-glegoo text-2xl text-slate-800 font-bold">
                             <a href="https://ospreydcs.com/" >Osprey DCS </a>
                         </div>
                     </div>
                     <div id="left-body" className="flex flex-col">
-                        <div id="nav-links" className="mx-4 mt-2">
+                        <div id="nav-links" className="mx-4">
                             <PageLink data={{name: "Data Explorer Home",
                                              route: "/",
                                              icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

@@ -1,12 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
-import {createSearchParams, useSearchParams} from "react-router-dom";
+import { createSearchParams, useSearchParams } from "react-router-dom";
 import FilterConstants from "../../domain/Constants";
+import NavBar from "../../components/NavBar";
 
-export default function SnapshotListPage({client}) {
+export default function SnapshotListPage({ client }) {
 
     let [filter, setFilter] = useState(new QueryFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
@@ -36,9 +37,9 @@ export default function SnapshotListPage({client}) {
         } else {
             setSnapshotList([]);
         }
-     }
+    }
 
-    function updateCriteria () {
+    function updateCriteria() {
         console.log("SnapshotListPage.updateCriteria()");
         setFilterCriteria(filter.criteriaList);
     }
@@ -88,16 +89,23 @@ export default function SnapshotListPage({client}) {
     }
 
     return (
-        <div>
-            <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-            <FilterCriteriaPanel
-                criteriaList={filterCriteria}
-                handleSubmitFunction={handleSubmit}
-                handleResetFunction={handleReset}
-                handleDeleteCriteriaFunction={handleDeleteCriteria}
-                heading="Snapshot List Filter Criteria"
-                beginPrompt="To begin, add criteria to snapshot list filter." />
-            <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg}/>
+        <div id="snapshot-wrapper" className="flex flex-col items-center h-full w-full">
+            <div id="snapshot-content" className="w-11/12 h-full mb-8 bg-blue-100">
+                <div id="snapshot-header-wrapper">
+                    <NavBar pageName={"Snapshot List Filter"} />
+                </div>
+                <div id="snapshot-filter-wrapper" className="flex flex-col w-full bg-red-100">
+                    <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria} />
+                </div>
+                <FilterCriteriaPanel
+                    criteriaList={filterCriteria}
+                    handleSubmitFunction={handleSubmit}
+                    handleResetFunction={handleReset}
+                    handleDeleteCriteriaFunction={handleDeleteCriteria}
+                    heading="Snapshot List Filter Criteria"
+                    beginPrompt="To begin, add criteria to snapshot list filter." />
+                <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
+            </div>
         </div>
     );
 
