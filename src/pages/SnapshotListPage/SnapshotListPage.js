@@ -102,7 +102,9 @@ export default function SnapshotListPage({ client }) {
                     <PageTitle pageName={"Snapshot List Filter"} />
                 </div>
                 <div id="snapshot-filter-wrapper" className="page-filter-wrapper">
-                    <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria} />
+                    <FilterEditPanel filter={filter}
+                                     updateCriteriaFunction={updateCriteria}
+                                     handleResetFunction={handleReset} />
                 </div>
                 <FilterCriteriaPanel
                     criteriaList={filterCriteria}

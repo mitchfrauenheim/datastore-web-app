@@ -104,7 +104,9 @@ export default function PvListPage({ client }) {
                     <PageTitle pageName={"PV List Filter"} />
                 </div>
                 <div id="pv-filter-wrapper" className="page-filter-wrapper">
-                    <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria} />
+                    <FilterEditPanel filter={filter}
+                                     updateCriteriaFunction={updateCriteria}
+                                     handleResetFunction={handleReset} />
                 </div>
                 <FilterCriteriaPanel
                     criteriaList={filterCriteria}

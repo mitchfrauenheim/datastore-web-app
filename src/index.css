@@ -20,6 +20,7 @@ code {
     monospace;
 }
 
+/* Classes for __ListPage files */
 .page-wrapper {
   @apply flex flex-col h-full w-full bg-gray-100;
 }
@@ -29,11 +30,17 @@ code {
 }
 
 .page-content {
-  @apply flex flex-col mx-8
+  @apply flex flex-col mx-8;
 }
 
 .page-filter-wrapper {
   @apply flex flex-col w-full px-8 py-4 rounded-xl shadow-md bg-white border border-black border-opacity-5
+}
+
+
+/* Classes for FliterEditPanel files */
+.filter-field-group {
+  @apply flex flex-col mb-4 md:mb-0
 }
 
 .filter-label {

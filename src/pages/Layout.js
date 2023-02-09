@@ -10,7 +10,6 @@ const Layout = ({ datastoreConfig }) => {
                 <Outlet />
             </div>
         </div>
-
     )
 };
 

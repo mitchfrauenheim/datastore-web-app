@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 
-export default function FilterEditPanel({ filter, updateCriteriaFunction }) {
+export default function FilterEditPanel({ filter,
+                                          updateCriteriaFunction,
+                                          handleResetFunction }) {
 
     const firstTimeRef = useRef(null);
     const lastTimeRef = useRef(null);
@@ -44,9 +46,9 @@ export default function FilterEditPanel({ filter, updateCriteriaFunction }) {
     // TODO: using defaultValue in input fields for now to hardwire some meaningful values,
     // remove and just use placeholder instead
     return (
-        <div className="flex flex-col md:flex-row items-center justify-between">
-
-            <div id="time-field" className="flex flex-col mb-4 md:mb-0">
+        <div className="flex flex-col md:flex-row flex-wrap justify-between">
+            
+            <div id="time-field-group" className="filter-field-group">
                 <label className="filter-label">Time Range</label>
                 <input type="text" ref={firstTimeRef}
                     placeholder="2022-09-21T03:03:19.000Z"
@@ -58,7 +60,7 @@ export default function FilterEditPanel({ filter, updateCriteriaFunction }) {
                     className="filter-input" />
             </div>
 
-            <div id="attribute-field" className="flex flex-col mb-4 md:mb-0">
+            <div id="attribute-field-group" className="filter-field-group">
                 <label className="filter-label">Attribute</label>
                 <input type="text" ref={attributeNameRef}
                     placeholder="attribute name ('classification')"
@@ -70,7 +72,7 @@ export default function FilterEditPanel({ filter, updateCriteriaFunction }) {
                     className="filter-input" />
             </div>
 
-            <div id="pv-field" className="flex flex-col mb-4 md:mb-0">
+            <div id="pv-field-group" className="filter-field-group">
                 <label className="filter-label">PV</label>
                 <input type="text" ref={pvPatternRef}
                     placeholder="PV name (e.g., 'mpexPv09' or 'mpexPv0*')"
@@ -82,7 +84,7 @@ export default function FilterEditPanel({ filter, updateCriteriaFunction }) {
                 <button onClick={handleAllFilters} className="mt-6 mb-1 apply-filters-button">
                     Apply Filters
                 </button>
-                <button className="clear-filters-button">
+                <button className="clear-filters-button" onClick={handleResetFunction}>
                     Clear Filters
                 </button>
             </div>

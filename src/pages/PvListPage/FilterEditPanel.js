@@ -1,6 +1,9 @@
 import React, { useRef } from "react";
 
-export default function FilterEditPanel({ filter, updateCriteriaFunction }) {
+export default function FilterEditPanel({ filter,
+                                          updateCriteriaFunction,
+                                          handleResetFunction
+                                        }) {
 
     const attributeNameRef = useRef(null);
     const attributeValueRef = useRef(null);
@@ -26,7 +29,7 @@ export default function FilterEditPanel({ filter, updateCriteriaFunction }) {
                     {/* {filter.singlePvCriteriaButtonLabel} */}
                     Apply Filter
                 </button>
-                <button className="clear-filters-button">
+                <button className="clear-filters-button" onClick={handleResetFunction}>
                     Clear Filter
                 </button>
             </div>
