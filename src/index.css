@@ -19,3 +19,35 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.page-wrapper {
+  @apply flex flex-col h-full w-full bg-gray-100;
+}
+
+.custom-breadcrumbs {
+  @apply px-8 pt-4 text-sm font-medium breadcrumbs text-slate-700 bg-white h-16;
+}
+
+.page-content {
+  @apply flex flex-col mx-8
+}
+
+.page-filter-wrapper {
+  @apply flex flex-col w-full px-8 py-4 rounded-xl shadow-md bg-white border border-black border-opacity-5
+}
+
+.filter-label {
+  @apply h-6 text-sm font-medium text-slate-800;
+}
+
+.filter-input {
+  @apply h-8 w-56 pl-2 bg-gray-200 rounded text-sm text-slate-600 font-medium placeholder-slate-400 focus:outline-0 focus:text-slate-900;
+}
+
+.apply-filters-button {
+  @apply h-8 w-32 px-2 rounded text-white text-sm font-medium bg-sky-500 transition duration-100 hover:bg-sky-700;
+}
+
+.clear-filters-button {
+  @apply h-8 w-32 px-2 rounded text-white text-sm font-medium bg-red-500 transition duration-100 hover:bg-red-700;
+}

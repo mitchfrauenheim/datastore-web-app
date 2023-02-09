@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import QueryFilter from "../../domain/filter/QueryFilter";
-import {useSearchParams} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
+import { Link } from 'react-router-dom'
+import PageTitle from "../../components/PageTitle";
 
-export default function PvListPage({client}) {
+export default function PvListPage({ client }) {
 
     let [filter, setFilter] = useState(new QueryFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
@@ -90,16 +92,29 @@ export default function PvListPage({client}) {
     }
 
     return (
-        <div>
-            <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-            <FilterCriteriaPanel
-                criteriaList={filterCriteria}
-                handleSubmitFunction={handleSubmit}
-                handleResetFunction={handleReset}
-                handleDeleteCriteriaFunction={handleDeleteCriteria}
-                heading="PV List Filter Criteria"
-                beginPrompt="To begin, add criteria to PV list filter." />
-            <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg}/>
+        <div id="pv-wrapper" className="page-wrapper">
+            <div id="pv-breadcrumbs" className="custom-breadcrumbs">
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li>PV List Filter</li>
+                </ul>
+            </div>
+            <div id="pv-content" className="page-content">
+                <div id="pv-title-wrapper">
+                    <PageTitle pageName={"PV List Filter"} />
+                </div>
+                <div id="pv-filter-wrapper" className="page-filter-wrapper">
+                    <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria} />
+                </div>
+                <FilterCriteriaPanel
+                    criteriaList={filterCriteria}
+                    handleSubmitFunction={handleSubmit}
+                    handleResetFunction={handleReset}
+                    handleDeleteCriteriaFunction={handleDeleteCriteria}
+                    heading="PV List Filter Criteria"
+                    beginPrompt="To begin, add criteria to PV list filter." />
+                <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
+            </div>
         </div>
     );
 

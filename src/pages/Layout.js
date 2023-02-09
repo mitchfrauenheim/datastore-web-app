@@ -4,10 +4,10 @@ import PageLink from "../components/PageLink"
 const Layout = ({datastoreConfig}) => {
     return (
         <>
-            <div id="page-wrapper" className="flex flex-row w-screen h-screen overflow-hidden font-inter">
-                <div id="left-wrapper" className="flex flex-col w-80 bg-zinc-100 border-r-2 border-black border-opacity-5 shadow-lg">
+            <div id="page-wrapper" className="flex flex-row w-screen h-screen overflow-hidden font-inter text-black">
+                <div id="left-wrapper" className="flex flex-col w-80 bg-white border-r border-black border-opacity-10">
                     <div id="left-header" className="flex items-center h-20">
-                        <div id="osprey" className="ml-6 font-glegoo text-2xl text-slate-800 font-bold">
+                        <div id="osprey" className="ml-6 font-glegoo text-2xl text-slate-700 font-bold">
                             <a href="https://ospreydcs.com/" >Osprey DCS </a>
                         </div>
                     </div>

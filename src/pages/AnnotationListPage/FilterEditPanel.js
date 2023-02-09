@@ -1,5 +1,5 @@
 import React, {useRef} from "react";
-import NavBar from "../../components/NavBar";
+import PageTitle from "../../components/PageTitle";
 
 export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
@@ -13,7 +13,7 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
 
     return (
         <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            <NavBar pageName={"Annotation List Filter"} />
+            <PageTitle pageName={"Annotation List Filter"} />
             <div>
                 <label>
                     Annotation filter

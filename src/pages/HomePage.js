@@ -1,15 +1,20 @@
 import logo from "../logo.svg";
-import {Link} from "react-router-dom";
-import NavBar from "../components/NavBar"
+import { Link } from "react-router-dom";
+import PageTitle from "../components/PageTitle";
 
-const HomePage = ({datastoreConfig}) => {
+const HomePage = ({ datastoreConfig }) => {
     return (
         <div className="App">
-            <NavBar pageName={"Home"} />
+            <div id="snapshot-breadcrumbs" className="custom-breadcrumbs">
+                <ul>
+                    <li>Home</li>
+                </ul>
+            </div>
+            <PageTitle pageName={"Home"} />
             <header className="App-header">
                 <img src={logo} className="App-logo" alt="logo" />
                 <p>
-                    Welcome to the EPICS Data Explorer.<br/>
+                    Welcome to the EPICS Data Explorer.<br />
                     Using Datastore configuration: {datastoreConfig}
                 </p>
                 <Link className="App-link" to="/snapshotList">explore snapshots</Link>

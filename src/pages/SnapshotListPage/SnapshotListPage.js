@@ -5,7 +5,8 @@ import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import FilterConstants from "../../domain/Constants";
-import NavBar from "../../components/NavBar";
+import PageTitle from "../../components/PageTitle";
+import { Link } from 'react-router-dom'
 
 export default function SnapshotListPage({ client }) {
 
@@ -89,12 +90,18 @@ export default function SnapshotListPage({ client }) {
     }
 
     return (
-        <div id="snapshot-wrapper" className="flex flex-col items-center h-full w-full">
-            <div id="snapshot-content" className="w-11/12 h-full mb-8 bg-blue-100">
-                <div id="snapshot-header-wrapper">
-                    <NavBar pageName={"Snapshot List Filter"} />
+        <div id="snapshot-wrapper" className="page-wrapper">
+            <div id="snapshot-breadcrumbs" className="custom-breadcrumbs">
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li>Snapshot List Filter</li>
+                </ul>
+            </div>
+            <div id="snapshot-content" className="page-content">
+                <div id="snapshot-title-wrapper">
+                    <PageTitle pageName={"Snapshot List Filter"} />
                 </div>
-                <div id="snapshot-filter-wrapper" className="flex flex-col w-full bg-red-100">
+                <div id="snapshot-filter-wrapper" className="page-filter-wrapper">
                     <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria} />
                 </div>
                 <FilterCriteriaPanel

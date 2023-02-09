@@ -72,6 +72,13 @@ export default class QueryFilter {
         this.attributeCriteriaList.push(new AttributeFilterCriteria(attributeName, attributeValue));
     }
 
+    get attributeCriteriaButtonLabel() {
+        if (this.attributeCriteriaList.length === 0) {
+            return "Add";
+        }
+        return "Update";
+    }
+
     addPvCriteria(pvPattern) {
         console.log("QueryFilter.addPvCriteria()");
         this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));
