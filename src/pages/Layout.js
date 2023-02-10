@@ -4,7 +4,7 @@ import Menu from "../components/Menu";
 
 const Layout = ({ datastoreConfig }) => {
     return (
-        <div id="page-wrapper" className="flex flex-row w-screen  sm:h-screen overflow-hidden font-inter text-black">
+        <div id="page-wrapper" className="flex flex-row w-screen sm:h-screen overflow-hidden font-inter text-black">
             <Menu />
             <div id="main-wrapper" className="w-full">
                 <Outlet />

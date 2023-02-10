@@ -1,34 +1,31 @@
 import React from "react";
 import SnapshotListTable from "./SnapshotListTable";
 
-export default function QueryResultsPanel({snapshots, errorMsg}) {
+export default function QueryResultsPanel({ snapshots, errorMsg }) {
 
     let snapshotMetadataList = snapshots;
 
     function renderSnapshotListDataTable() {
         return (
             <div>
-                <SnapshotListTable snapshots={snapshots}/>
+                <SnapshotListTable snapshots={snapshots} />
             </div>
         );
     }
 
     function renderNoSnapshotListDataTable() {
         return (
-            <div/>
+            <div />
         );
     }
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-                        {(snapshots.length === 0) ? renderNoSnapshotListDataTable() : renderSnapshotListDataTable()}
-                    </div>
-                </div>
+            <div style={{ paddingBottom: "4px", borderBottom: "1px solid darkgray" }}>
+                {(snapshots.length === 0) ? renderNoSnapshotListDataTable() : renderSnapshotListDataTable()}
             </div>
         );
+
     }
 
     function renderQueryErrorPanel() {
@@ -40,7 +37,7 @@ export default function QueryResultsPanel({snapshots, errorMsg}) {
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
+        <div style={{ paddingBottom: "4px", borderBottom: "1px solid darkgray" }}>
             {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
         </div>
     );

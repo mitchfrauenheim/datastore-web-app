@@ -97,6 +97,7 @@ export default function SnapshotListPage({ client }) {
                     <li>Snapshot List Filter</li>
                 </ul>
             </div>
+            <div className="overflow-y-scroll h-full">
             <div id="snapshot-list-content" className="page-content">
                 <div id="snapshot-list-title-wrapper">
                     <PageTitle pageName="Snapshot List Filter" />
@@ -122,6 +123,7 @@ export default function SnapshotListPage({ client }) {
                     </div>
                 </div>
                 <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
+            </div>
             </div>
         </div>
     );
