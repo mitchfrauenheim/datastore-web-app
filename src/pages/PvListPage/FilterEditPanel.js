@@ -17,7 +17,7 @@ export default function FilterEditPanel({ filter,
 
     return (
         <div className="flex flex-col md:flex-row items-center justify-between">
-            <div id="pv-field" className="flex flex-col mb-4 md:mb-0">
+            <div id="pv-field" className="filter-field-group">
                 <label className="filter-label">PV filter</label>
                 <input type="text" ref={pvPatternRef}
                     placeholder="PV name (e.g., 'mpexPv09' or 'mpexPv0*')"

@@ -90,18 +90,18 @@ export default function SnapshotListPage({ client }) {
     }
 
     return (
-        <div id="snapshot-wrapper" className="page-wrapper">
-            <div id="snapshot-breadcrumbs" className="custom-breadcrumbs">
+        <div id="snapshot-list-wrapper" className="page-wrapper">
+            <div id="snapshot-list-breadcrumbs" className="custom-breadcrumbs">
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li>Snapshot List Filter</li>
                 </ul>
             </div>
-            <div id="snapshot-content" className="page-content">
-                <div id="snapshot-title-wrapper">
-                    <PageTitle pageName={"Snapshot List Filter"} />
+            <div id="snapshot-list-content" className="page-content">
+                <div id="snapshot-list-title-wrapper">
+                    <PageTitle pageName="Snapshot List Filter" />
                 </div>
-                <div id="snapshot-filter-wrapper" className="page-filter-wrapper">
+                <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
                     <FilterEditPanel filter={filter}
                                      updateCriteriaFunction={updateCriteria}
                                      handleResetFunction={handleReset} />

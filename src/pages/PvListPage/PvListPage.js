@@ -92,18 +92,18 @@ export default function PvListPage({ client }) {
     }
 
     return (
-        <div id="pv-wrapper" className="page-wrapper">
-            <div id="pv-breadcrumbs" className="custom-breadcrumbs">
+        <div id="pv-list-wrapper" className="page-wrapper">
+            <div id="pv-list-breadcrumbs" className="custom-breadcrumbs">
                 <ul>
                     <li><Link to="/">Home</Link></li>
                     <li>PV List Filter</li>
                 </ul>
             </div>
-            <div id="pv-content" className="page-content">
-                <div id="pv-title-wrapper">
-                    <PageTitle pageName={"PV List Filter"} />
+            <div id="pv-list-content" className="page-content">
+                <div id="pv-list-title-wrapper">
+                    <PageTitle pageName="PV List Filter" />
                 </div>
-                <div id="pv-filter-wrapper" className="page-filter-wrapper">
+                <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
                     <FilterEditPanel filter={filter}
                                      updateCriteriaFunction={updateCriteria}
                                      handleResetFunction={handleReset} />

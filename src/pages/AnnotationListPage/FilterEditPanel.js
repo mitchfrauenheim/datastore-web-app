@@ -1,7 +1,10 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import PageTitle from "../../components/PageTitle";
 
-export default function FilterEditPanel({filter, updateCriteriaFunction}) {
+export default function FilterEditPanel({ filter,
+                                          updateCriteriaFunction,
+                                          handleResetFunction
+                                        }) {
 
     const attributeNamePatternRef = useRef(null);
 
@@ -12,17 +15,23 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            <PageTitle pageName={"Annotation List Filter"} />
-            <div>
-                <label>
-                    Annotation filter
-                    <input type="text" ref={attributeNamePatternRef}
-                           placeholder="Annotation name pattern (e.g., 'power failure')"/>
-                    <button onClick={handleAddAnnotationFilter}>
-                        {filter.annotationCriteriaButtonLabel}
-                    </button>
-                </label>
+        <div className="flex flex-col md:flex-row items-center justify-between">
+            <div id="annotation-field-group" className="filter-field-group">
+                <label className="filter-label">Annotation</label>
+                <input type="text" ref={attributeNamePatternRef}
+                    placeholder="Annotation name pattern (e.g., 'power failure')"
+                    className="filter-input" />
+            </div>
+            {/* <button onClick={handleAddAnnotationFilter}>
+                {filter.annotationCriteriaButtonLabel}
+            </button> */}
+            <div className="flex flex-row pt-2 md:pt-6 space-x-2 justify-center">
+                <button onClick={handleAddAnnotationFilter} className="apply-filters-button">
+                    Apply Filters
+                </button>
+                <button className="clear-filters-button" onClick={handleResetFunction}>
+                    Clear Filters
+                </button>
             </div>
         </div>
     );
