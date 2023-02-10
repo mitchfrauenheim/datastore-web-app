@@ -19,7 +19,7 @@ export default function () {
 
     return (
         <>
-            <div id="left-wrapper-small" className="sm:hidden flex flex-col w-20 bg-white border-r border-gray-200">
+            <div id="left-wrapper-small" className="sm:hidden flex flex-col w-20 bg-slate-800 border-r border-gray-200">
                 <div id="left-header-small" className="flex items-center justify-center h-20">
                     <div id="hamburger-icon" className="">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
@@ -57,9 +57,9 @@ export default function () {
                     </div>
                 </div>
             </div>
-            <div id="left-wrapper" className="hidden sm:flex flex-col w-80 min-w-max bg-white border-r border-gray-200">
+            <div id="left-wrapper" className="hidden sm:flex flex-col w-80 min-w-max bg-slate-800 border-r border-gray-200">
                 <div id="left-header" className="flex items-center h-20">
-                    <div id="osprey" className="ml-6 font-glegoo text-2xl text-slate-700 font-bold">
+                    <div id="osprey" className="ml-6 font-glegoo text-2xl text-slate-300 font-bold">
                         <a href="https://ospreydcs.com/" >Osprey DCS </a>
                     </div>
                 </div>

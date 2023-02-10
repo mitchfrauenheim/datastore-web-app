@@ -13,14 +13,14 @@ export default function SnapshotListTable({ snapshots = [] }) {
         <div className="bg-white rounded-xl shadow-md border border-black border-opacity-5 overflow-hidden">
         <table className="">
             <tbody>
-            <tr className="bg-gray-200 text-medium">
-                <th className="border border-black border-opacity-5">Snapshot ID</th>
-                <th className="border border-black border-opacity-5">Size</th>
-                <th className="border border-black border-opacity-5">Trigger Time</th>
-                <th className="border border-black border-opacity-5">First Sample Time</th>
-                <th className="border border-black border-opacity-5">Last Sample Time</th>
-                <th className="border border-black border-opacity-5">PV Names</th>
-                <th className="border border-black border-opacity-5">Attributes (name=>value)</th>
+            <tr className="text-slate-300 bg-slate-800 text-medium">
+                <th className="border border-black border-opacity-5 font-semibold text-sm">Snapshot ID</th>
+                <th className="border border-black border-opacity-5 font-semibold text-sm">Size</th>
+                <th className="border border-black border-opacity-5 font-semibold text-sm">Trigger Time</th>
+                <th className="border border-black border-opacity-5 font-semibold text-sm">First Sample Time</th>
+                <th className="border border-black border-opacity-5 font-semibold text-sm">Last Sample Time</th>
+                <th className="border border-black border-opacity-5 font-semibold text-sm">PV Names</th>
+                <th className="border border-black border-opacity-5 font-semibold text-sm">Attributes (name=>value)</th>
             </tr>
             {snapshots?.map((snapshot, i) => {
                 return (
