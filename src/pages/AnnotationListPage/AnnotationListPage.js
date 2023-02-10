@@ -89,12 +89,12 @@ export default function AnnotationListPage({ client }) {
             <div id="annotations-list-breadcrumbs" className="custom-breadcrumbs">
                 <ul>
                     <li><Link to="/">Home</Link></li>
-                    <li>Annotations List Filter</li>
+                    <li>Annotation List Filter</li>
                 </ul>
             </div>
             <div id="annotations-list-content" className="page-content">
                 <div id="annotations-list-title-wrapper">
-                    <PageTitle pageName="Annotations List Filter" />
+                    <PageTitle pageName="Annotation List Filter" />
                 </div>
                 <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
                     <FilterEditPanel filter={filter}
