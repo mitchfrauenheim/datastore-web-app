@@ -27,10 +27,10 @@ export default function FilterEditPanel({ filter,
             </button> */}
             <div className="flex flex-row pt-2 md:pt-6 space-x-2 justify-center">
                 <button onClick={handleAddAnnotationFilter} className="apply-filters-button">
-                    Apply Filters
+                    Apply Filter
                 </button>
                 <button className="clear-filters-button" onClick={handleResetFunction}>
-                    Clear Filters
+                    Clear Filter
                 </button>
             </div>
         </div>
