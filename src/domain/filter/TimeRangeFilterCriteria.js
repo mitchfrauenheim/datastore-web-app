@@ -25,7 +25,7 @@ export default class TimeRangeFilterCriteria extends FilterCriteriaBase {
     }
 
     get displayString() {
-        return "Snapshot trigger time is between: " + this._firstTime + " and " + this._lastTime;
+        return "Trigger Range: " + this._firstTime + " to " + this._lastTime;
     }
 
 }

@@ -16,7 +16,7 @@ export default class PvFilterCriteria extends FilterCriteriaBase {
     }
 
     get displayString() {
-        return "Snapshot contains PV with name(s) matching: " + this._pattern;
+        return "PV Name: " + this._pattern;
     }
 
 }

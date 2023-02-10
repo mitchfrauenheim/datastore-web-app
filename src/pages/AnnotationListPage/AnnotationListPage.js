@@ -97,17 +97,22 @@ export default function AnnotationListPage({ client }) {
                     <PageTitle pageName="Annotation List Filter" />
                 </div>
                 <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
-                    <FilterEditPanel filter={filter}
-                                     updateCriteriaFunction={updateCriteria}
-                                     handleResetFunction={handleReset} />
+                    <div id="annotations-list-edit-panel" className="px-8 pb-4">
+                        <FilterEditPanel filter={filter}
+                            updateCriteriaFunction={updateCriteria}
+                            handleResetFunction={handleReset} />
+                    </div>
+                    <div className="mb-4 border-b border-gray-300"></div>
+                    <div id="pv-list-criteria-panel" className="px-8">
+                        <FilterCriteriaPanel
+                            criteriaList={filterCriteria}
+                            handleSubmitFunction={handleSubmit}
+                            handleResetFunction={handleReset}
+                            handleDeleteCriteriaFunction={handleDeleteCriteria}
+                            heading="Annotation List Filter Criteria"
+                            beginPrompt="To begin, add criteria to Annotation list filter." />
+                    </div>
                 </div>
-                <FilterCriteriaPanel
-                    criteriaList={filterCriteria}
-                    handleSubmitFunction={handleSubmit}
-                    handleResetFunction={handleReset}
-                    handleDeleteCriteriaFunction={handleDeleteCriteria}
-                    heading="Annotation List Filter Criteria"
-                    beginPrompt="To begin, add criteria to Annotation list filter." />
                 <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg} />
             </div>
         </div>

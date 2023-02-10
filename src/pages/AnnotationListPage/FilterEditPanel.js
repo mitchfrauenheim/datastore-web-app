@@ -17,9 +17,9 @@ export default function FilterEditPanel({ filter,
     return (
         <div className="flex flex-col md:flex-row items-center justify-between">
             <div id="annotation-field-group" className="filter-field-group">
-                <label className="filter-label">Annotation Name Pattern</label>
+                <label className="filter-label">Annotation Name Pattern:</label>
                 <input type="text" ref={attributeNamePatternRef}
-                    placeholder="Annotation name pattern (e.g., 'power failure')"
+                    placeholder="e.g. 'power failure'"
                     className="filter-input" />
             </div>
             {/* <button onClick={handleAddAnnotationFilter}>

@@ -102,17 +102,25 @@ export default function SnapshotListPage({ client }) {
                     <PageTitle pageName="Snapshot List Filter" />
                 </div>
                 <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
-                    <FilterEditPanel filter={filter}
-                                     updateCriteriaFunction={updateCriteria}
-                                     handleResetFunction={handleReset} />
+                    <div id="snapshot-list-edit-panel" className="px-8 pb-4">
+                        <FilterEditPanel
+                            filter={filter}
+                            updateCriteriaFunction={updateCriteria}
+                            handleResetFunction={handleReset}
+                        />
+                    </div>
+                    <div className="mb-4 border-b border-gray-300"></div>
+                    <div id="snapshot-list-criteria-panel" className="px-8">
+                        <FilterCriteriaPanel
+                            criteriaList={filterCriteria}
+                            handleSubmitFunction={handleSubmit}
+                            handleResetFunction={handleReset}
+                            handleDeleteCriteriaFunction={handleDeleteCriteria}
+                            heading="Snapshot List Filter Criteria"
+                            beginPrompt="To begin, add criteria to snapshot list filter."
+                        />
+                    </div>
                 </div>
-                <FilterCriteriaPanel
-                    criteriaList={filterCriteria}
-                    handleSubmitFunction={handleSubmit}
-                    handleResetFunction={handleReset}
-                    handleDeleteCriteriaFunction={handleDeleteCriteria}
-                    heading="Snapshot List Filter Criteria"
-                    beginPrompt="To begin, add criteria to snapshot list filter." />
                 <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
             </div>
         </div>

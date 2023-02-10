@@ -104,17 +104,23 @@ export default function PvListPage({ client }) {
                     <PageTitle pageName="PV List Filter" />
                 </div>
                 <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
-                    <FilterEditPanel filter={filter}
-                                     updateCriteriaFunction={updateCriteria}
-                                     handleResetFunction={handleReset} />
+                    <div id="pv-list-edit-panel" className="px-8 pb-4">
+
+                        <FilterEditPanel filter={filter}
+                            updateCriteriaFunction={updateCriteria}
+                            handleResetFunction={handleReset} />
+                    </div>
+                    <div className="mb-4 border-b border-gray-300"></div>
+                    <div id="pv-list-criteria-panel" className="px-8">
+                        <FilterCriteriaPanel
+                            criteriaList={filterCriteria}
+                            handleSubmitFunction={handleSubmit}
+                            handleResetFunction={handleReset}
+                            handleDeleteCriteriaFunction={handleDeleteCriteria}
+                            heading="PV List Filter Criteria"
+                            beginPrompt="To begin, add criteria to PV list filter." />
+                    </div>
                 </div>
-                <FilterCriteriaPanel
-                    criteriaList={filterCriteria}
-                    handleSubmitFunction={handleSubmit}
-                    handleResetFunction={handleReset}
-                    handleDeleteCriteriaFunction={handleDeleteCriteria}
-                    heading="PV List Filter Criteria"
-                    beginPrompt="To begin, add criteria to PV list filter." />
                 <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
             </div>
         </div>

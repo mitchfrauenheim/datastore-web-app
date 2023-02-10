@@ -49,7 +49,7 @@ export default function FilterEditPanel({ filter,
         <div className="flex flex-col md:flex-row flex-wrap justify-between">
             
             <div id="time-field-group" className="filter-field-group">
-                <label className="filter-label">Time Range</label>
+                <label className="filter-label">Time Range:</label>
                 <input type="text" ref={firstTimeRef}
                     placeholder="2022-09-21T03:03:19.000Z"
                     defaultValue="2022-10-28T15:43:07.000Z"
@@ -61,21 +61,21 @@ export default function FilterEditPanel({ filter,
             </div>
 
             <div id="attribute-field-group" className="filter-field-group">
-                <label className="filter-label">Attribute</label>
+                <label className="filter-label">Attribute:</label>
                 <input type="text" ref={attributeNameRef}
-                    placeholder="attribute name ('classification')"
+                    placeholder="e.g. 'classification')"
                     defaultValue="classification"
                     className="mb-1 filter-input" />
                 <input type="text" ref={attributeValueRef}
-                    placeholder="attribute value ('test')"
+                    placeholder="e.g.'test'"
                     defaultValue="dev"
                     className="filter-input" />
             </div>
 
             <div id="pv-field-group" className="filter-field-group">
-                <label className="filter-label">PV</label>
+                <label className="filter-label">PV Pattern:</label>
                 <input type="text" ref={pvPatternRef}
-                    placeholder="PV name (e.g., 'mpexPv09' or 'mpexPv0*')"
+                    placeholder="e.g. 'mpexPv09' or 'mpexPv0*'"
                     className="filter-input" />
             </div>
 
