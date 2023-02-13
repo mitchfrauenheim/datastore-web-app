@@ -7,6 +7,7 @@ import { createSearchParams, useSearchParams } from "react-router-dom";
 import FilterConstants from "../../domain/Constants";
 import PageTitle from "../../components/PageTitle";
 import { Link } from 'react-router-dom'
+import { Disclosure } from "@headlessui/react";
 
 export default function SnapshotListPage({ client }) {
 
@@ -98,32 +99,36 @@ export default function SnapshotListPage({ client }) {
                 </ul>
             </div>
             <div className="overflow-y-scroll h-full">
-            <div id="snapshot-list-content" className="page-content">
-                <div id="snapshot-list-title-wrapper">
-                    <PageTitle pageName="Snapshot List Filter" />
+                <div id="snapshot-list-content" className="page-content">
+                    <Disclosure defaultOpen={true}>
+                        <div id="snapshot-list-title-wrapper">
+                            <PageTitle pageName="Snapshot List Filter" />
+                        </div>
+                        <Disclosure.Panel>
+                            <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
+                                <div id="snapshot-list-edit-panel" className="px-8 pb-4">
+                                    <FilterEditPanel
+                                        filter={filter}
+                                        updateCriteriaFunction={updateCriteria}
+                                        handleResetFunction={handleReset}
+                                    />
+                                </div>
+                                <div className="mb-4 border-b border-gray-300"></div>
+                                <div id="snapshot-list-criteria-panel" className="px-8">
+                                    <FilterCriteriaPanel
+                                        criteriaList={filterCriteria}
+                                        handleSubmitFunction={handleSubmit}
+                                        handleResetFunction={handleReset}
+                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                        heading="Snapshot List Filter Criteria"
+                                        beginPrompt="To begin, add criteria to snapshot list filter."
+                                    />
+                                </div>
+                            </div>
+                        </Disclosure.Panel>
+                    </Disclosure>
+                    <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
                 </div>
-                <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
-                    <div id="snapshot-list-edit-panel" className="px-8 pb-4">
-                        <FilterEditPanel
-                            filter={filter}
-                            updateCriteriaFunction={updateCriteria}
-                            handleResetFunction={handleReset}
-                        />
-                    </div>
-                    <div className="mb-4 border-b border-gray-300"></div>
-                    <div id="snapshot-list-criteria-panel" className="px-8">
-                        <FilterCriteriaPanel
-                            criteriaList={filterCriteria}
-                            handleSubmitFunction={handleSubmit}
-                            handleResetFunction={handleReset}
-                            handleDeleteCriteriaFunction={handleDeleteCriteria}
-                            heading="Snapshot List Filter Criteria"
-                            beginPrompt="To begin, add criteria to snapshot list filter."
-                        />
-                    </div>
-                </div>
-                <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
-            </div>
             </div>
         </div>
     );

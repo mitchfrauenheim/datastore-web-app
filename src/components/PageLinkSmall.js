@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 export default function PageLinkSmall(props) {
     // Styling applied to active link
     let activeClassName = "text-sky-400"
-    let inactiveClassName = "text-slate-700 hover:text-slate-900"
+    let inactiveClassName = "text-slate-300 hover:text-slate-900"
 
     return (
         <NavLink to={props.data.route} className={({ isActive }) => isActive ? activeClassName : inactiveClassName}>
