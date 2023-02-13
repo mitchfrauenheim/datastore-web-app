@@ -5,7 +5,7 @@ import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import FilterConstants from "../../domain/Constants";
-import PageTitle from "../../components/PageTitle";
+import FilterPageTitle from "../../components/FilterPageTitle";
 import { Link } from 'react-router-dom'
 import { Disclosure } from "@headlessui/react";
 
@@ -102,7 +102,7 @@ export default function SnapshotListPage({ client }) {
                 <div id="snapshot-list-content" className="page-content">
                     <Disclosure defaultOpen={true}>
                         <div id="snapshot-list-title-wrapper">
-                            <PageTitle pageName="Snapshot List Filter" />
+                            <FilterPageTitle pageName="Snapshot List Filter" />
                         </div>
                         <Disclosure.Panel>
                             <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">

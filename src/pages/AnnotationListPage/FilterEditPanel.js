@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import PageTitle from "../../components/PageTitle";
 
 export default function FilterEditPanel({ filter,
                                           updateCriteriaFunction,

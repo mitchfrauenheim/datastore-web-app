@@ -5,7 +5,7 @@ import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import { Link } from 'react-router-dom'
-import PageTitle from "../../components/PageTitle";
+import FilterPageTitle from "../../components/FilterPageTitle";
 import { Disclosure } from "@headlessui/react";
 
 export default function PvListPage({ client }) {
@@ -104,7 +104,7 @@ export default function PvListPage({ client }) {
                 <div id="pv-list-content" className="page-content">
                     <Disclosure defaultOpen={true}>
                         <div id="pv-list-title-wrapper">
-                            <PageTitle pageName="PV List Filter" />
+                            <FilterPageTitle pageName="PV List Filter" />
                         </div>
                         <Disclosure.Panel>
                             <div id="pv-list-filter-wrapper" className="page-filter-wrapper">

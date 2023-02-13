@@ -21,7 +21,7 @@ export default function QueryResultsPanel({annotationList, errorMsg}) {
         return (
             <div>
                 <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
+                    <div>
                         {(annotationList.length === 0) ? renderNoDataTable() : renderDataTable()}
                     </div>
                 </div>
@@ -38,7 +38,7 @@ export default function QueryResultsPanel({annotationList, errorMsg}) {
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
+        <div>
             {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
         </div>
     );

@@ -5,7 +5,7 @@ import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import { Link } from "react-router-dom";
-import PageTitle from "../../components/PageTitle";
+import FilterPageTitle from "../../components/FilterPageTitle";
 import { Disclosure } from "@headlessui/react";
 
 export default function AnnotationListPage({ client }) {
@@ -97,7 +97,7 @@ export default function AnnotationListPage({ client }) {
                 <div id="annotations-list-content" className="page-content">
                     <Disclosure defaultOpen={true}>
                         <div id="annotations-list-title-wrapper">
-                            <PageTitle pageName="Annotation List Filter" />
+                            <FilterPageTitle pageName="Annotation List Filter" />
                         </div>
                         <Disclosure.Panel>
                             <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
