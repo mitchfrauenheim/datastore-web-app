@@ -6,6 +6,7 @@ import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import { Link } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
+import { Disclosure } from "@headlessui/react";
 
 export default function AnnotationListPage({ client }) {
 
@@ -92,28 +93,34 @@ export default function AnnotationListPage({ client }) {
                     <li>Annotation List Filter</li>
                 </ul>
             </div>
-            <div id="annotations-list-content" className="page-content">
-                <div id="annotations-list-title-wrapper">
-                    <PageTitle pageName="Annotation List Filter" />
+            <div className="overflow-y-scroll h-full">
+                <div id="annotations-list-content" className="page-content">
+                    <Disclosure defaultOpen={true}>
+                        <div id="annotations-list-title-wrapper">
+                            <PageTitle pageName="Annotation List Filter" />
+                        </div>
+                        <Disclosure.Panel>
+                            <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
+                                <div id="annotations-list-edit-panel" className="px-8 pb-4">
+                                    <FilterEditPanel filter={filter}
+                                        updateCriteriaFunction={updateCriteria}
+                                        handleResetFunction={handleReset} />
+                                </div>
+                                <div className="mb-4 border-b border-gray-300"></div>
+                                <div id="pv-list-criteria-panel" className="px-8">
+                                    <FilterCriteriaPanel
+                                        criteriaList={filterCriteria}
+                                        handleSubmitFunction={handleSubmit}
+                                        handleResetFunction={handleReset}
+                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                        heading="Annotation List Filter Criteria"
+                                        beginPrompt="To begin, add criteria to Annotation list filter." />
+                                </div>
+                            </div>
+                        </Disclosure.Panel>
+                    </Disclosure>
+                    <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg} />
                 </div>
-                <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
-                    <div id="annotations-list-edit-panel" className="px-8 pb-4">
-                        <FilterEditPanel filter={filter}
-                            updateCriteriaFunction={updateCriteria}
-                            handleResetFunction={handleReset} />
-                    </div>
-                    <div className="mb-4 border-b border-gray-300"></div>
-                    <div id="pv-list-criteria-panel" className="px-8">
-                        <FilterCriteriaPanel
-                            criteriaList={filterCriteria}
-                            handleSubmitFunction={handleSubmit}
-                            handleResetFunction={handleReset}
-                            handleDeleteCriteriaFunction={handleDeleteCriteria}
-                            heading="Annotation List Filter Criteria"
-                            beginPrompt="To begin, add criteria to Annotation list filter." />
-                    </div>
-                </div>
-                <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg} />
             </div>
         </div>
     );

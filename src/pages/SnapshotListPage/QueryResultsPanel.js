@@ -21,7 +21,7 @@ export default function QueryResultsPanel({ snapshots, errorMsg }) {
 
     function renderQueryResultsPanel() {
         return (
-            <div style={{ paddingBottom: "4px", borderBottom: "1px solid darkgray" }}>
+            <div>
                 {(snapshots.length === 0) ? renderNoSnapshotListDataTable() : renderSnapshotListDataTable()}
             </div>
         );
@@ -37,7 +37,7 @@ export default function QueryResultsPanel({ snapshots, errorMsg }) {
     }
 
     return (
-        <div style={{ paddingBottom: "4px", borderBottom: "1px solid darkgray" }}>
+        <div>
             {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
         </div>
     );

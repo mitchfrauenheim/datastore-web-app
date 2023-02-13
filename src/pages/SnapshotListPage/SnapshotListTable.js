@@ -14,13 +14,13 @@ export default function SnapshotListTable({ snapshots = [] }) {
         <table className="">
             <tbody>
             <tr className="text-slate-800 bg-gray-300 text-medium">
-                <th className="border border-black border-opacity-5 font-semibold text-sm">Snapshot ID</th>
+                <th className="px-2 py-2 border border-black border-opacity-5 font-semibold text-sm">ID</th>
                 <th className="border border-black border-opacity-5 font-semibold text-sm">Size</th>
                 <th className="border border-black border-opacity-5 font-semibold text-sm">Trigger Time</th>
                 <th className="border border-black border-opacity-5 font-semibold text-sm">First Sample Time</th>
                 <th className="border border-black border-opacity-5 font-semibold text-sm">Last Sample Time</th>
                 <th className="border border-black border-opacity-5 font-semibold text-sm">PV Names</th>
-                <th className="border border-black border-opacity-5 font-semibold text-sm">Attributes (name=>value)</th>
+                <th className="border border-black border-opacity-5 font-semibold text-sm">Attributes</th>
             </tr>
             {snapshots?.map((snapshot, i) => {
                 return (

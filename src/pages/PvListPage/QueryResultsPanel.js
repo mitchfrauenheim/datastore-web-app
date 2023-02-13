@@ -21,7 +21,7 @@ export default function QueryResultsPanel({pvs, errorMsg}) {
         return (
             <div>
                 <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
+                    <div>
                         {(pvs.length === 0) ? renderNoPvListDataTable() : renderPvListDataTable()}
                     </div>
                 </div>
@@ -38,7 +38,7 @@ export default function QueryResultsPanel({pvs, errorMsg}) {
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
+        <div>
             {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
         </div>
     );

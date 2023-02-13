@@ -10,7 +10,8 @@ export default function PageTitle(props) {
                 </div>
                 <Disclosure.Button>
                     <div id="snapshot-expand-filters" className="flex items-center font-medium text-gray-500">
-                        Expand/Collapse Filters
+                        <div className="ui-open:hidden">Expand Filters</div>
+                        <div className="ui-not-open:hidden">Collapse Filters</div>
                         <ChevronUpIcon className="w-5 h-5 ml-2 ui-open:rotate-180" />
                     </div>
                 </Disclosure.Button>

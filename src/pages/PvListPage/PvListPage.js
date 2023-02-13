@@ -6,6 +6,7 @@ import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import { Link } from 'react-router-dom'
 import PageTitle from "../../components/PageTitle";
+import { Disclosure } from "@headlessui/react";
 
 export default function PvListPage({ client }) {
 
@@ -99,29 +100,35 @@ export default function PvListPage({ client }) {
                     <li>PV List Filter</li>
                 </ul>
             </div>
-            <div id="pv-list-content" className="page-content">
-                <div id="pv-list-title-wrapper">
-                    <PageTitle pageName="PV List Filter" />
-                </div>
-                <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
-                    <div id="pv-list-edit-panel" className="px-8 pb-4">
+            <div className="overflow-y-scroll h-full">
+                <div id="pv-list-content" className="page-content">
+                    <Disclosure defaultOpen={true}>
+                        <div id="pv-list-title-wrapper">
+                            <PageTitle pageName="PV List Filter" />
+                        </div>
+                        <Disclosure.Panel>
+                            <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
+                                <div id="pv-list-edit-panel" className="px-8 pb-4">
 
-                        <FilterEditPanel filter={filter}
-                            updateCriteriaFunction={updateCriteria}
-                            handleResetFunction={handleReset} />
-                    </div>
-                    <div className="mb-4 border-b border-gray-300"></div>
-                    <div id="pv-list-criteria-panel" className="px-8">
-                        <FilterCriteriaPanel
-                            criteriaList={filterCriteria}
-                            handleSubmitFunction={handleSubmit}
-                            handleResetFunction={handleReset}
-                            handleDeleteCriteriaFunction={handleDeleteCriteria}
-                            heading="PV List Filter Criteria"
-                            beginPrompt="To begin, add criteria to PV list filter." />
-                    </div>
+                                    <FilterEditPanel filter={filter}
+                                        updateCriteriaFunction={updateCriteria}
+                                        handleResetFunction={handleReset} />
+                                </div>
+                                <div className="mb-4 border-b border-gray-300"></div>
+                                <div id="pv-list-criteria-panel" className="px-8">
+                                    <FilterCriteriaPanel
+                                        criteriaList={filterCriteria}
+                                        handleSubmitFunction={handleSubmit}
+                                        handleResetFunction={handleReset}
+                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                        heading="PV List Filter Criteria"
+                                        beginPrompt="To begin, add criteria to PV list filter." />
+                                </div>
+                            </div>
+                        </Disclosure.Panel>
+                    </Disclosure>
+                    <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
                 </div>
-                <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
             </div>
         </div>
     );
