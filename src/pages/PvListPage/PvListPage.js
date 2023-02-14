@@ -5,8 +5,9 @@ import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import { Link } from 'react-router-dom'
-import FilterPageTitle from "../../components/FilterPageTitle";
+import PageTitle from "../../components/PageTitle";
 import { Disclosure } from "@headlessui/react";
+import DisclosureHead from "../../components/DisclosureHead";
 
 export default function PvListPage({ client }) {
 
@@ -102,19 +103,20 @@ export default function PvListPage({ client }) {
             </div>
             <div className="overflow-y-scroll h-full">
                 <div id="pv-list-content" className="page-content">
-                    <Disclosure defaultOpen={true}>
                         <div id="pv-list-title-wrapper">
-                            <FilterPageTitle pageName="PV List Filter" />
+                            <PageTitle pageName="PV List Filter" />
                         </div>
-                        <Disclosure.Panel>
+                    <Disclosure defaultOpen={true}>
                             <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
-                                <div id="pv-list-edit-panel" className="px-8 pb-4">
+                        <DisclosureHead titleText="Filters" />
+                        <Disclosure.Panel>
+                        <div className="my-4 border-b border-gray-300"></div>
+                                <div id="pv-list-edit-panel" className="mx-8 pb-4 border-b border-gray-300">
 
                                     <FilterEditPanel filter={filter}
                                         updateCriteriaFunction={updateCriteria}
                                         handleResetFunction={handleReset} />
                                 </div>
-                                <div className="mb-4 border-b border-gray-300"></div>
                                 <div id="pv-list-criteria-panel" className="px-8">
                                     <FilterCriteriaPanel
                                         criteriaList={filterCriteria}
@@ -124,8 +126,8 @@ export default function PvListPage({ client }) {
                                         heading="PV List Filter Criteria"
                                         beginPrompt="To begin, add criteria to PV list filter." />
                                 </div>
-                            </div>
                         </Disclosure.Panel>
+                            </div>
                     </Disclosure>
                     <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
                 </div>

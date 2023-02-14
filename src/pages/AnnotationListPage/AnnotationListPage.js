@@ -5,8 +5,9 @@ import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
 import { Link } from "react-router-dom";
-import FilterPageTitle from "../../components/FilterPageTitle";
+import PageTitle from "../../components/PageTitle";
 import { Disclosure } from "@headlessui/react";
+import DisclosureHead from "../../components/DisclosureHead";
 
 export default function AnnotationListPage({ client }) {
 
@@ -95,18 +96,19 @@ export default function AnnotationListPage({ client }) {
             </div>
             <div className="overflow-y-scroll h-full">
                 <div id="annotations-list-content" className="page-content">
+                    <div id="annotations-list-title-wrapper">
+                        <PageTitle pageName="Annotation List Filter" />
+                    </div>
                     <Disclosure defaultOpen={true}>
-                        <div id="annotations-list-title-wrapper">
-                            <FilterPageTitle pageName="Annotation List Filter" />
-                        </div>
-                        <Disclosure.Panel>
-                            <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
-                                <div id="annotations-list-edit-panel" className="px-8 pb-4">
+                        <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
+                            <DisclosureHead titleText="Filters" />
+                            <Disclosure.Panel>
+                                <div className="my-4 border-b border-gray-300"></div>
+                                <div id="annotations-list-edit-panel" className="mx-8 pb-4 border-b border-gray-300">
                                     <FilterEditPanel filter={filter}
                                         updateCriteriaFunction={updateCriteria}
                                         handleResetFunction={handleReset} />
                                 </div>
-                                <div className="mb-4 border-b border-gray-300"></div>
                                 <div id="pv-list-criteria-panel" className="px-8">
                                     <FilterCriteriaPanel
                                         criteriaList={filterCriteria}
@@ -116,8 +118,8 @@ export default function AnnotationListPage({ client }) {
                                         heading="Annotation List Filter Criteria"
                                         beginPrompt="To begin, add criteria to Annotation list filter." />
                                 </div>
-                            </div>
-                        </Disclosure.Panel>
+                            </Disclosure.Panel>
+                        </div>
                     </Disclosure>
                     <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg} />
                 </div>

@@ -5,6 +5,7 @@ import PageTitle from "../../components/PageTitle"
 import KeyValuePair from "../../components/KeyValuePair";
 import { ChevronUpIcon } from '@heroicons/react/24/outline'
 import { Disclosure } from "@headlessui/react";
+import DisclosureHead from "../../components/DisclosureHead";
 
 export default function SnapshotDetailsPanel({ snapshotDetails, errorMsg }) {
 
@@ -14,16 +15,7 @@ export default function SnapshotDetailsPanel({ snapshotDetails, errorMsg }) {
                 <PageTitle pageName="Snapshot View" />
                 <Disclosure defaultOpen={true}>
                 <div id="snapshot-details" className="flex flex-col py-4 bg-white rounded">
-                    <div id="snapshot-details-head" className="flex flex-row justify-between px-8">
-                        <div className="font-semibold text-slate-800">Details</div>
-                        <Disclosure.Button>
-                        <div className="flex flex-row items-center font-medium text-slate-500">
-                            <div className="ui-open:hidden">Expand</div>
-                            <div className="ui-not-open:hidden">Collapse</div>
-                            <ChevronUpIcon className="w-5 h-5 ml-2 ui-open:rotate-180" />
-                        </div>
-                        </Disclosure.Button>
-                    </div>
+                    <DisclosureHead titleText="Details" />
                     <Disclosure.Panel>
                     <div className="my-4 border-b border-gray-300"></div>
                     <div id="snapshot-details-body" className="flex flex-row flex-wrap px-8">

@@ -5,9 +5,11 @@ import QueryResultsPanel from "./QueryResultsPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import { createSearchParams, useSearchParams } from "react-router-dom";
 import FilterConstants from "../../domain/Constants";
-import FilterPageTitle from "../../components/FilterPageTitle";
+import PageTitle from "../../components/PageTitle";
 import { Link } from 'react-router-dom'
 import { Disclosure } from "@headlessui/react";
+import { ChevronUpIcon } from '@heroicons/react/24/outline'
+import DisclosureHead from "../../components/DisclosureHead";
 
 export default function SnapshotListPage({ client }) {
 
@@ -100,20 +102,21 @@ export default function SnapshotListPage({ client }) {
             </div>
             <div className="overflow-y-scroll h-full">
                 <div id="snapshot-list-content" className="page-content">
+                    <div id="snapshot-list-title-wrapper">
+                        <PageTitle pageName="Snapshot List Filter" />
+                    </div>
                     <Disclosure defaultOpen={true}>
-                        <div id="snapshot-list-title-wrapper">
-                            <FilterPageTitle pageName="Snapshot List Filter" />
-                        </div>
-                        <Disclosure.Panel>
-                            <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
-                                <div id="snapshot-list-edit-panel" className="px-8 pb-4">
+                        <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
+                            <DisclosureHead titleText="Filters" />
+                            <Disclosure.Panel>
+                                <div className="my-4 border-b border-gray-300"></div>
+                                <div id="snapshot-list-edit-panel" className="mx-8 pb-4 mb-4 border-b border-gray-300">
                                     <FilterEditPanel
                                         filter={filter}
                                         updateCriteriaFunction={updateCriteria}
                                         handleResetFunction={handleReset}
                                     />
                                 </div>
-                                <div className="mb-4 border-b border-gray-300"></div>
                                 <div id="snapshot-list-criteria-panel" className="px-8">
                                     <FilterCriteriaPanel
                                         criteriaList={filterCriteria}
@@ -124,8 +127,8 @@ export default function SnapshotListPage({ client }) {
                                         beginPrompt="To begin, add criteria to snapshot list filter."
                                     />
                                 </div>
-                            </div>
-                        </Disclosure.Panel>
+                            </Disclosure.Panel>
+                        </div>
                     </Disclosure>
                     <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
                 </div>
