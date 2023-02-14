@@ -34,7 +34,7 @@ code {
 }
 
 .page-filter-wrapper {
-  @apply flex flex-col w-full py-4 mb-4 rounded shadow-md bg-white border border-black border-opacity-5;
+  @apply flex flex-col w-full py-4 mb-4 rounded shadow bg-white;
 }
 
 .filter-edit-panel {

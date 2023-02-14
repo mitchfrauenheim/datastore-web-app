@@ -12,7 +12,7 @@ export default function SnapshotDetailsPanel({ snapshotDetails, errorMsg }) {
     function renderDetailsPanel() {
         return (
                 <Disclosure defaultOpen={true}>
-                    <div id="snapshot-details" className="flex flex-col py-4 mb-4 bg-white rounded">
+                    <div id="snapshot-details" className="page-filter-wrapper">
                         <DisclosureHead titleText="Details" />
                         <Disclosure.Panel>
                             <div className="my-4 border-b border-gray-300"></div>
