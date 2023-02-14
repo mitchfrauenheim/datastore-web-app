@@ -193,7 +193,7 @@ export default function SnapshotPage({ client, onOpen }) {
                     <div id="snapshot-content" className="page-content">
                         <PageTitle pageName="Snapshot View" />
                         <SnapshotDetailsPanel snapshotDetails={snapshotDetails} errorMsg={detailsQueryErrorMsg} />
-                        <Disclosure defaultOpen={true}>
+                        <Disclosure>
                             <div id="snapshot-data-filter-wrapper" className="page-filter-wrapper">
                                 <DisclosureHead titleText="Snapshot Data Filters" />
                                 <Disclosure.Panel>
