@@ -96,15 +96,13 @@ export default function AnnotationListPage({ client }) {
             </div>
             <div className="overflow-y-scroll h-full">
                 <div id="annotations-list-content" className="page-content">
-                    <div id="annotations-list-title-wrapper">
-                        <PageTitle pageName="Annotation List Filter" />
-                    </div>
+                    <PageTitle pageName="Annotation List Filter" />
                     <Disclosure defaultOpen={true}>
                         <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
                             <DisclosureHead titleText="Filters" />
                             <Disclosure.Panel>
                                 <div className="my-4 border-b border-gray-300"></div>
-                                <div id="annotations-list-edit-panel" className="mx-8 pb-4 border-b border-gray-300">
+                                <div id="annotations-list-edit-panel" className="filter-list-panel">
                                     <FilterEditPanel filter={filter}
                                         updateCriteriaFunction={updateCriteria}
                                         handleResetFunction={handleReset} />

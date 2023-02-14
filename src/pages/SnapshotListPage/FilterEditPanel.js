@@ -46,7 +46,7 @@ export default function FilterEditPanel({ filter,
     // TODO: using defaultValue in input fields for now to hardwire some meaningful values,
     // remove and just use placeholder instead
     return (
-        <div className="flex flex-col md:flex-row flex-wrap justify-between">
+        <div className="filter-group-wrapper">
             
             <div id="time-field-group" className="filter-field-group">
                 <label className="filter-label">Time Range:</label>
@@ -85,7 +85,7 @@ export default function FilterEditPanel({ filter,
                     Apply Filters
                 </button>
                 <button className="clear-filters-button" onClick={handleResetFunction}>
-                    Clear Filters
+                    Reset Filters
                 </button>
             </div>
         </div>

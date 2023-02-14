@@ -1,6 +1,8 @@
 import React, {useRef} from "react";
 
-export default function FilterEditPanel({filter, updateCriteriaFunction}) {
+export default function FilterEditPanel({ filter,
+                                          updateCriteriaFunction,
+                                          handleResetFunction }) {
 
     const firstTimeRef = useRef(null);
     const lastTimeRef = useRef(null);
@@ -19,29 +21,38 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
         updateCriteriaFunction();
     }
 
+    function handleAllFilters() {
+        filter.addTimeRangeCriteria(
+            firstTimeRef.current.value, lastTimeRef.current.value);
+        filter.addPvCriteria(pvPatternRef.current.value);
+        updateCriteriaFunction();
+    }
+
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            <h1>Snapshot Data Filter</h1>
-            <div>
-                <label>
-                    time range filter
+        <div className="filter-group-wrapper">
+            <div className="filter-field-group">
+                <label className="filter-label">Time Range:</label>
                     <input type="text" ref={firstTimeRef}
-                           defaultValue={filter.minFirstTime}/>
+                           defaultValue={filter.minFirstTime}
+                           className="mb-1 filter-input" />
                     <input type="text" ref={lastTimeRef}
-                           defaultValue={filter.maxLastTime}/>
-                    <button onClick={handleAddTimeRangeFilter}>
-                        {filter.timeRangeCriteriaButtonLabel}
-                    </button>
-                </label>
+                           defaultValue={filter.maxLastTime}
+                           className="filter-input" />
             </div>
-            <div>
-                <label>
-                    PV filter
+            <div className="filter-field-group">
+                <label className="filter-label">PV Pattern:</label>
                     <input type="text" ref={pvPatternRef}
                            placeholder="PV name (e.g., mpexPv01 or *.*)"
-                           defaultValue="mpexPv01"/>
-                    <button onClick={handleAddPVFilter}>Add</button>
-                </label>
+                           defaultValue="mpexPv01"
+                           className="filter-input" />
+            </div>
+            <div className="flex flex-col justify-center">
+                <button onClick={handleAllFilters} className="mt-6 mb-1 apply-filters-button">
+                    Add Filters
+                </button>
+                <button onClick={handleResetFunction} className="clear-filters-button">
+                    Reset Filters
+                </button>
             </div>
         </div>
     );

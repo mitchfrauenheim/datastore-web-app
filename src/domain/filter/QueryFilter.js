@@ -76,7 +76,7 @@ export default class QueryFilter {
                 break;
             }
         }
-        if (!found) {this.attributeCriteriaList.push(new AttributeFilterCriteria(attributeName, attributeValue));}
+        if (!found && attributeName && attributeValue) {this.attributeCriteriaList.push(new AttributeFilterCriteria(attributeName, attributeValue));}
         
     }
 
@@ -96,7 +96,7 @@ export default class QueryFilter {
                 break;
             }
         }
-        if (!found) {this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));}
+        if (!found && pvPattern) {this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));}
     }
 
     addOrUpdatePvCriteria(pvPattern) {

@@ -34,13 +34,21 @@ code {
 }
 
 .page-filter-wrapper {
-  @apply flex flex-col w-full py-4 mb-8 rounded shadow-md bg-white border border-black border-opacity-5;
+  @apply flex flex-col w-full py-4 mb-4 rounded shadow-md bg-white border border-black border-opacity-5;
+}
+
+.filter-edit-panel {
+  @apply mx-8 pb-4 mb-4 border-b border-gray-300;
 }
 
 
 /* Classes for FliterEditPanel files */
+.filter-group-wrapper {
+  @apply flex flex-col md:flex-row flex-wrap justify-between;
+}
+
 .filter-field-group {
-  @apply flex flex-col mb-4 md:mb-0
+  @apply flex flex-col mb-4 md:mb-0;
 }
 
 .filter-label {

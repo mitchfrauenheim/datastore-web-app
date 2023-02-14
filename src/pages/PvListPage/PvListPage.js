@@ -103,16 +103,13 @@ export default function PvListPage({ client }) {
             </div>
             <div className="overflow-y-scroll h-full">
                 <div id="pv-list-content" className="page-content">
-                        <div id="pv-list-title-wrapper">
-                            <PageTitle pageName="PV List Filter" />
-                        </div>
+                    <PageTitle pageName="PV List Filter" />
                     <Disclosure defaultOpen={true}>
-                            <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
-                        <DisclosureHead titleText="Filters" />
-                        <Disclosure.Panel>
-                        <div className="my-4 border-b border-gray-300"></div>
-                                <div id="pv-list-edit-panel" className="mx-8 pb-4 border-b border-gray-300">
-
+                        <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
+                            <DisclosureHead titleText="Filters" />
+                            <Disclosure.Panel>
+                                <div className="my-4 border-b border-gray-300"></div>
+                                <div id="pv-list-edit-panel" className="filter-edit-panel">
                                     <FilterEditPanel filter={filter}
                                         updateCriteriaFunction={updateCriteria}
                                         handleResetFunction={handleReset} />
@@ -126,8 +123,8 @@ export default function PvListPage({ client }) {
                                         heading="PV List Filter Criteria"
                                         beginPrompt="To begin, add criteria to PV list filter." />
                                 </div>
-                        </Disclosure.Panel>
-                            </div>
+                            </Disclosure.Panel>
+                        </div>
                     </Disclosure>
                     <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
                 </div>

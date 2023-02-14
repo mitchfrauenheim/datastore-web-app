@@ -16,7 +16,7 @@ export default function FilterEditPanel({ filter,
     }
 
     return (
-        <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="filter-group-wrapper">
             <div id="pv-field" className="filter-field-group">
                 <label className="filter-label">PV Pattern:</label>
                 <input type="text" ref={pvPatternRef}
@@ -30,7 +30,7 @@ export default function FilterEditPanel({ filter,
                     Apply Filter
                 </button>
                 <button className="clear-filters-button" onClick={handleResetFunction}>
-                    Clear Filter
+                    Reset Filter
                 </button>
             </div>
         </div>

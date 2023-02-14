@@ -10,7 +10,7 @@ export default function SnapshotListTable({ snapshots = [] }) {
     }
 
     return (
-        <div className="bg-white rounded-xl shadow-md border border-black border-opacity-5 overflow-hidden">
+        <div className="bg-white rounded shadow-md border border-black border-opacity-5 overflow-hidden">
         <table className="">
             <tbody>
             <tr className="text-slate-800 bg-gray-300 text-medium">

@@ -102,15 +102,13 @@ export default function SnapshotListPage({ client }) {
             </div>
             <div className="overflow-y-scroll h-full">
                 <div id="snapshot-list-content" className="page-content">
-                    <div id="snapshot-list-title-wrapper">
-                        <PageTitle pageName="Snapshot List Filter" />
-                    </div>
+                    <PageTitle pageName="Snapshot List Filter" />
                     <Disclosure defaultOpen={true}>
                         <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
                             <DisclosureHead titleText="Filters" />
                             <Disclosure.Panel>
                                 <div className="my-4 border-b border-gray-300"></div>
-                                <div id="snapshot-list-edit-panel" className="mx-8 pb-4 mb-4 border-b border-gray-300">
+                                <div id="snapshot-list-edit-panel" className="filter-edit-panel">
                                     <FilterEditPanel
                                         filter={filter}
                                         updateCriteriaFunction={updateCriteria}

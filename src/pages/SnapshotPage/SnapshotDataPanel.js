@@ -15,7 +15,7 @@ export default function SnapshotDataPanel({
                     <button onClick={handleNextPageFunction}>Next Page</button>
                 </div>
                 <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
+                    <div>
                         <SnapshotDataTable snapshotDataPage={snapshotDataPage}/>
                     </div>
                 </div>
@@ -38,7 +38,7 @@ export default function SnapshotDataPanel({
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
+        <div>
             {(errorMsg !== null) ? renderQueryErrorPanel() : (snapshotDataPage !== null)
                 ? renderQueryResultsPanel() : renderNoResultsPanel() }
         </div>

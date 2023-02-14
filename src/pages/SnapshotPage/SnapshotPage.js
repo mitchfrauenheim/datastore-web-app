@@ -7,6 +7,9 @@ import QueryFilter from "../../domain/filter/QueryFilter";
 import { useLocation, useSearchParams } from "react-router-dom";
 import Constants from "../../domain/Constants";
 import { Link } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
+import { Dialog, Disclosure } from "@headlessui/react";
+import DisclosureHead from "../../components/DisclosureHead";
 
 export default function SnapshotPage({ client, onOpen }) {
 
@@ -187,16 +190,32 @@ export default function SnapshotPage({ client, onOpen }) {
                     </ul>
                 </div>
                 <div className="overflow-y-scroll h-full">
-                    <div id="snapshot-list-content" className="page-content">
+                    <div id="snapshot-content" className="page-content">
+                        <PageTitle pageName="Snapshot View" />
                         <SnapshotDetailsPanel snapshotDetails={snapshotDetails} errorMsg={detailsQueryErrorMsg} />
-                        <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria} />
-                        <FilterCriteriaPanel
-                            criteriaList={filterCriteria}
-                            handleSubmitFunction={handleSubmit}
-                            handleResetFunction={handleReset}
-                            handleDeleteCriteriaFunction={handleDeleteCriteria}
-                            heading="Snapshot Data Filter Criteria"
-                            beginPrompt="To begin, add criteria to snapshot data filter." />
+                        <Disclosure defaultOpen={true}>
+                            <div id="snapshot-data-filter-wrapper" className="page-filter-wrapper">
+                                <DisclosureHead titleText="Snapshot Data Filters" />
+                                <Disclosure.Panel>
+                                    <div className="my-4 border-b border-gray-300"></div>
+                                    <div id="snapshot-data-edit-panel" className="filter-edit-panel">
+                                        <FilterEditPanel
+                                            filter={filter}
+                                            updateCriteriaFunction={updateCriteria}
+                                            handleResetFunction={handleReset} />
+                                    </div>
+                                    <div id="snapshot-data-criteria-panel" className="px-8">
+                                        <FilterCriteriaPanel
+                                            criteriaList={filterCriteria}
+                                            handleSubmitFunction={handleSubmit}
+                                            handleResetFunction={handleReset}
+                                            handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                            heading="Snapshot Data Filter Criteria"
+                                            beginPrompt="To begin, add criteria to snapshot data filter." />
+                                    </div>
+                                </Disclosure.Panel>
+                            </div>
+                        </Disclosure>
                         <SnapshotDataPanel
                             snapshotDataPage={snapshotDataPage}
                             errorMsg={dataQueryErrorMsg}
