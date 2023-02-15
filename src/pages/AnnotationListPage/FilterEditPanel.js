@@ -14,7 +14,7 @@ export default function FilterEditPanel({ filter,
     }
 
     return (
-        <div className="filter-group wrapper">
+        <div className="filter-group-wrapper">
             <div id="annotation-field-group" className="filter-field-group">
                 <label className="filter-label">Annotation Name Pattern:</label>
                 <input type="text" ref={attributeNamePatternRef}

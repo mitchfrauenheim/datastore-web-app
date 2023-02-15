@@ -102,7 +102,7 @@ export default function AnnotationListPage({ client }) {
                             <DisclosureHead titleText="Filters" />
                             <Disclosure.Panel>
                                 <div className="my-4 border-b border-gray-300"></div>
-                                <div id="annotations-list-edit-panel" className="filter-list-panel">
+                                <div id="annotations-list-edit-panel" className="filter-edit-panel">
                                     <FilterEditPanel filter={filter}
                                         updateCriteriaFunction={updateCriteria}
                                         handleResetFunction={handleReset} />

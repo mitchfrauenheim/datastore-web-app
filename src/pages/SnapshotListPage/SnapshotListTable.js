@@ -45,7 +45,7 @@ export default function SnapshotListTable({ snapshots = [] }) {
                                 <td className="border">{snapshot?.firstTimestampDisplayString || ""}</td>
                                 <td className="border">{snapshot?.lastTimestampDisplayString || ""}</td>
                                 <td className="border">
-                                    <PvNamesWithLinksParagraph objectWithPvs={snapshot} />
+                                    <PvNamesWithLinksParagraph objectWithPvs={snapshot} snapshotID={snapshot.id} showAll={false} />
                                 </td>
                                 <td className="border">
                                     <AttributePairsTable objectWithAttributes={snapshot} />

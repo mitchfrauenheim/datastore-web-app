@@ -17,7 +17,7 @@ export default function SnapshotDetailsPanel({ snapshotDetails, errorMsg }) {
                         <Disclosure.Panel>
                             <div className="my-4 border-b border-gray-300"></div>
                             <div id="snapshot-details-body" className="flex flex-row flex-wrap px-8">
-                                <div className="flex flex-row flex-wrap space-x-8 mb-6">
+                                <div className="flex flex-row flex-wrap space-x-10 mb-6">
                                     <KeyValuePair index="ID" value={snapshotDetails.id} />
                                     <KeyValuePair index="Size" value={snapshotDetails.size} />
                                     <KeyValuePair index="Trigger Timestamp" value={snapshotDetails.snapshotTimestampDisplayString} />
@@ -25,7 +25,7 @@ export default function SnapshotDetailsPanel({ snapshotDetails, errorMsg }) {
                                     <KeyValuePair index="Last Sample Time" value={snapshotDetails.lastTimestampDisplayString} />
                                 </div>
                                 <div className="mb-6">
-                                    <KeyValuePair index="PV Names" value={<PvNamesWithLinksParagraph objectWithPvs={snapshotDetails} />} />
+                                    <KeyValuePair index="PV Names" value={<PvNamesWithLinksParagraph objectWithPvs={snapshotDetails} snapshotID={snapshotDetails.id} showAll={true} />} />
                                 </div>
                                 <KeyValuePair index="Attributes" value={<AttributePairsTable objectWithAttributes={snapshotDetails} />} />
                             </div>

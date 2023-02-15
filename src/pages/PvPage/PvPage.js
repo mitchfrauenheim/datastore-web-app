@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {useLocation, useSearchParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import Constants from "../../domain/Constants";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import PvDetailsPanel from "./PvDetailsPanel";
+import { Link } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
 
 export default function PvPage({ client, onOpen }) {
 
@@ -73,8 +75,18 @@ export default function PvPage({ client, onOpen }) {
     function renderPvPage() {
         console.log("PvPage.renderPvPage()");
         return (
-            <div>
-                <PvDetailsPanel pv={pv} />
+            <div id="pv-wrapper" className="page-wrapper">
+                <div id="snapshot-breadcrumbs" className="custom-breadcrumbs">
+                    <ul>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/pvList">PV List Filter</Link></li>
+                        <li>PV View</li>
+                    </ul>
+                </div>
+                <div id="pv-content" className="page-content">
+                    <PageTitle pageName="PV View" />
+                    <PvDetailsPanel pv={pv} />
+                </div>
             </div>
         );
     }
