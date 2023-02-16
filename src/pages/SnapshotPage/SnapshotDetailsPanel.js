@@ -16,7 +16,7 @@ export default function SnapshotDetailsPanel({ snapshotDetails, errorMsg }) {
                         <DisclosureHead titleText="Details" />
                         <Disclosure.Panel>
                             <div className="my-4 border-b border-gray-300"></div>
-                            <div id="snapshot-details-body" className="flex flex-row flex-wrap px-8">
+                            <div id="snapshot-details-body" className="flex flex-col flex-wrap px-8">
                                 <div className="flex flex-row flex-wrap space-x-10 mb-6">
                                     <KeyValuePair index="ID" value={snapshotDetails.id} />
                                     <KeyValuePair index="Size" value={snapshotDetails.size} />

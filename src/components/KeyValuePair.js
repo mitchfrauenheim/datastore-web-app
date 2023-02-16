@@ -4,7 +4,7 @@ export default function KeyValuePair(props) {
         <div id="snapshot-id-label" className="text-sm font-medium text-slate-500">
             {props.index}
         </div>
-        <div id="snapshot-id-value" className="text-sm text-slate-800">
+        <div id="snapshot-id-value" className="text-sm text-black">
             {props.value}
         </div>
     </div>

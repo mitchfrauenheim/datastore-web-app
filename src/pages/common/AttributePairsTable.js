@@ -3,18 +3,15 @@ import React from "react";
 export default function AttributePairsTable({ objectWithAttributes }) {
 
     return (
-        <table className="table-without-border">
-            <tbody>
+        <div classname="flex flex-col">
             {objectWithAttributes.attributePairStrings?.map((pairString, i) => {
+                console.log(objectWithAttributes)
                 return (
-                    <tr key={i}>
-                        <td>
-                            {pairString}
-                        </td>
-                    </tr>
+                    <div key={i}>
+                            {pairString.replace(" =>", ":")}
+                    </div>
                 );
             })}
-            </tbody>
-        </table>
+        </div>
     );
 }

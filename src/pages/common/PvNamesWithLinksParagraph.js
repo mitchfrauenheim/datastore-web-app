@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import TestComponent from "../../components/TestComponent";
 
 export default function PvNamesWithLinksParagraph(props) {
     if (props.objectWithPvs.pvNames.length < 3 || props.showAll) {
@@ -28,7 +29,7 @@ export default function PvNamesWithLinksParagraph(props) {
                 </Link>
             )
         }).reduce((prev, curr) => [prev, ", ", curr])}
-        ... <Link to={`/snapshot?id=${props.snapshotID}`}>+{remaining}</Link>
+        ... <div className="tooltip" data-tip={<TestComponent />}><Link to={`/snapshot?id=${props.snapshotID}`}>+{remaining}</Link></div>
         </>
     );
 }

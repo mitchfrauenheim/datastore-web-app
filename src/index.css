@@ -20,6 +20,14 @@ code {
     monospace;
 }
 
+th {
+  @apply px-2 py-2 text-left font-semibold;
+}
+
+td {
+  @apply px-2;
+}
+
 /* Classes for __ListPage files */
 .page-wrapper {
   @apply flex flex-col flex-shrink-0 h-screen w-full bg-gray-100;
