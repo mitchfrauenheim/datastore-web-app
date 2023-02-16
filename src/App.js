@@ -5,6 +5,7 @@ import HomePage from "./pages/HomePage";
 import SnapshotListPage from "./pages/SnapshotListPage/SnapshotListPage";
 import SnapshotPage from "./pages/SnapshotPage/SnapshotPage";
 import NoPage from "./pages/NoPage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
 
 import './App.css';
 
@@ -80,6 +81,7 @@ export default function App() {
                         <Route path="pv" element={<PvPage client={datastoreApi}/>} />
                         <Route path="annotationList" element={<AnnotationListPage client={datastoreApi}/>} />
                         <Route path="annotation" element={<AnnotationPage client={datastoreApi}/>} />
+                        <Route path="settings" element={<SettingsPage client={datastoreApi}/>} />
                         <Route path="*" element={<NoPage />} />
                     </Route>
                 </Routes>
