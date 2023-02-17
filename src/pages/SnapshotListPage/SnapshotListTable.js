@@ -11,9 +11,9 @@ export default function SnapshotListTable({ snapshots = [] }) {
     }
 
     return (
-        <div className="mb-4 overflow-hidden bg-white rounded shadow-md text-sm">
+        <div className="table-wrapper">
             <table className="w-full">
-                <tbody>
+                <thead>
                     <tr className="text-slate-800">
                         <th>ID</th>
                         <th>Size</th>
@@ -23,9 +23,11 @@ export default function SnapshotListTable({ snapshots = [] }) {
                         <th>PV Names</th>
                         <th>Attributes</th>
                     </tr>
+                </thead>
+                <tbody>
                     {snapshots?.map((snapshot, i) => {
                         return (
-                            <tr key={i} className="hover:bg-gray-100 border-y last:border-b-0">
+                            <tr key={i} className="table-row">
                                 <td className="font-medium">
                                     <Link
                                         onClick={() => handleClickSnapshotLink(snapshot)}

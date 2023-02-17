@@ -94,33 +94,31 @@ export default function AnnotationListPage({ client }) {
                     <li>Annotation List Filter</li>
                 </ul>
             </div>
-            <div className="overflow-y-scroll h-full">
-                <div id="annotations-list-content" className="page-content">
-                    <PageTitle pageName="Annotation List Filter" />
-                    <Disclosure defaultOpen={true}>
-                        <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
-                            <DisclosureHead titleText="Filters" />
-                            <Disclosure.Panel>
-                                <div className="my-4 border-b border-gray-300"></div>
-                                <div id="annotations-list-edit-panel" className="filter-edit-panel">
-                                    <FilterEditPanel filter={filter}
-                                        updateCriteriaFunction={updateCriteria}
-                                        handleResetFunction={handleReset} />
-                                </div>
-                                <div id="pv-list-criteria-panel" className="px-8">
-                                    <FilterCriteriaPanel
-                                        criteriaList={filterCriteria}
-                                        handleSubmitFunction={handleSubmit}
-                                        handleResetFunction={handleReset}
-                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
-                                        heading="Annotation List Filter Criteria"
-                                        beginPrompt="To begin, add criteria to Annotation list filter." />
-                                </div>
-                            </Disclosure.Panel>
-                        </div>
-                    </Disclosure>
-                    <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg} />
-                </div>
+            <div id="annotations-list-content" className="page-content">
+                <PageTitle pageName="Annotation List Filter" />
+                <Disclosure defaultOpen={true}>
+                    <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
+                        <DisclosureHead titleText="Filters" />
+                        <Disclosure.Panel>
+                            <div className="my-4 border-b border-gray-300"></div>
+                            <div id="annotations-list-edit-panel" className="filter-edit-panel">
+                                <FilterEditPanel filter={filter}
+                                    updateCriteriaFunction={updateCriteria}
+                                    handleResetFunction={handleReset} />
+                            </div>
+                            <div id="pv-list-criteria-panel" className="px-8">
+                                <FilterCriteriaPanel
+                                    criteriaList={filterCriteria}
+                                    handleSubmitFunction={handleSubmit}
+                                    handleResetFunction={handleReset}
+                                    handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                    heading="Annotation List Filter Criteria"
+                                    beginPrompt="To begin, add criteria to Annotation list filter." />
+                            </div>
+                        </Disclosure.Panel>
+                    </div>
+                </Disclosure>
+                <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg} />
             </div>
         </div>
     );

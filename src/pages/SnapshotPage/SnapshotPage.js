@@ -189,39 +189,37 @@ export default function SnapshotPage({ client, onOpen }) {
                         <li>Snapshot View</li>
                     </ul>
                 </div>
-                <div className="overflow-y-scroll h-full">
-                    <div id="snapshot-content" className="page-content">
-                        <PageTitle pageName="Snapshot View" />
-                        <SnapshotDetailsPanel snapshotDetails={snapshotDetails} errorMsg={detailsQueryErrorMsg} />
-                        <Disclosure>
-                            <div id="snapshot-data-filter-wrapper" className="page-filter-wrapper">
-                                <DisclosureHead titleText="Snapshot Data Filters" />
-                                <Disclosure.Panel>
-                                    <div className="my-4 border-b border-gray-300"></div>
-                                    <div id="snapshot-data-edit-panel" className="filter-edit-panel">
-                                        <FilterEditPanel
-                                            filter={filter}
-                                            updateCriteriaFunction={updateCriteria}
-                                            handleResetFunction={handleReset} />
-                                    </div>
-                                    <div id="snapshot-data-criteria-panel" className="px-8">
-                                        <FilterCriteriaPanel
-                                            criteriaList={filterCriteria}
-                                            handleSubmitFunction={handleSubmit}
-                                            handleResetFunction={handleReset}
-                                            handleDeleteCriteriaFunction={handleDeleteCriteria}
-                                            heading="Snapshot Data Filter Criteria"
-                                            beginPrompt="To begin, add criteria to snapshot data filter." />
-                                    </div>
-                                </Disclosure.Panel>
-                            </div>
-                        </Disclosure>
-                        <SnapshotDataPanel
-                            snapshotDataPage={snapshotDataPage}
-                            errorMsg={dataQueryErrorMsg}
-                            handlePreviousPageFunction={handlePreviousDataPage}
-                            handleNextPageFunction={handleNextDataPage} />
-                    </div>
+                <div id="snapshot-content" className="page-content">
+                    <PageTitle pageName="Snapshot View" />
+                    <SnapshotDetailsPanel snapshotDetails={snapshotDetails} errorMsg={detailsQueryErrorMsg} />
+                    <Disclosure>
+                        <div id="snapshot-data-filter-wrapper" className="page-filter-wrapper">
+                            <DisclosureHead titleText="Snapshot Data Filters" />
+                            <Disclosure.Panel>
+                                <div className="my-4 border-b border-gray-300"></div>
+                                <div id="snapshot-data-edit-panel" className="filter-edit-panel">
+                                    <FilterEditPanel
+                                        filter={filter}
+                                        updateCriteriaFunction={updateCriteria}
+                                        handleResetFunction={handleReset} />
+                                </div>
+                                <div id="snapshot-data-criteria-panel" className="px-8">
+                                    <FilterCriteriaPanel
+                                        criteriaList={filterCriteria}
+                                        handleSubmitFunction={handleSubmit}
+                                        handleResetFunction={handleReset}
+                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                        heading="Snapshot Data Filter Criteria"
+                                        beginPrompt="To begin, add criteria to snapshot data filter." />
+                                </div>
+                            </Disclosure.Panel>
+                        </div>
+                    </Disclosure>
+                    <SnapshotDataPanel
+                        snapshotDataPage={snapshotDataPage}
+                        errorMsg={dataQueryErrorMsg}
+                        handlePreviousPageFunction={handlePreviousDataPage}
+                        handleNextPageFunction={handleNextDataPage} />
                 </div>
             </div>
         );

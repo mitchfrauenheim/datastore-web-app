@@ -101,33 +101,31 @@ export default function PvListPage({ client }) {
                     <li>PV List Filter</li>
                 </ul>
             </div>
-            <div className="overflow-y-scroll h-full">
-                <div id="pv-list-content" className="page-content">
-                    <PageTitle pageName="PV List Filter" />
-                    <Disclosure defaultOpen={true}>
-                        <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
-                            <DisclosureHead titleText="Filters" />
-                            <Disclosure.Panel>
-                                <div className="my-4 border-b border-gray-300"></div>
-                                <div id="pv-list-edit-panel" className="filter-edit-panel">
-                                    <FilterEditPanel filter={filter}
-                                        updateCriteriaFunction={updateCriteria}
-                                        handleResetFunction={handleReset} />
-                                </div>
-                                <div id="pv-list-criteria-panel" className="px-8">
-                                    <FilterCriteriaPanel
-                                        criteriaList={filterCriteria}
-                                        handleSubmitFunction={handleSubmit}
-                                        handleResetFunction={handleReset}
-                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
-                                        heading="PV List Filter Criteria"
-                                        beginPrompt="To begin, add criteria to PV list filter." />
-                                </div>
-                            </Disclosure.Panel>
-                        </div>
-                    </Disclosure>
-                    <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
-                </div>
+            <div id="pv-list-content" className="page-content">
+                <PageTitle pageName="PV List Filter" />
+                <Disclosure defaultOpen={true}>
+                    <div id="pv-list-filter-wrapper" className="page-filter-wrapper">
+                        <DisclosureHead titleText="Filters" />
+                        <Disclosure.Panel>
+                            <div className="my-4 border-b border-gray-300"></div>
+                            <div id="pv-list-edit-panel" className="filter-edit-panel">
+                                <FilterEditPanel filter={filter}
+                                    updateCriteriaFunction={updateCriteria}
+                                    handleResetFunction={handleReset} />
+                            </div>
+                            <div id="pv-list-criteria-panel" className="px-8">
+                                <FilterCriteriaPanel
+                                    criteriaList={filterCriteria}
+                                    handleSubmitFunction={handleSubmit}
+                                    handleResetFunction={handleReset}
+                                    handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                    heading="PV List Filter Criteria"
+                                    beginPrompt="To begin, add criteria to PV list filter." />
+                            </div>
+                        </Disclosure.Panel>
+                    </div>
+                </Disclosure>
+                <QueryResultsPanel pvs={pvList} errorMsg={queryErrorMsg} />
             </div>
         </div>
     );

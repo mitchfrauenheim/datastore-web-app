@@ -30,15 +30,16 @@ td {
 
 /* Classes for __ListPage files */
 .page-wrapper {
-  @apply flex flex-col flex-shrink-0 h-screen w-full bg-gray-100;
+  @apply flex flex-col h-screen w-full bg-gray-100;
 }
 
 .custom-breadcrumbs {
-  @apply px-8 pt-4 text-sm font-medium breadcrumbs text-slate-500 bg-white h-16 border-b;
+  @apply breadcrumbs flex-shrink-0 px-8 pt-4 text-sm font-medium text-slate-500 bg-white h-14 border-b;
 }
 
 .page-content {
-  @apply flex flex-col mx-8;
+  @apply flex flex-col mx-8 overflow-y-scroll;
+  height: calc(100% - 56px)
 }
 
 .page-filter-wrapper {
@@ -73,4 +74,17 @@ td {
 
 .clear-filters-button {
   @apply h-8 w-32 px-2 rounded text-white text-sm font-medium bg-red-500 transition duration-100 hover:bg-red-700;
+}
+
+/* Classes for ___ListTable files */
+.table-wrapper {
+  @apply mb-4 rounded shadow-md text-sm h-full overflow-y-auto;
+}
+
+.table-wrapper thead {
+  @apply sticky top-0 bg-white shadow;
+}
+
+.table-row {
+  @apply hover:bg-gray-100 border-y last:border-b-0 bg-white;
 }

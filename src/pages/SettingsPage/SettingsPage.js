@@ -10,10 +10,8 @@ export default function SettingsPage() {
                     <li>Settings</li>
                 </ul>
             </div>
-            <div className="overflow-y-scroll h-full">
-                <div id="settings-content" className="page-content">
-                    <PageTitle pageName="Settings" />
-                </div>
+            <div id="settings-content" className="page-content">
+                <PageTitle pageName="Settings" />
             </div>
         </div>
     );

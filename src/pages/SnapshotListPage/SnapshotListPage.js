@@ -100,36 +100,34 @@ export default function SnapshotListPage({ client }) {
                     <li>Snapshot List Filter</li>
                 </ul>
             </div>
-            <div className="overflow-y-scroll h-full">
-                <div id="snapshot-list-content" className="page-content">
-                    <PageTitle pageName="Snapshot List Filter" />
-                    <Disclosure defaultOpen={true}>
-                        <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
-                            <DisclosureHead titleText="Filters" />
-                            <Disclosure.Panel>
-                                <div className="my-4 border-b border-gray-300"></div>
-                                <div id="snapshot-list-edit-panel" className="filter-edit-panel">
-                                    <FilterEditPanel
-                                        filter={filter}
-                                        updateCriteriaFunction={updateCriteria}
-                                        handleResetFunction={handleReset}
-                                    />
-                                </div>
-                                <div id="snapshot-list-criteria-panel" className="px-8">
-                                    <FilterCriteriaPanel
-                                        criteriaList={filterCriteria}
-                                        handleSubmitFunction={handleSubmit}
-                                        handleResetFunction={handleReset}
-                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
-                                        heading="Snapshot List Filter Criteria"
-                                        beginPrompt="To begin, add criteria to snapshot list filter."
-                                    />
-                                </div>
-                            </Disclosure.Panel>
-                        </div>
-                    </Disclosure>
-                    <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
-                </div>
+            <div id="snapshot-list-content" className="page-content">
+                <PageTitle pageName="Snapshot List Filter" />
+                <Disclosure defaultOpen={true}>
+                    <div id="snapshot-list-filter-wrapper" className="page-filter-wrapper">
+                        <DisclosureHead titleText="Filters" />
+                        <Disclosure.Panel>
+                            <div className="my-4 border-b border-gray-300"></div>
+                            <div id="snapshot-list-edit-panel" className="filter-edit-panel">
+                                <FilterEditPanel
+                                    filter={filter}
+                                    updateCriteriaFunction={updateCriteria}
+                                    handleResetFunction={handleReset}
+                                />
+                            </div>
+                            <div id="snapshot-list-criteria-panel" className="px-8">
+                                <FilterCriteriaPanel
+                                    criteriaList={filterCriteria}
+                                    handleSubmitFunction={handleSubmit}
+                                    handleResetFunction={handleReset}
+                                    handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                    heading="Snapshot List Filter Criteria"
+                                    beginPrompt="To begin, add criteria to snapshot list filter."
+                                />
+                            </div>
+                        </Disclosure.Panel>
+                    </div>
+                </Disclosure>
+                <QueryResultsPanel snapshots={snapshotList} errorMsg={queryErrorMsg} />
             </div>
         </div>
     );

@@ -1,31 +1,23 @@
 import PvListTable from "./PvListTable";
 import React from "react";
 
-export default function QueryResultsPanel({pvs, errorMsg}) {
+export default function QueryResultsPanel({ pvs, errorMsg }) {
 
     function renderPvListDataTable() {
         return (
-            <div>
-                <PvListTable pvs={pvs}/>
-            </div>
+            <PvListTable pvs={pvs} />
         );
     }
 
     function renderNoPvListDataTable() {
         return (
-            <div/>
+            <div />
         );
     }
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                <div>
-                    <div>
-                        {(pvs.length === 0) ? renderNoPvListDataTable() : renderPvListDataTable()}
-                    </div>
-                </div>
-            </div>
+            (pvs.length === 0) ? renderNoPvListDataTable() : renderPvListDataTable()
         );
     }
 
@@ -38,8 +30,6 @@ export default function QueryResultsPanel({pvs, errorMsg}) {
     }
 
     return (
-        <div>
-            {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
-        </div>
+        (errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()
     );
 }

@@ -3,7 +3,7 @@ import PageLinkSmall from './PageLinkSmall'
 import { HomeIcon, CameraIcon, DocumentChartBarIcon, PencilIcon, Cog8ToothIcon } from '@heroicons/react/24/outline'
 
 
-export default function () {
+export default function Menu() {
     return (
         <>
             <div id="left-wrapper-small" className="sm:hidden flex flex-col w-20 bg-slate-800 border-r border-gray-200">
