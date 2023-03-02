@@ -39,13 +39,13 @@ export default function SnapshotDataTable({ snapshotDataPage }) {
     }, [snapshotDataPage])
 
     return (
-        <div className="table-wrapper ag-theme-material">
+        <div className="grid-section-wrapper">
             <PageSizeSelector
                 options={[10, 50, 100, 500]}
                 gridRef={gridRef}
                 setSelected={setSelected}
             />
-            <div className="grid-wrapper">
+            <div className="grid-wrapper ag-theme-material ag-theme-tight">
                 <AgGridReact
                     ref={gridRef}
                     rowData={rowData}

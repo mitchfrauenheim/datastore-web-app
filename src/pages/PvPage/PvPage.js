@@ -97,8 +97,6 @@ export default function PvPage({ client, onOpen }) {
     }
 
     return (
-        <div>
-            {pv ? renderPvPage() : renderNoPvPage()}
-        </div>
+        pv ? renderPvPage() : renderNoPvPage()
     );
 }

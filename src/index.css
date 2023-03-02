@@ -82,7 +82,7 @@ td {
 }
 
 /* Classes for ___ListTable files */
-.table-wrapper {
+.grid-section-wrapper {
   @apply mb-4 flex-grow;
 }
 
@@ -96,11 +96,16 @@ td {
   /* --ag-cell-horizontal-padding: 1.5rem; */
   --ag-font-family: 'Inter', sans-serif;
   --ag-header-foreground-color: #1E2A3B;
-  --ag-list-item-height: 20px;
-  --ag-grid-size: 4px;
+  /* --ag-list-item-height: 20px;
+  --ag-grid-size: 4px; */
   --ag-header-height: 40px;
   --ag-row-hover-color: #F4F5F6;
   --ag-odd-row-background-color: rgb(249, 250, 251);
+}
+
+.ag-theme-tight {
+  --ag-list-item-height: 20px;
+  --ag-grid-size: 4px;
 }
 
 .ag-paging-panel {
