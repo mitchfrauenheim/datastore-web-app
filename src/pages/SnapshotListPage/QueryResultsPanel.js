@@ -1,5 +1,6 @@
 import React from "react";
 import SnapshotListTable from "./SnapshotListTable";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export default function QueryResultsPanel({ snapshots, errorMsg }) {
 
@@ -25,9 +26,8 @@ export default function QueryResultsPanel({ snapshots, errorMsg }) {
     }
 
     function renderQueryErrorPanel() {
-        alert(errorMsg)
         return (
-            <div />
+            <ErrorMessage errorMsg={errorMsg} />
         );
     }
 

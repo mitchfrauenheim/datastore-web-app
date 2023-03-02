@@ -1,5 +1,6 @@
 import PvListTable from "./PvListTable";
 import React from "react";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export default function QueryResultsPanel({ pvs, errorMsg }) {
 
@@ -22,9 +23,8 @@ export default function QueryResultsPanel({ pvs, errorMsg }) {
     }
 
     function renderQueryErrorPanel() {
-        alert(errorMsg)
         return (
-            <div />
+            <ErrorMessage errorMsg={errorMsg} />
         );
     }
 

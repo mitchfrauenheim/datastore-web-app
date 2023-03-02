@@ -1,5 +1,6 @@
 import React from "react";
 import AnnotationListTable from "./AnnotationListTable";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export default function QueryResultsPanel({ annotationList, errorMsg }) {
 
@@ -23,9 +24,8 @@ export default function QueryResultsPanel({ annotationList, errorMsg }) {
     }
 
     function renderQueryErrorPanel() {
-        alert(errorMsg)
         return (
-            <div />
+            <ErrorMessage errorMsg={errorMsg} />
         );
     }
 
