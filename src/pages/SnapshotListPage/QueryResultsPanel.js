@@ -7,9 +7,7 @@ export default function QueryResultsPanel({ snapshots, errorMsg }) {
 
     function renderSnapshotListDataTable() {
         return (
-            <div>
-                <SnapshotListTable snapshots={snapshots} />
-            </div>
+            <SnapshotListTable snapshots={snapshots} />
         );
     }
 
@@ -21,24 +19,19 @@ export default function QueryResultsPanel({ snapshots, errorMsg }) {
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                {(snapshots.length === 0) ? renderNoSnapshotListDataTable() : renderSnapshotListDataTable()}
-            </div>
+            (snapshots.length === 0) ? renderNoSnapshotListDataTable() : renderSnapshotListDataTable()
         );
 
     }
 
     function renderQueryErrorPanel() {
+        alert(errorMsg)
         return (
-            <div>
-                <h1>{errorMsg}</h1>;
-            </div>
+            <div />
         );
     }
 
     return (
-        <div>
-            {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
-        </div>
+        (errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()
     );
 }

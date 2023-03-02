@@ -39,7 +39,7 @@ export default function Menu() {
                     </div>
                 </div>
             </div>
-            <div id="left-wrapper" className="hidden sm:flex flex-col w-80 min-w-max bg-slate-800 border-r border-gray-200">
+            <div id="left-wrapper" className="hidden sm:flex flex-col flex-shrink-0 w-64 min-w-max bg-slate-800 border-r border-gray-200">
                 <div id="left-header" className="flex items-center h-20">
                     <div id="osprey" className="ml-6 font-glegoo text-2xl text-slate-300 font-bold">
                         <a href="https://ospreydcs.com/" >Osprey DCS </a>

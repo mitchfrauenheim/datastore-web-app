@@ -23,10 +23,10 @@ export default function FilterCriteriaPanel({
                 <div>
                     {criteriaList?.map((criteria, i) => {
                         return (
-                            <div className="badge font-medium text-slate-500 bg-gray-200 border-gray-200 cursor-default mr-2">
+                            <div id={i} className="badge font-medium text-slate-500 bg-gray-200 border-gray-200 cursor-default mr-2">
                                 {criteria.displayString}
                                 &nbsp;
-                                <button onClick={(e) => handleDeleteCriteriaFunction(criteria)}>
+                                <button onClick={(e) => handleDeleteCriteriaFunction(criteria)} className="transition duration-100 hover:text-slate-800">
                                     <XCircleIcon className="w-3.5 h-3.5" />
                                 </button>
                             </div>
@@ -63,9 +63,7 @@ export default function FilterCriteriaPanel({
     }
 
     return (
-        <div>
-            {(criteriaList.length === 0) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()}
-        </div>
+        (criteriaList.length === 0) ? renderNoFilterCriteriaPanel() : renderFilterCriteriaPanel()
     );
 
 }

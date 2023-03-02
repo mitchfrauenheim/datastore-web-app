@@ -1,5 +1,5 @@
 import { Disclosure } from "@headlessui/react";
-import { ChevronUpIcon } from "@heroicons/react/24/outline"
+import {ChevronDownIcon } from "@heroicons/react/24/outline"
 
 export default function DisclosureHead(props) {
     return (
@@ -11,7 +11,7 @@ export default function DisclosureHead(props) {
                 <div className="flex flex-row items-center font-medium text-slate-500">
                     <div className="ui-open:hidden">Expand</div>
                     <div className="ui-not-open:hidden">Collapse</div>
-                    <ChevronUpIcon className="w-5 h-5 ml-2 ui-open:rotate-180" />
+                    <ChevronDownIcon className="w-5 h-5 ml-2 ui-open:rotate-180" />
                 </div>
             </Disclosure.Button>
         </div>

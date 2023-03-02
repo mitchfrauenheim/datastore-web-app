@@ -6,6 +6,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-material.css';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -25,12 +28,13 @@ th {
 }
 
 td {
-  @apply px-2;
+  @apply px-2 py-1;
 }
 
 /* Classes for __ListPage files */
 .page-wrapper {
-  @apply flex flex-col h-screen w-full bg-gray-100;
+  @apply flex flex-col h-screen bg-gray-100 overflow-y-scroll;
+  width: calc(100vw - 256px)
 }
 
 .custom-breadcrumbs {
@@ -38,8 +42,8 @@ td {
 }
 
 .page-content {
-  @apply flex flex-col mx-8 overflow-y-scroll;
-  height: calc(100% - 56px)
+  @apply flex flex-col mx-8;
+  height: calc(100% - 56px);
 }
 
 .page-filter-wrapper {
@@ -65,7 +69,8 @@ td {
 }
 
 .filter-input {
-  @apply h-8 w-56 pl-2 bg-gray-200 rounded text-sm text-slate-600 font-medium placeholder-slate-400 focus:outline-0 focus:text-slate-900;
+  /* @apply h-8 w-56 pl-2 bg-gray-200 rounded text-sm text-slate-600 font-medium placeholder-slate-400 focus:outline-0 focus:text-slate-900; */
+  @apply h-8 w-56 pl-2 rounded text-sm font-medium text-slate-800 border border-black border-opacity-30 drop-shadow-sm focus:outline-0 focus:border-slate-800 focus:drop-shadow-md;
 }
 
 .apply-filters-button {
@@ -78,13 +83,30 @@ td {
 
 /* Classes for ___ListTable files */
 .table-wrapper {
-  @apply mb-4 rounded shadow-md text-sm h-full overflow-y-auto;
+  @apply mb-4 flex-grow;
 }
 
-.table-wrapper thead {
-  @apply sticky top-0 bg-white shadow;
+.grid-wrapper {
+  @apply w-full h-full shadow-md rounded overflow-hidden;
+  height: calc(100% - 1.5rem);
 }
 
-.table-row {
-  @apply hover:bg-gray-100 border-y last:border-b-0 bg-white;
+.ag-theme-material {
+  --ag-font-size: 0.875rem;
+  /* --ag-cell-horizontal-padding: 1.5rem; */
+  --ag-font-family: 'Inter', sans-serif;
+  --ag-header-foreground-color: #1E2A3B;
+  --ag-list-item-height: 20px;
+  --ag-grid-size: 4px;
+  --ag-header-height: 40px;
+  --ag-row-hover-color: #F4F5F6;
+  --ag-odd-row-background-color: rgb(249, 250, 251);
+}
+
+.ag-paging-panel {
+  @apply font-inter;
+}
+
+.ag-paging-row-summary-panel-number, .ag-paging-number {
+  @apply font-semibold text-slate-800;
 }

@@ -22,10 +22,9 @@ export default function QueryResultsPanel({ pvs, errorMsg }) {
     }
 
     function renderQueryErrorPanel() {
+        alert(errorMsg)
         return (
-            <div>
-                <h1>{errorMsg}</h1>;
-            </div>
+            <div />
         );
     }
 

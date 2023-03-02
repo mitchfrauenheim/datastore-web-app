@@ -2,45 +2,38 @@ import React from "react";
 import SnapshotDataTable from "./SnapshotDataTable";
 
 export default function SnapshotDataPanel({
-                                              snapshotDataPage,
-                                              errorMsg,
-                                              handlePreviousPageFunction,
-                                              handleNextPageFunction }) {
+    snapshotDataPage,
+    errorMsg,
+    handlePreviousPageFunction,
+    handleNextPageFunction }) {
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                <div>
-                    <button onClick={handlePreviousPageFunction}>Previous Page</button>
+            <>
+                <div className="flex flex-row">
+                    <button onClick={handlePreviousPageFunction} className="mr-2">Previous Page</button>
                     <button onClick={handleNextPageFunction}>Next Page</button>
                 </div>
-                <div>
-                    <div>
-                        <SnapshotDataTable snapshotDataPage={snapshotDataPage}/>
-                    </div>
-                </div>
-            </div>
+                <SnapshotDataTable snapshotDataPage={snapshotDataPage} />
+            </>
         );
     }
 
     function renderNoResultsPanel() {
         return (
-            <div/>
+            <div />
         );
     }
 
     function renderQueryErrorPanel() {
+        alert(errorMsg)
         return (
-            <div>
-                <h1>{errorMsg}</h1>
-            </div>
+            <div />
         );
     }
 
     return (
-        <div>
-            {(errorMsg !== null) ? renderQueryErrorPanel() : (snapshotDataPage !== null)
-                ? renderQueryResultsPanel() : renderNoResultsPanel() }
-        </div>
+        (errorMsg !== null) ? renderQueryErrorPanel() : (snapshotDataPage !== null)
+            ? renderQueryResultsPanel() : renderNoResultsPanel()
     );
 }

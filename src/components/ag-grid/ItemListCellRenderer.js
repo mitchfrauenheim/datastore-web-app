@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function AttributePairsTable(props) {
-    if (props.objectWithAttributes.attributePairStrings?.length < 3 || props.showAll) {
+export default function ItemListCellRenderer(props) {
+    if (props.value.items?.length < 3) {
         return (
             <div className="flex flex-col">
-                {props.objectWithAttributes.attributePairStrings?.map((pairString, i) => {
+                {props.value.items?.map((pairString, i) => {
                     return (
                         <div key={i}>
                             {pairString.replace(" =>", ":")}
@@ -15,8 +15,8 @@ export default function AttributePairsTable(props) {
             </div>
         );
     }
-    const firstTwo = [props.objectWithAttributes.attributePairStrings[0], props.objectWithAttributes.attributePairStrings[1]];
-    const remaining = props.objectWithAttributes.attributePairStrings.length - 2;
+    const firstTwo = [props.value.items[0], props.value.items[1]];
+    const remaining = props.value.items.length - 2;
     return (
         <>
             {firstTwo.map((pairString, i) => {
@@ -27,7 +27,7 @@ export default function AttributePairsTable(props) {
 
                 );
             })}
-            <div className="tooltip font-medium" data-tip="Redirects to snapshot page"><Link to={`/snapshot?id=${props.snapshotID}`}>+{remaining} more</Link></div>
+            <div className="font-medium"><Link to={props.value.path}>+{remaining} more</Link></div>
         </>
     );
 }

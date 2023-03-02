@@ -8,7 +8,6 @@ import FilterConstants from "../../domain/Constants";
 import PageTitle from "../../components/PageTitle";
 import { Link } from 'react-router-dom'
 import { Disclosure } from "@headlessui/react";
-import { ChevronUpIcon } from '@heroicons/react/24/outline'
 import DisclosureHead from "../../components/DisclosureHead";
 
 export default function SnapshotListPage({ client }) {

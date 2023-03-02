@@ -3,7 +3,6 @@ import AttributePairsTable from "../common/AttributePairsTable";
 import PvNamesWithLinksParagraph from "../common/PvNamesWithLinksParagraph";
 import PageTitle from "../../components/PageTitle"
 import KeyValuePair from "../../components/KeyValuePair";
-import { ChevronUpIcon } from '@heroicons/react/24/outline'
 import { Disclosure } from "@headlessui/react";
 import DisclosureHead from "../../components/DisclosureHead";
 
@@ -27,7 +26,7 @@ export default function SnapshotDetailsPanel({ snapshotDetails, errorMsg }) {
                                 <div className="mb-6">
                                     <KeyValuePair index="PV Names" value={<PvNamesWithLinksParagraph objectWithPvs={snapshotDetails} snapshotID={snapshotDetails.id} showAll={true} />} />
                                 </div>
-                                <KeyValuePair index="Attributes" value={<AttributePairsTable objectWithAttributes={snapshotDetails} />} />
+                                <KeyValuePair index="Attributes" value={<AttributePairsTable objectWithAttributes={snapshotDetails} snapshotID={snapshotDetails.id} showAll={true} />} />
                             </div>
                         </Disclosure.Panel>
                     </div>

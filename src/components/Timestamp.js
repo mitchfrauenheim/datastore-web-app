@@ -13,4 +13,5 @@ export default function Timestamp(props) {
             </div>
         );
     }
+    return(props.timestamp)
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
@@ -120,6 +120,7 @@ export default function SnapshotPage({ client, onOpen }) {
         console.log("SnapshotPage.handleSubmit()");
         setDataQueryErrorMsg(null);
         setUrlParams();
+        alert('Collapse the "Details" and/or "Snapshot Data Filters" panels to view the data more clearly.')
     }
 
     function handleReset() {

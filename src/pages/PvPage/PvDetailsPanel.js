@@ -33,7 +33,7 @@ export default function PvDetailsPanel({ pv }) {
                                 </div>
                                 <div className="flex flex-row space-x-10 px-8">
                                 <KeyValuePair index="Field Names and Types" value={<FieldNameTypeTable objectWithFields={pv} />} />
-                                <KeyValuePair index="Attributes" value={<AttributeNameTable objectWithAttributes={pv} />} />
+                                <KeyValuePair index="Attributes" value={<AttributeNameTable objectWithAttributes={pv} pvName={pv.name} showAll={true} />} />
                                 </div>
                                 {/* <b>Field Names and Types:</b>
                                 <p />
