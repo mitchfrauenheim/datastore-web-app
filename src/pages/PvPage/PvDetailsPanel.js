@@ -1,7 +1,6 @@
 import React from "react";
 import FieldNameTypeTable from "../common/FieldNameTypeTable";
 import AttributeNameTable from "../common/AttributeNameTable";
-import { Link } from "react-router-dom";
 import KeyValuePair from "../../components/KeyValuePair";
 
 export default function PvDetailsPanel({ pv }) {

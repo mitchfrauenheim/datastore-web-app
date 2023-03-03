@@ -5,6 +5,7 @@ import QueryFilter from "../../domain/filter/QueryFilter";
 import PvDetailsPanel from "./PvDetailsPanel";
 import { Link } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
+import ErrorMessage from "../../components/ErrorMessage"
 
 export default function PvPage({ client, onOpen }) {
 
@@ -93,7 +94,9 @@ export default function PvPage({ client, onOpen }) {
 
     function renderNoPvPage() {
         console.log("PvPage.renderNoPvPage()");
-        return <h1>{queryErrorMsg}</h1>;
+        return (
+            <ErrorMessage errorMsg={queryErrorMsg} />
+        )
     }
 
     return (

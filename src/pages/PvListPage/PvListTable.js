@@ -8,7 +8,7 @@ import PageSizeSelector from "../../components/PageSizeSelector";
 export default function PvListTable({ pvs = [] }) {
 
     const gridRef = useRef();
-    const [selected, setSelected] = useState();
+    const [setSelected] = useState();
     const [rowData, setRowData] = useState();
 
     const [columnDefs] = useState([

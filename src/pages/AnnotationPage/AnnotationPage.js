@@ -4,6 +4,7 @@ import PageTitle from "../../components/PageTitle";
 import Constants from "../../domain/Constants";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import AnnotationDetailsPanel from "./AnnotationDetailsPanel";
+import ErrorMessage from "../../components/ErrorMessage"
 
 export default function AnnotationPage({ client, onOpen }) {
 
@@ -92,7 +93,9 @@ export default function AnnotationPage({ client, onOpen }) {
 
     function renderNoAnnotationPage() {
         console.log("AnnotationPage.renderNoAnnotationPage()");
-        return <h1>{queryErrorMsg}</h1>;
+        return (
+            <ErrorMessage errorMsg={queryErrorMsg} />
+        )
     }
 
     return (

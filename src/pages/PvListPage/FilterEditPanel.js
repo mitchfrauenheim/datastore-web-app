@@ -26,7 +26,6 @@ export default function FilterEditPanel({ filter,
             </div>
             <div className="flex flex-row pt-2 md:pt-6 space-x-2 justify-center">
                 <button onClick={handleAddPVFilter} className="apply-filters-button">
-                    {/* {filter.singlePvCriteriaButtonLabel} */}
                     Apply Filter
                 </button>
                 <button className="clear-filters-button" onClick={handleResetFunction}>

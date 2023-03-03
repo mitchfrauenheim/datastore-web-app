@@ -69,7 +69,6 @@ td {
 }
 
 .filter-input {
-  /* @apply h-8 w-56 pl-2 bg-gray-200 rounded text-sm text-slate-600 font-medium placeholder-slate-400 focus:outline-0 focus:text-slate-900; */
   @apply h-8 w-56 pl-2 rounded text-sm font-medium text-slate-800 border border-black border-opacity-30 drop-shadow-sm focus:outline-0 focus:border-slate-800 focus:drop-shadow-md;
 }
 
@@ -81,7 +80,7 @@ td {
   @apply h-8 w-32 px-2 rounded text-white text-sm font-medium bg-red-500 transition duration-100 hover:bg-red-700;
 }
 
-/* Classes for ___ListTable files */
+/* Classes for Table files */
 .grid-section-wrapper {
   @apply mb-4 flex-grow;
 }
@@ -93,11 +92,8 @@ td {
 
 .ag-theme-material {
   --ag-font-size: 0.875rem;
-  /* --ag-cell-horizontal-padding: 1.5rem; */
   --ag-font-family: 'Inter', sans-serif;
   --ag-header-foreground-color: #1E2A3B;
-  /* --ag-list-item-height: 20px;
-  --ag-grid-size: 4px; */
   --ag-header-height: 40px;
   --ag-row-hover-color: #F4F5F6;
   --ag-odd-row-background-color: rgb(249, 250, 251);

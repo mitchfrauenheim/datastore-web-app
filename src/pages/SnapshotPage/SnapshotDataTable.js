@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
 import NanosTimestampCellRenderer from "../../components/ag-grid/NanosTimestampCellRenderer";
 import PageSizeSelector from "../../components/PageSizeSelector";

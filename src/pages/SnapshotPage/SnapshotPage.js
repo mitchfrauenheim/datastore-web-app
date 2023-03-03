@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
@@ -8,7 +8,7 @@ import { useLocation, useSearchParams } from "react-router-dom";
 import Constants from "../../domain/Constants";
 import { Link } from "react-router-dom";
 import PageTitle from "../../components/PageTitle";
-import { Dialog, Disclosure } from "@headlessui/react";
+import { Disclosure } from "@headlessui/react";
 import DisclosureHead from "../../components/DisclosureHead";
 
 export default function SnapshotPage({ client, onOpen }) {

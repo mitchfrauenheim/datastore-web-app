@@ -22,8 +22,6 @@ export default function PvListPage({ client }) {
 
     useEffect(() => {
         console.log("PvListPage.useEffect()");
-        // const currentSearchParams = Object.fromEntries([...searchParams]);
-        // console.log(currentSearchParams);
         if (handledParams) return;
         handledParams = true;
         console.log("handling URL parameters");
