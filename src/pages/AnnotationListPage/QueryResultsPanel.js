@@ -1,45 +1,35 @@
 import React from "react";
 import AnnotationListTable from "./AnnotationListTable";
+import ErrorMessage from "../../components/ErrorMessage";
 
-export default function QueryResultsPanel({annotationList, errorMsg}) {
+export default function QueryResultsPanel({ annotationList, errorMsg }) {
 
     function renderDataTable() {
         return (
-            <div>
-                <AnnotationListTable annotationList={annotationList}/>
-            </div>
+            <AnnotationListTable annotationList={annotationList} />
         );
     }
 
     function renderNoDataTable() {
         return (
-            <div/>
+            <div />
         );
     }
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-                        {(annotationList.length === 0) ? renderNoDataTable() : renderDataTable()}
-                    </div>
-                </div>
-            </div>
-        );
+            (annotationList.length === 0) ? renderNoDataTable() : renderDataTable()
+        )
+
     }
 
     function renderQueryErrorPanel() {
         return (
-            <div>
-                <h1>{errorMsg}</h1>;
-            </div>
+            <ErrorMessage errorMsg={errorMsg} />
         );
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
-        </div>
+        (errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()
     );
 }

@@ -1,46 +1,39 @@
 import React from "react";
 import SnapshotDataTable from "./SnapshotDataTable";
+import ErrorMessage from "../../components/ErrorMessage";
 
 export default function SnapshotDataPanel({
-                                              snapshotDataPage,
-                                              errorMsg,
-                                              handlePreviousPageFunction,
-                                              handleNextPageFunction }) {
+    snapshotDataPage,
+    errorMsg,
+    handlePreviousPageFunction,
+    handleNextPageFunction }) {
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                <div>
-                    <button onClick={handlePreviousPageFunction}>Previous Page</button>
+            <>
+                <div className="flex flex-row">
+                    <button onClick={handlePreviousPageFunction} className="mr-2">Previous Page</button>
                     <button onClick={handleNextPageFunction}>Next Page</button>
                 </div>
-                <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-                        <SnapshotDataTable snapshotDataPage={snapshotDataPage}/>
-                    </div>
-                </div>
-            </div>
+                <SnapshotDataTable snapshotDataPage={snapshotDataPage} />
+            </>
         );
     }
 
     function renderNoResultsPanel() {
         return (
-            <div/>
+            <div />
         );
     }
 
     function renderQueryErrorPanel() {
         return (
-            <div>
-                <h1>{errorMsg}</h1>
-            </div>
+            <ErrorMessage errorMsg={errorMsg} />
         );
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            {(errorMsg !== null) ? renderQueryErrorPanel() : (snapshotDataPage !== null)
-                ? renderQueryResultsPanel() : renderNoResultsPanel() }
-        </div>
+        (errorMsg !== null) ? renderQueryErrorPanel() : (snapshotDataPage !== null)
+            ? renderQueryResultsPanel() : renderNoResultsPanel()
     );
 }

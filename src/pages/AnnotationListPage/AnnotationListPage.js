@@ -1,11 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import QueryFilter from "../../domain/filter/QueryFilter";
-import {useSearchParams} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import QueryResultsPanel from "./QueryResultsPanel";
+import { Link } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
+import { Disclosure } from "@headlessui/react";
+import DisclosureHead from "../../components/DisclosureHead";
 
-export default function AnnotationListPage({client}) {
+export default function AnnotationListPage({ client }) {
 
     let [filter, setFilter] = useState(new QueryFilter());
     let [filterCriteria, setFilterCriteria] = useState([]);
@@ -83,16 +87,39 @@ export default function AnnotationListPage({client}) {
     }
 
     return (
-        <div>
-            <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-            <FilterCriteriaPanel
-                criteriaList={filterCriteria}
-                handleSubmitFunction={handleSubmit}
-                handleResetFunction={handleReset}
-                handleDeleteCriteriaFunction={handleDeleteCriteria}
-                heading="Annotation List Filter Criteria"
-                beginPrompt="To begin, add criteria to Annotation list filter." />
-            <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg}/>
+        <div id="annotations-list-wrapper" className="page-wrapper">
+            <div id="annotations-list-breadcrumbs" className="custom-breadcrumbs">
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li>Annotation List Filter</li>
+                </ul>
+            </div>
+            <div id="annotations-list-content" className="page-content">
+                <PageTitle pageName="Annotation List Filter" />
+                <Disclosure defaultOpen={true}>
+                    <div id="annotations-list-filter-wrapper" className="page-filter-wrapper">
+                        <DisclosureHead titleText="Filters" />
+                        <Disclosure.Panel>
+                            <div className="my-4 border-b border-gray-300"></div>
+                            <div id="annotations-list-edit-panel" className="filter-edit-panel">
+                                <FilterEditPanel filter={filter}
+                                    updateCriteriaFunction={updateCriteria}
+                                    handleResetFunction={handleReset} />
+                            </div>
+                            <div id="pv-list-criteria-panel" className="px-8">
+                                <FilterCriteriaPanel
+                                    criteriaList={filterCriteria}
+                                    handleSubmitFunction={handleSubmit}
+                                    handleResetFunction={handleReset}
+                                    handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                    heading="Annotation List Filter Criteria"
+                                    beginPrompt="To begin, add criteria to Annotation list filter." />
+                            </div>
+                        </Disclosure.Panel>
+                    </div>
+                </Disclosure>
+                <QueryResultsPanel annotationList={annotationList} errorMsg={queryErrorMsg} />
+            </div>
         </div>
     );
 

@@ -1,3 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Glegoo:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-material.css';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +21,93 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+th {
+  @apply px-2 py-2 text-left font-semibold;
+}
+
+td {
+  @apply px-2 py-1;
+}
+
+/* Classes for __ListPage files */
+.page-wrapper {
+  @apply flex flex-col h-screen bg-gray-100 overflow-y-scroll;
+  width: calc(100vw - 256px)
+}
+
+.custom-breadcrumbs {
+  @apply breadcrumbs flex-shrink-0 px-8 pt-4 text-sm font-medium text-slate-500 bg-white h-14 border-b;
+}
+
+.page-content {
+  @apply flex flex-col mx-8;
+  height: calc(100% - 56px);
+}
+
+.page-filter-wrapper {
+  @apply flex flex-col w-full py-4 mb-4 rounded shadow bg-white;
+}
+
+.filter-edit-panel {
+  @apply mx-8 pb-4 mb-4 border-b border-gray-300;
+}
+
+
+/* Classes for FliterEditPanel files */
+.filter-group-wrapper {
+  @apply flex flex-col md:flex-row flex-wrap justify-between;
+}
+
+.filter-field-group {
+  @apply flex flex-col mb-4 md:mb-0;
+}
+
+.filter-label {
+  @apply h-6 text-sm font-medium text-slate-800;
+}
+
+.filter-input {
+  @apply h-8 w-56 pl-2 rounded text-sm font-medium text-slate-800 border border-black border-opacity-30 drop-shadow-sm focus:outline-0 focus:border-slate-800 focus:drop-shadow-md;
+}
+
+.apply-filters-button {
+  @apply h-8 w-32 px-2 rounded text-white text-sm font-medium bg-sky-500 transition duration-100 hover:bg-sky-700;
+}
+
+.clear-filters-button {
+  @apply h-8 w-32 px-2 rounded text-white text-sm font-medium bg-red-500 transition duration-100 hover:bg-red-700;
+}
+
+/* Classes for Table files */
+.grid-section-wrapper {
+  @apply mb-4 flex-grow;
+}
+
+.grid-wrapper {
+  @apply w-full h-full shadow-md rounded overflow-hidden;
+  height: calc(100% - 1.5rem);
+}
+
+.ag-theme-material {
+  --ag-font-size: 0.875rem;
+  --ag-font-family: 'Inter', sans-serif;
+  --ag-header-foreground-color: #1E2A3B;
+  --ag-header-height: 40px;
+  --ag-row-hover-color: #F4F5F6;
+  --ag-odd-row-background-color: rgb(249, 250, 251);
+}
+
+.ag-theme-tight {
+  --ag-list-item-height: 20px;
+  --ag-grid-size: 4px;
+}
+
+.ag-paging-panel {
+  @apply font-inter;
+}
+
+.ag-paging-row-summary-panel-number, .ag-paging-number {
+  @apply font-semibold text-slate-800;
 }

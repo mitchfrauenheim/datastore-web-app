@@ -25,7 +25,7 @@ export default class AttributeFilterCriteria extends FilterCriteriaBase {
     }
 
     get displayString() {
-        return "Attribute name is: " + this._name + " and value like: " + this._value;
+        return "Attribute: {" + this._name + ": " + this._value + "}";
     }
 
 }
