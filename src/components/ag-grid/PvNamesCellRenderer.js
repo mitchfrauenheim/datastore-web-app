@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function PvNamesWithLinksParagraph(props) {
-    if (props.objectWithPvs.pvNames.length < 3 || props.showAll) {
+export default function PvNamesCellRenderer(props) {
+    if (props.value.pvNames.length < 3) {
         return (
             <p>
-                {props.objectWithPvs.pvNames?.map((pvName, i) => {
+                {props.value.pvNames?.map((pvName, i) => {
                     return (
                         <Link key={i} to={`/pv?name=${pvName}`}>
                             {pvName}
@@ -17,8 +17,8 @@ export default function PvNamesWithLinksParagraph(props) {
 
         );
     }
-    const firstTwo = [props.objectWithPvs.pvNames[0], props.objectWithPvs.pvNames[1]]
-    const remaining = props.objectWithPvs.pvNames.length - 2
+    const firstTwo = [props.value.pvNames[0], props.value.pvNames[1]]
+    const remaining = props.value.pvNames.length - 2
     return (
         <>
         {firstTwo?.map((pvName, i) => {
@@ -28,7 +28,7 @@ export default function PvNamesWithLinksParagraph(props) {
                 </Link>
             )
         }).reduce((prev, curr) => [prev, ", ", curr])}
-        ... <div className="tooltip font-medium" data-tip="Redirects to snapshot page"><Link to={`/snapshot?id=${props.snapshotID}`}>+{remaining} more</Link></div>
+        ... <div className="tooltip font-medium" data-tip="Redirects to snapshot page"><Link to={`/snapshot?id=${props.value.snapshotID}`}>+{remaining} more</Link></div>
         </>
     );
 }

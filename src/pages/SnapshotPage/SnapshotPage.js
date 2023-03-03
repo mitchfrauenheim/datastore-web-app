@@ -1,11 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import SnapshotDetailsPanel from "./SnapshotDetailsPanel";
 import FilterEditPanel from "./FilterEditPanel";
 import FilterCriteriaPanel from "../common/FilterCriteriaPanel";
 import SnapshotDataPanel from "./SnapshotDataPanel";
 import QueryFilter from "../../domain/filter/QueryFilter";
-import {useLocation, useSearchParams} from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import Constants from "../../domain/Constants";
+import { Link } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
+import { Disclosure } from "@headlessui/react";
+import DisclosureHead from "../../components/DisclosureHead";
 
 export default function SnapshotPage({ client, onOpen }) {
 
@@ -78,7 +82,7 @@ export default function SnapshotPage({ client, onOpen }) {
         filter.minFirstTime = snapshot.firstTimestampIsoString;
         filter.maxLastTime = snapshot.lastTimestampIsoString;
         filter.availablePvsList = snapshot.pvNames;
-        if (snapshot.size <= 0 ) {
+        if (snapshot.size <= 0) {
             handleSnapshotDetailsQueryError("error: snapshot size returned by API is zero")
         }
         const durationSeconds = snapshot.lastTimestampSeconds - snapshot.firstTimestampSeconds;
@@ -101,7 +105,7 @@ export default function SnapshotPage({ client, onOpen }) {
         setDetailsQueryErrorMsg(errorMsg);
     }
 
-    function updateCriteria () {
+    function updateCriteria() {
         console.log("SnapshotPage.updateCriteria()");
         setFilterCriteria(filter.criteriaList);
     }
@@ -116,6 +120,7 @@ export default function SnapshotPage({ client, onOpen }) {
         console.log("SnapshotPage.handleSubmit()");
         setDataQueryErrorMsg(null);
         setUrlParams();
+        alert('Collapse the "Details" and/or "Snapshot Data Filters" panels to view the data more clearly.')
     }
 
     function handleReset() {
@@ -177,21 +182,46 @@ export default function SnapshotPage({ client, onOpen }) {
     function renderSnapshotPage() {
         console.log("SnapshotPage.renderSnapshotPage()");
         return (
-            <div>
-                <SnapshotDetailsPanel snapshotDetails={snapshotDetails} errorMsg={detailsQueryErrorMsg}/>
-                <FilterEditPanel filter={filter} updateCriteriaFunction={updateCriteria}/>
-                <FilterCriteriaPanel
-                    criteriaList={filterCriteria}
-                    handleSubmitFunction={handleSubmit}
-                    handleResetFunction={handleReset}
-                    handleDeleteCriteriaFunction={handleDeleteCriteria}
-                    heading="Snapshot Data Filter Criteria"
-                    beginPrompt="To begin, add criteria to snapshot data filter." />
-                <SnapshotDataPanel
-                    snapshotDataPage={snapshotDataPage}
-                    errorMsg={dataQueryErrorMsg}
-                    handlePreviousPageFunction={handlePreviousDataPage}
-                    handleNextPageFunction={handleNextDataPage}/>
+            <div id="snapshot-wrapper" className="page-wrapper">
+                <div id="snapshot-breadcrumbs" className="custom-breadcrumbs">
+                    <ul>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/snapshotList">Snapshot List Filter</Link></li>
+                        <li>Snapshot View</li>
+                    </ul>
+                </div>
+                <div id="snapshot-content" className="page-content">
+                    <PageTitle pageName="Snapshot View" />
+                    <SnapshotDetailsPanel snapshotDetails={snapshotDetails} errorMsg={detailsQueryErrorMsg} />
+                    <Disclosure>
+                        <div id="snapshot-data-filter-wrapper" className="page-filter-wrapper">
+                            <DisclosureHead titleText="Snapshot Data Filters" />
+                            <Disclosure.Panel>
+                                <div className="my-4 border-b border-gray-300"></div>
+                                <div id="snapshot-data-edit-panel" className="filter-edit-panel">
+                                    <FilterEditPanel
+                                        filter={filter}
+                                        updateCriteriaFunction={updateCriteria}
+                                        handleResetFunction={handleReset} />
+                                </div>
+                                <div id="snapshot-data-criteria-panel" className="px-8">
+                                    <FilterCriteriaPanel
+                                        criteriaList={filterCriteria}
+                                        handleSubmitFunction={handleSubmit}
+                                        handleResetFunction={handleReset}
+                                        handleDeleteCriteriaFunction={handleDeleteCriteria}
+                                        heading="Snapshot Data Filter Criteria"
+                                        beginPrompt="To begin, add criteria to snapshot data filter." />
+                                </div>
+                            </Disclosure.Panel>
+                        </div>
+                    </Disclosure>
+                    <SnapshotDataPanel
+                        snapshotDataPage={snapshotDataPage}
+                        errorMsg={dataQueryErrorMsg}
+                        handlePreviousPageFunction={handlePreviousDataPage}
+                        handleNextPageFunction={handleNextDataPage} />
+                </div>
             </div>
         );
     }

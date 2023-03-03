@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from "react";
-import {useLocation, useSearchParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
+import PageTitle from "../../components/PageTitle";
 import Constants from "../../domain/Constants";
 import QueryFilter from "../../domain/filter/QueryFilter";
 import AnnotationDetailsPanel from "./AnnotationDetailsPanel";
+import ErrorMessage from "../../components/ErrorMessage"
 
 export default function AnnotationPage({ client, onOpen }) {
 
@@ -73,20 +75,30 @@ export default function AnnotationPage({ client, onOpen }) {
     function renderAnnotationPage() {
         console.log("AnnotationPage.renderAnnotationPage()");
         return (
-            <div>
-                <AnnotationDetailsPanel annotation={annotation} />
+            <div id="annotation-wrapper" className="page-wrapper">
+                <div id="annotation-breadcrumbs" className="custom-breadcrumbs">
+                    <ul>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/annotationList">Annotation List Filter</Link></li>
+                        <li>Annotation View</li>
+                    </ul>
+                </div>
+                <div id="annotation-content" className="page-content">
+                    <PageTitle pageName="Annotation View" />
+                    <AnnotationDetailsPanel annotation={annotation} />
+                </div>
             </div>
         );
     }
 
     function renderNoAnnotationPage() {
         console.log("AnnotationPage.renderNoAnnotationPage()");
-        return <h1>{queryErrorMsg}</h1>;
+        return (
+            <ErrorMessage errorMsg={queryErrorMsg} />
+        )
     }
 
     return (
-        <div>
-            {annotation ? renderAnnotationPage() : renderNoAnnotationPage()}
-        </div>
+        annotation ? renderAnnotationPage() : renderNoAnnotationPage()
     );
 }

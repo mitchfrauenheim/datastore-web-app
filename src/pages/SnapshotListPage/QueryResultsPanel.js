@@ -1,47 +1,37 @@
 import React from "react";
 import SnapshotListTable from "./SnapshotListTable";
+import ErrorMessage from "../../components/ErrorMessage";
 
-export default function QueryResultsPanel({snapshots, errorMsg}) {
+export default function QueryResultsPanel({ snapshots, errorMsg }) {
 
     let snapshotMetadataList = snapshots;
 
     function renderSnapshotListDataTable() {
         return (
-            <div>
-                <SnapshotListTable snapshots={snapshots}/>
-            </div>
+            <SnapshotListTable snapshots={snapshots} />
         );
     }
 
     function renderNoSnapshotListDataTable() {
         return (
-            <div/>
+            <div />
         );
     }
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-                        {(snapshots.length === 0) ? renderNoSnapshotListDataTable() : renderSnapshotListDataTable()}
-                    </div>
-                </div>
-            </div>
+            (snapshots.length === 0) ? renderNoSnapshotListDataTable() : renderSnapshotListDataTable()
         );
+
     }
 
     function renderQueryErrorPanel() {
         return (
-            <div>
-                <h1>{errorMsg}</h1>;
-            </div>
+            <ErrorMessage errorMsg={errorMsg} />
         );
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
-        </div>
+        (errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()
     );
 }

@@ -3,18 +3,14 @@ import React from "react";
 export default function FieldNameTypeTable({ objectWithFields }) {
 
     return (
-        <table className="table-without-border">
-            <tbody>
+        <div className="flex flex-col">
             {objectWithFields.fieldNameTypeStringList?.map((fieldNameTypeString, i) => {
                 return (
-                    <tr key={i}>
-                        <td>
-                            {fieldNameTypeString}
-                        </td>
-                    </tr>
+                    <div key={i}>
+                        {fieldNameTypeString.replace(" =>", ":")}
+                    </div>
                 );
             })}
-            </tbody>
-        </table>
+        </div>
     );
 }

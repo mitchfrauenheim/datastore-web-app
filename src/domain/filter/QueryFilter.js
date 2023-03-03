@@ -69,12 +69,34 @@ export default class QueryFilter {
 
     addAttributeCriteria(attributeName, attributeValue) {
         console.log("QueryFilter.addAttributeCriteria()");
-        this.attributeCriteriaList.push(new AttributeFilterCriteria(attributeName, attributeValue));
+        let found = false
+        for (let i = 0; i < this.attributeCriteriaList.length; i++) {
+            if (this.attributeCriteriaList[i].name == attributeName && this.attributeCriteriaList[i].value == attributeValue) {
+                found = true;
+                break;
+            }
+        }
+        if (!found && attributeName && attributeValue) {this.attributeCriteriaList.push(new AttributeFilterCriteria(attributeName, attributeValue));}
+        
+    }
+
+    get attributeCriteriaButtonLabel() {
+        if (this.attributeCriteriaList.length === 0) {
+            return "Add";
+        }
+        return "Update";
     }
 
     addPvCriteria(pvPattern) {
         console.log("QueryFilter.addPvCriteria()");
-        this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));
+        let found = false;
+        for (let i = 0; i < this.pvCriteriaList.length; i++) {
+            if (this.pvCriteriaList[i].pattern == pvPattern) {
+                found = true;
+                break;
+            }
+        }
+        if (!found && pvPattern) {this.pvCriteriaList.push(new PvFilterCriteria(pvPattern));}
     }
 
     addOrUpdatePvCriteria(pvPattern) {

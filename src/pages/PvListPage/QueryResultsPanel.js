@@ -1,45 +1,34 @@
 import PvListTable from "./PvListTable";
 import React from "react";
+import ErrorMessage from "../../components/ErrorMessage";
 
-export default function QueryResultsPanel({pvs, errorMsg}) {
+export default function QueryResultsPanel({ pvs, errorMsg }) {
 
     function renderPvListDataTable() {
         return (
-            <div>
-                <PvListTable pvs={pvs}/>
-            </div>
+            <PvListTable pvs={pvs} />
         );
     }
 
     function renderNoPvListDataTable() {
         return (
-            <div/>
+            <div />
         );
     }
 
     function renderQueryResultsPanel() {
         return (
-            <div>
-                <div>
-                    <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-                        {(pvs.length === 0) ? renderNoPvListDataTable() : renderPvListDataTable()}
-                    </div>
-                </div>
-            </div>
+            (pvs.length === 0) ? renderNoPvListDataTable() : renderPvListDataTable()
         );
     }
 
     function renderQueryErrorPanel() {
         return (
-            <div>
-                <h1>{errorMsg}</h1>;
-            </div>
+            <ErrorMessage errorMsg={errorMsg} />
         );
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            {(errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()}
-        </div>
+        (errorMsg !== null) ? renderQueryErrorPanel() : renderQueryResultsPanel()
     );
 }

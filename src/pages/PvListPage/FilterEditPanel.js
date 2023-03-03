@@ -1,6 +1,9 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 
-export default function FilterEditPanel({filter, updateCriteriaFunction}) {
+export default function FilterEditPanel({ filter,
+                                          updateCriteriaFunction,
+                                          handleResetFunction
+                                        }) {
 
     const attributeNameRef = useRef(null);
     const attributeValueRef = useRef(null);
@@ -13,18 +16,21 @@ export default function FilterEditPanel({filter, updateCriteriaFunction}) {
     }
 
     return (
-        <div style={{paddingBottom: "4px", borderBottom: "1px solid darkgray"}}>
-            <h1>PV List Filter</h1>
-            <div>
-                <label>
-                    PV filter
-                    <input type="text" ref={pvPatternRef}
-                           placeholder="PV name (e.g., 'mpexPv09' or 'mpexPv0*')"
-                           defaultValue="mpex*"/>
-                    <button onClick={handleAddPVFilter}>
-                        {filter.singlePvCriteriaButtonLabel}
-                    </button>
-                </label>
+        <div className="filter-group-wrapper">
+            <div id="pv-field" className="filter-field-group">
+                <label className="filter-label">PV Pattern:</label>
+                <input type="text" ref={pvPatternRef}
+                    placeholder="e.g. 'mpexPv09' or 'mpexPv0*'"
+                    defaultValue="mpex*"
+                    className="filter-input" />
+            </div>
+            <div className="flex flex-row pt-2 md:pt-6 space-x-2 justify-center">
+                <button onClick={handleAddPVFilter} className="apply-filters-button">
+                    Apply Filter
+                </button>
+                <button className="clear-filters-button" onClick={handleResetFunction}>
+                    Reset Filter
+                </button>
             </div>
         </div>
     );
