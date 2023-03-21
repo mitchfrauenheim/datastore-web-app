@@ -25,7 +25,7 @@ export default function Menu() {
                             icon: <CameraIcon className="h-6 w-6" />
                         }} />
                         <PageLinkSmall data={{
-                            route: "pvList",
+                            route: "/pvList",
                             icon: <DocumentChartBarIcon className="h-6 w-6" />
                         }} />
                         <PageLinkSmall data={{
