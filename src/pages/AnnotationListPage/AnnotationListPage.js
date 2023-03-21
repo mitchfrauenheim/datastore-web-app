@@ -106,7 +106,7 @@ export default function AnnotationListPage({ client }) {
                                     updateCriteriaFunction={updateCriteria}
                                     handleResetFunction={handleReset} />
                             </div>
-                            <div id="pv-list-criteria-panel" className="px-8">
+                            <div id="annotations-list-criteria-panel" className="px-8">
                                 <FilterCriteriaPanel
                                     criteriaList={filterCriteria}
                                     handleSubmitFunction={handleSubmit}
